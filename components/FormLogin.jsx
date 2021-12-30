@@ -54,6 +54,7 @@ const FormLogin = ({ rol }) => {
     else direction = 'http://localhost:8000/auth/users'
 
     localStorage.removeItem('user-info')
+    sessionStorage.removeItem('token')
     const result = await LoginAccount(direction, data)
     // .then((res) => {
     //   if (!response.ok) {
