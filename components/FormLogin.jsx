@@ -15,17 +15,17 @@ import Favorite from '@mui/icons-material/Favorite'
 import LoginAccount from './LoginAccount'
 
 const schema = yup.object({
-  email: yup.string().email('El email no es valido').required('El campo es requerido').max(100, 'Máximo 100 caracteres'),
+  email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(100, '***Máximo 100 caracteres'),
   password: yup.string().required('El campo es requerido')
 }).required('El campo es requerido')
 
-const validarCorreo = (email) => {
-  const expReg =
-    /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
-  const isValid = expReg.test(email)
-  // isValid ? setEmailValid(false) : setEmailValid(true)
-  return isValid
-}
+// const validarCorreo = (email) => {
+//   const expReg =
+//     /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
+//   const isValid = expReg.test(email)
+//   // isValid ? setEmailValid(false) : setEmailValid(true)
+//   return isValid
+// }
 
 const FormLogin = ({ rol }) => {
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -105,7 +105,7 @@ const FormLogin = ({ rol }) => {
               style={inputStyle}
               {...register('email')}
             />
-            <span id='emailHelp' className='text-danger'>{errors.email?.message}</span>
+            <div id='emailHelp' className='mb-4 error text-danger'>{errors.email?.message}</div>
 
             <TextField
               label='Password'
@@ -117,7 +117,7 @@ const FormLogin = ({ rol }) => {
               style={inputStyle}
               {...register('password')}
             />
-            <span id='passwordHelp' className='text-danger'>{errors.password?.message}</span>
+            <span id='passwordHelp' className='mb-4 error text-danger'>{errors.password?.message}</span>
 
             <FormControlLabel
               style={inputStyle}
