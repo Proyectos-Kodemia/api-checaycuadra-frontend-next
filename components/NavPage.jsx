@@ -1,7 +1,14 @@
 import React from 'react'
 import { Nav, Navbar, Container, Button } from 'react-bootstrap'
+import { useRouter } from 'next/router'
 
-function NavbarH () {
+function NavPage () {
+  const router = useRouter()
+
+  const handlerLogin = (e) => {
+    e.preventDefault()
+    router.push('../components/Login')
+  }
   return (
     <Navbar bg='light' expand='lg'>
       <Container>
@@ -17,12 +24,12 @@ function NavbarH () {
           </Nav>
         </div>
         <div>
-          <Button variant='light'>Registrate</Button>{' '}
-          <Button variant='outline-primary'>Ingresar</Button>{' '}
+          <Button type='button' variant='light'>Registrate</Button>{' '}
+          <Button type='button' variant='outline-primary' onClick={handlerLogin}>Ingresar</Button>{' '}
         </div>
       </Container>
     </Navbar>
   )
 }
 
-export default NavbarH
+export default NavPage
