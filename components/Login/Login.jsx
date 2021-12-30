@@ -14,7 +14,7 @@ const TabPanel = (props) => {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
     >
-      {value === index && <h1>{children}</h1>}
+      {value === index && <>{children}</>}
     </div>
   )
 }
@@ -22,9 +22,6 @@ const TabPanel = (props) => {
 const Login = () => {
   const [value, setValue] = useState(0)
 
-  const paperStyle = { padding: 20, height: '500px', width: 280, margin: '20px auto' }
-  const avatarStyle = { backgroundColor: '#075c2c' }
-  const styleBox = { backgroundColor: '#075c2c', color: 'white', borderRadius: '10px' }
   const styleTabs = { style: { background: '#8fed4d', height: '7px' } }
 
   const handleChange = (event, newValue) => {
@@ -33,16 +30,16 @@ const Login = () => {
 
   return (
     <Grid>
-      <Paper elevation={12} style={paperStyle}>
+      <Paper elevation={12} className='paperStyle'>
         <Grid align='center'>
-          <Avatar style={avatarStyle}>
+          <Avatar className='avatarStyle'>
             <LockOpenOutlinedIcon />
           </Avatar>
           <h2>Checa y Cuadra</h2>
         </Grid>
         <Box>
           <Tabs
-            style={styleBox}
+            className='styleBox'
             value={value}
             onChange={handleChange}
             TabIndicatorProps={styleTabs}

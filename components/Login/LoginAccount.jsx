@@ -7,8 +7,7 @@ function LoginAccount (url, credentials) {
     body: JSON.stringify(credentials),
     mode: 'cors'
   }
-  //   retornar la promesa
-  return fetch(URL, options)
+  return fetch(url, options)
 }
 
 export default LoginAccount

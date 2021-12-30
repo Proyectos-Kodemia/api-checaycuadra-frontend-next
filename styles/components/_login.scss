@@ -13,3 +13,38 @@
 .error{
     font-size: 12px;
 }
+
+.paperStyle{
+    padding: 10px;
+    height: 520px;
+    width: 300px;
+    margin: 20px auto;
+}
+
+.avatarStyle{
+    background-color: $GreenPrincipal;
+}
+
+.styleBox{
+    background-color: $GreenPrincipal;
+    color:$white;
+    border-radius: 10px;
+}
+
+.heartStyle{
+    color:$red;
+}
+
+.inputStyle{
+    padding: 8px 0;
+    font-size: 12px;
+}
+
+.buttonStyle{
+    background-color: $GreenPrincipal;
+    padding: 5px 0;
+    margin:5px 0;
+    &:hover{
+        background-color:lighten($GreenPrincipal, 20%)
+    }
+}

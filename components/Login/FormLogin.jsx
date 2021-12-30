@@ -43,42 +43,36 @@ const FormLogin = ({ rol }) => {
   // }
   // }, [])
 
-  const heartStyle = { color: 'red' }
-  const inputStyle = { padding: '8px 0' }
-  const buttonStyle = { backgroundColor: '#075c2c', padding: '5px 0', margin: '5px 0' }
-
   const dataLogin = async (data) => {
     let direction = ''
 
     if (rol === 'Contador') direction = 'http://localhost:8000/auth/account'
     else direction = 'http://localhost:8000/auth/users'
 
-    localStorage.removeItem('user-info')
-    sessionStorage.removeItem('token')
-    const result = await LoginAccount(direction, data)
-    // .then((res) => {
-    //   if (!response.ok) {
-    //   throw new Error('Network response was not OK');
+    // if (localStorage.getItem('user-info')) {
+    //   localStorage.removeItem('user-info')
     // }
-    // })
-    // .catch((err) => {
-    //   // setError(true)
-    //   console.log('error dentro del fetch 2 ', err)
-    //   return { status: 'false' }
-    // })
-    // .finally(() => setLoading(true))
+    if (sessionStorage.getItem('token')) {
+      sessionStorage.removeItem('token')
+    }
 
-    const res = await result.json()
-    const responseJSON = await res.json()
-    if (res.status === 200) {
-      router.push('/dashboard')
-      console.log('se creo el token y se almaceno')
-      sessionStorage.setItem('token', responseJSON.token)
-      setLoading(false)
-      localStorage.setItem('user-info', JSON.stringify(res.token))
-    } else {
+    try {
+      const result = await LoginAccount(direction, data)
+      const res = await result.json()
+      console.log(res.status)
+      if (res.status) {
+        console.log('se creo el token y se almaceno')
+        sessionStorage.setItem('token', JSON.stringify(res.token))
+        // localStorage.setItem('user-info', JSON.stringify(res.token))
+        setLoading(false)
+        router.push('/Login/Login')
+      } else {
+        setError(true)
+        console.log('error en login ')
+      }
+    } catch (err) {
       setError(true)
-      console.log('error en login ')
+      console.log(err)
     }
   }
 
@@ -90,20 +84,16 @@ const FormLogin = ({ rol }) => {
 
   return (
     <>
-      {/* <span className='remember'>
-        {credencialsValid && <div style={textStyle}>El usuario o contraseña son incorrectos</div>}
-        {emailValid && <div style={textStyle}>Los datos son incorrectos</div>}
-      </span> */}
       <div className='container'>
         <div className='row'>
-          <form className='border rounded mt-2 justify-content-center' onSubmit={handleSubmit(dataLogin)}>
+          <form className='rounded mt-3 justify-content-center' onSubmit={handleSubmit(dataLogin)}>
             <TextField
               label='Email'
               placeholder='Ingrese Email'
               color='secondary'
               required
               fullWidth
-              style={inputStyle}
+              className='inputStyle'
               {...register('email')}
             />
             <div id='emailHelp' className='mb-4 error text-danger'>{errors.email?.message}</div>
@@ -111,29 +101,31 @@ const FormLogin = ({ rol }) => {
             <TextField
               label='Password'
               placeholder='Ingrese Password'
+
+              // falta checar cambio de color de contorno input
+
               color='secondary'
               type='password'
               required
               fullWidth
-              style={inputStyle}
+              className='inputStyle'
               {...register('password')}
             />
             <span id='passwordHelp' className='mb-4 error text-danger'>{errors.password?.message}</span>
 
             <FormControlLabel
-              style={inputStyle}
+              className='inputStyle'
               control={
                 <Checkbox
                   icon={<FavoriteBorder />}
-                  checkedIcon={<Favorite style={heartStyle} />}
+                  checkedIcon={<Favorite className='heartStyle' />}
                 />
-        }
-              label='Recordar Usuario'
+              } label='Recordar Usuario'
             />
 
             <Button
               type='submit'
-              style={buttonStyle}
+              className='buttonStyle'
               variant='contained'
               fullWidth
             >
