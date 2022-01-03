@@ -1,6 +1,11 @@
-$GreenPrincipal:#113311;
-$LemonGreen:#8fed4d;
-$cyan:#1dcdd9;
-$BlueMarine:#00244c;
-$white:#fff;
-$red:red;
+a {
+    text-decoration: none;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    background-color: peru;
+}

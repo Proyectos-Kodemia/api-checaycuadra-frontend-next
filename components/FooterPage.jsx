@@ -1,11 +1,15 @@
 import React from 'react'
+import TwitterIcon from '@mui/icons-material/Twitter'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import InstagramIcon from '@mui/icons-material/Instagram'
 
 function FooterPage () {
   return (
-    <footer>
+    <footer className='footer'>
       <div className='container'>
         <div className='row'>
-          <div className='col-4'>
+          <div className='col-md-3 col-xs-6 '>
             <a
               href='https://kodemia.mx/'
               target='_blank'
@@ -17,13 +21,13 @@ function FooterPage () {
             </a>
           </div>
 
-          <div className='col-4'>
+          <div className='col-md-3 col-xs-6 '>
             <h5> Contacto</h5>
             <p>(MEX) +52 (55) 1234 5678</p>
             <p>info@checaycuadra.com</p>
           </div>
 
-          <div className='col-4'>
+          <div className='col-md-3 col-xs-6 '>
             <h5>Navegacion </h5>
             <ul className='list-unstyled'>
               <li>
@@ -36,8 +40,27 @@ function FooterPage () {
                 <a href='#Profesionales'>Profesionales</a>
               </li>
             </ul>
+          </div>
+
+          <div className='col-md-3 col-xs-6 '>
+            <div>
+              <div><TwitterIcon /></div>
+              <div><FacebookIcon /></div>
+              <div><LinkedInIcon /></div>
+              <div><InstagramIcon /></div>
+            </div>
+            <div>
+              <p>
+                @ ChecayCuadra 2021. Todos los derechos reservados
+              </p>
+              <br />
+              <p>
+                Politíca de privacidad
+              </p>
+            </div>
 
           </div>
+
         </div>
       </div>
     </footer>
