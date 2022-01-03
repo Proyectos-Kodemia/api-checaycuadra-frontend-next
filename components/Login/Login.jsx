@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
-import { Avatar, Box, Tab, Tabs, Grid, Paper } from '@mui/material'
+import { Box, Tab, Tabs, Grid, Paper } from '@mui/material'
 import FormLogin from './FormLogin'
-import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
-import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined'
 
 const TabPanel = (props) => {
   const { children, value, index } = props
@@ -22,7 +19,7 @@ const TabPanel = (props) => {
 const Login = () => {
   const [value, setValue] = useState(0)
 
-  const styleTabs = { style: { background: '#8fed4d', height: '7px' } }
+  const styleTabs = { style: { background: '#113311', height: '7px' } }
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
@@ -32,10 +29,7 @@ const Login = () => {
     <Grid>
       <Paper elevation={12} className='paperStyle'>
         <Grid align='center'>
-          <Avatar className='avatarStyle'>
-            <LockOpenOutlinedIcon />
-          </Avatar>
-          <h2>Checa y Cuadra</h2>
+          <div className='welcome'>¡Bienvenido! Accede a tu cuenta</div>
         </Grid>
         <Box>
           <Tabs
@@ -46,8 +40,8 @@ const Login = () => {
             textColor='inherit'
             variant='fullWidth'
           >
-            <Tab label='Usuario' icon={<PersonOutlineOutlinedIcon />} />
-            <Tab label='Contador' icon={<AssignmentIndOutlinedIcon />} />
+            <Tab label='Usuario' className={`${!value ? 'activo' : 'inactivo'}`} />
+            <Tab label='Contador' className={`${value ? 'activo' : 'inactivo'}`} />
           </Tabs>
           <TabPanel value={value} index={0}>
             <FormLogin rol='Usuario' />

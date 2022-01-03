@@ -7,8 +7,16 @@ function NavPage () {
 
   const handlerLogin = (e) => {
     e.preventDefault()
-    router.push('../components/Login')
+    console.log(e)
+    router.push('/LoginPage')
   }
+
+  const handlerRegister = (e) => {
+    e.preventDefault()
+    console.log(e)
+    router.push('/RegisterPage')
+  }
+
   return (
     <Navbar bg='light' expand='lg'>
       <Container>
@@ -24,7 +32,7 @@ function NavPage () {
           </Nav>
         </div>
         <div>
-          <Button type='button' variant='light'>Registrate</Button>{' '}
+          <Button type='button' variant='light' onClick={handlerRegister}>Registrate</Button>{' '}
           <Button type='button' variant='outline-primary' onClick={handlerLogin}>Ingresar</Button>{' '}
         </div>
       </Container>
