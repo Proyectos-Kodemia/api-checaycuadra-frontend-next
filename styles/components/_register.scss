@@ -1,30 +1,18 @@
 @import '../abstract/variables';
 
-.remember{
-    text-align:center;
-}
-
-.forgetPass{
-    font-size: 14px;
-    color:$BlueMarine;
-    margin:10px 0 25px 0 ;
-}
-
-.register{
-    font-size: 14px;
-    color:$BlueMarine;
-    margin:10px 0 25px 0;
-}
-
-.error{
-    font-size: 12px;
-}
-
-.paperStyle{
+//Clases localizadas en Register.jsx
+.cardStyle{
     padding: 10px;
-    height: 560px;
-    width: 320px;
+    height: 600px;
+    width: 500px;
     margin: 20px auto;
+}
+
+.regCount{
+    color: $GreenPrincipal;
+    font-size:18px;
+    font-weight: bold;
+    margin:5px auto 25px auto;
 }
 
 .styleBox{
@@ -45,26 +33,36 @@
     font-weight: bold !important;
 }
 
-.heartStyle{
-    color:$red;
+//clases localizadas en FormRegister.jsx
+.inputStyle{
+    font-size: 12px;
 }
 
-.inputStyle{
+.error{
     font-size: 12px;
 }
 
 .buttonStyle{
     background-color: $BlueMarine !important;
-    padding: 5px 0;
-    margin:5px 0 15px 0;
+    padding: 10px 10px;
+    margin:15px auto;
     &:hover{
         background-color:lighten($BlueMarine, 10%) !important
     }
 }
 
-.welcome{
-    color: $GreenPrincipal;
-    font-size:18px;
-    font-weight: bold;
-    margin:5px auto 25px auto;
+.remember{
+    text-align:center;
+}
+
+.forgetPass{
+    font-size: 14px;
+    color:$BlueMarine;
+    margin:10px 0 0px 0 ;
+}
+
+.register{
+    font-size: 14px;
+    color:$BlueMarine;
+    margin:10px 0 25px 0;
 }

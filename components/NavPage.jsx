@@ -1,20 +1,19 @@
 import React from 'react'
 import { Nav, Navbar, Container, Button } from 'react-bootstrap'
 import { useRouter } from 'next/router'
+import { URL_BASE } from '../services/config'
 
 function NavPage () {
   const router = useRouter()
 
   const handlerLogin = (e) => {
     e.preventDefault()
-    console.log(e)
-    router.push('/LoginPage')
+    router.push(`${URL_BASE}/Cuenta/LoginPage`, '/auth/loginUser')
   }
 
   const handlerRegister = (e) => {
     e.preventDefault()
-    console.log(e)
-    router.push('/RegisterPage')
+    router.push(`${URL_BASE}/Cuenta/RegisterPage`, '/auth/registerUser')
   }
 
   return (

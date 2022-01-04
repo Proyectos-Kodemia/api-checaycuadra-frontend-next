@@ -1,11 +1,9 @@
 import React from 'react'
+import Reg from '../../components/Register/Register'
 
 function Register () {
   return (
-    <div>
-      <h1>Registro</h1>
-    </div>
-
+    <Reg />
   )
 }
 

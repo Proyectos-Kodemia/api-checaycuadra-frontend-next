@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 
 import { useRouter } from 'next/router'
-
+import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-import { Button, TextField } from '@mui/material'
+import { Button, Link, TextField, InputAdornment, IconButton } from '@mui/material'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+
 // import FormControlLabel from '@mui/material/FormControlLabel'
 // import Checkbox from '@mui/material/Checkbox'
 // import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
@@ -14,7 +17,8 @@ import { Button, TextField } from '@mui/material'
 
 // import { makeStyles } from '@material-ui/core'
 
-import LoginAccount from './LoginAccount'
+import imageLogin from '../../images/graphLogin.svg'
+import { URL_BASE } from '../../services/config'
 
 // const useStyles = makeStyles(theme => ({
 //   root: {
@@ -55,6 +59,7 @@ const FormLogin = ({ rol }) => {
   const url = '#'
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const router = useRouter()
   // const classes = useStyles()
@@ -97,6 +102,10 @@ const FormLogin = ({ rol }) => {
     }
   }
 
+  const handleClickShowPassword = () => setShowPassword(!showPassword)
+  const handleMouseDownPassword = () => setShowPassword(!showPassword)
+
+
   if (error) {
     return <div className='pass'>Error al obtener los datos. Favor de recargar la página</div>
   }
@@ -124,11 +133,24 @@ const FormLogin = ({ rol }) => {
               placeholder='Ingrese contraseña'
               // falta checar cambio de color de contorno input
               color='secondary'
-              type='password'
               required
               fullWidth
-              className='inputStyle'
+              className='inputStyle mb-3'
               {...register('password')}
+              type={showPassword ? 'text' : 'password'}
+              InputProps={{ // <-- This is where the toggle button is added.
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
             />
             <span id='passwordHelp' className='mb-4 error text-danger'>{errors.password?.message}</span>
             {/*
@@ -144,7 +166,7 @@ const FormLogin = ({ rol }) => {
 
             <Button
               type='submit'
-              className='buttonStyle'
+              className='buttonStyle mb-2'
               variant='contained'
               fullWidth
             >
@@ -156,10 +178,9 @@ const FormLogin = ({ rol }) => {
 
       <div className='remember'>
         <a className='forgetPass' href={url}>Olvidé mi contraseña</a>
-
-        <div className='register'>¿No tienes una cuenta?<a href={url}>¡Registrate!</a></div>
+        <Image src={imageLogin} width='300' height='150' />
+        <div className='register'>¿No tienes una cuenta?<Link href={`${URL_BASE}/Cuenta/RegisterPage`} underline='none'> ¡Registrate!</Link></div>
       </div>
-
     </>
   )
 }

@@ -1,13 +1,11 @@
 import Layout from '../components/Layout'
-import Login from '../components/Login/Login'
 
 export default function Home () {
   return (
     <Layout>
-      {/* <div className='container'>
+      <div className='container'>
         <img src='/icons/inicio.svg' alt='inicio' width={1500} height={1200} />
-      </div> */}
-      <Login />
+      </div>
     </Layout>
 
   )
