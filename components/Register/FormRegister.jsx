@@ -17,11 +17,9 @@ import imageLogin from '../../images/graphLogin.svg'
 import { URL_BASE } from '../../services/config'
 
 // esquema de validaciones de input
-// const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(100, '***Máximo 100 caracteres'),
-  phone: yup.string(), // .min(8, 'El número debe incluir al menos 8 caracteres').required('El campo es requerido').matches(phoneRegExp, 'El número no es valido'),
+  phone: yup.string().min(8, 'El número debe incluir al menos 8 caracteres').required('El campo es requerido'),
   password: yup.string().required('El campo es requerido').matches(
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
     'Debe contener 8 caracteres, 1 Mayuscula, 1 minuscula, 1 número y 1 caracter especial'
@@ -34,15 +32,10 @@ function FormRegister ({ rol }) {
     resolver: yupResolver(schema)
   })
 
-  // se debera elimina al crear las paginas
-  const url = '#'
-
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [telephone, setTelephone] = useState({})
-  const [showPassword, setShowPassword] = useState(false)
 
-  const router = useRouter()
+  const [showPassword, setShowPassword] = useState(false)
 
   const dataLogin = async (data) => {
     let direction = ''
@@ -51,31 +44,9 @@ function FormRegister ({ rol }) {
     if (rol === 'Contador') direction = 'http://localhost:8000/auth/account'
     else direction = 'http://localhost:8000/auth/users'
 
-    // if (localStorage.getItem('user-info')) {
-    //   localStorage.removeItem('user-info')
-    // }
     if (sessionStorage.getItem('token')) {
       sessionStorage.removeItem('token')
     }
-
-    // try {
-    //   const result = await LoginAccount(direction, data)
-    //   const res = await result.json()
-    //   console.log(res.status)
-    //   if (res.status) {
-    //     console.log('se creo el token y se almaceno')
-    //     sessionStorage.setItem('token', JSON.stringify(res.token))
-    //     // localStorage.setItem('user-info', JSON.stringify(res.token))
-    //     setLoading(false)
-    //     router.push('/Login/Login')
-    //   } else {
-    //     setError(true)
-    //     console.log('error en login ')
-    //   }
-    // } catch (err) {
-    //   setError(true)
-    //   console.log(err)
-    // }
   }
 
   const handleClickShowPassword = () => setShowPassword(!showPassword)
@@ -98,30 +69,23 @@ function FormRegister ({ rol }) {
           required
           fullWidth
           className='inputStyle'
-        //   {...register('email')}
+          {...register('email')}
         />
         <div id='emailHelp' className='mb-4 error text-danger'>{errors.email?.message}</div>
 
-        {/* <MuiPhoneNumber
-              regions='america'
-              defaultCountry='mx'
-              color='secondary'
-              label='Número Telefónico'
-              fullWidth
-              {...register('phone')}
-            /> */}
-
+        {/* https://codesandbox.io/s/64024619-how-to-validate-material-ui-phone-number-with-yup-forked-8329m */}
         <Controller
           name='phone'
           control={control}
           defaultValue=''
-          render={({ name, onBlur, onChange, value }) => (
+          render={({ field: { name, onBlur, onChange, value } }) => (
             <MuiPhoneNumber
               name={name}
               value={value}
               onBlur={onBlur}
               onChange={onChange}
               regions='america'
+              color='secondary'
               id='contactPhoneNumber'
               defaultCountry='mx'
               fullWidth
@@ -145,7 +109,7 @@ function FormRegister ({ rol }) {
           className='inputStyle mb-2'
           type={showPassword ? 'text' : 'password'}
           name='password'
-        //   {...register('password')}
+          {...register('password')}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
@@ -163,7 +127,7 @@ function FormRegister ({ rol }) {
         <span id='passwordHelp' className='mb-2 error text-danger'>{errors.password?.message}</span>
 
         <TextField
-          label='Confirme Contraseña'
+          label='ConfirmeContraseña'
           placeholder='Reingrese contraseña'
                   // falta checar cambio de color de contorno input
           color='secondary'
@@ -172,9 +136,9 @@ function FormRegister ({ rol }) {
           fullWidth
           className='inputStyle mb-2'
           name='passwordConfirmation'
-        //   {...register('passwordConfirmation')}
+          {...register('passwordConfirmation')}
         />
-        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.password?.message}</span>
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.passwordConfirmation?.message}</span>
 
         <div className='remember'>
           <Button
@@ -188,7 +152,7 @@ function FormRegister ({ rol }) {
       </form>
 
       <div className='remember'>
-        <a className='forgetPass' href={url}>Olvidé mi contraseña</a>
+        <div><a className='forgetPass' href='#'>Olvidé mi contraseña</a></div>
         <Image src={imageLogin} width='300' height='150' />
         <div className='register'>¿Ya tienes una cuenta?<Link href={`${URL_BASE}/Cuenta/LoginPage`} underline='none'> ¡Inicia sesión!</Link></div>
       </div>
