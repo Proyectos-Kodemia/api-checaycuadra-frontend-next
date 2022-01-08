@@ -1,18 +1,42 @@
 import React, { useState } from 'react'
 
 import { useRouter } from 'next/router'
-
+import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-import { Button, TextField } from '@mui/material'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
-import Favorite from '@mui/icons-material/Favorite'
+import { Button, Link, TextField, InputAdornment, IconButton } from '@mui/material'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-import LoginAccount from './LoginAccount'
+// import FormControlLabel from '@mui/material/FormControlLabel'
+// import Checkbox from '@mui/material/Checkbox'
+// import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
+// import Favorite from '@mui/icons-material/Favorite'
+
+// import { makeStyles } from '@material-ui/core'
+
+import imageLogin from '../../images/graphLogin.svg'
+import { URL_BASE } from '../../services/config'
+
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     display: 'flex',
+//     flexDirection: 'column',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     padding: theme.spacing(2),
+
+//     '& .MuiTextField-root': {
+//       margin: theme.spacing(1),
+//       width: '300px'
+//     },
+//     '& .MuiButtonBase-root': {
+//       margin: theme.spacing(2)
+//     }
+//   }
+// }))
 
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(100, '***Máximo 100 caracteres'),
@@ -35,8 +59,10 @@ const FormLogin = ({ rol }) => {
   const url = '#'
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const router = useRouter()
+  // const classes = useStyles()
 
   // useEffect(() => {
   // if (localStorage.getItem('user-info')) {
@@ -76,6 +102,10 @@ const FormLogin = ({ rol }) => {
     }
   }
 
+  const handleClickShowPassword = () => setShowPassword(!showPassword)
+  const handleMouseDownPassword = () => setShowPassword(!showPassword)
+
+
   if (error) {
     return <div className='pass'>Error al obtener los datos. Favor de recargar la página</div>
   }
@@ -88,8 +118,8 @@ const FormLogin = ({ rol }) => {
         <div className='row'>
           <form className='rounded mt-3 justify-content-center' onSubmit={handleSubmit(dataLogin)}>
             <TextField
-              label='Email'
-              placeholder='Ingrese Email'
+              label='Correo electrónico'
+              placeholder='midirección@mail.com'
               color='secondary'
               required
               fullWidth
@@ -99,20 +129,31 @@ const FormLogin = ({ rol }) => {
             <div id='emailHelp' className='mb-4 error text-danger'>{errors.email?.message}</div>
 
             <TextField
-              label='Password'
-              placeholder='Ingrese Password'
-
+              label='Contraseña'
+              placeholder='Ingrese contraseña'
               // falta checar cambio de color de contorno input
-
               color='secondary'
-              type='password'
               required
               fullWidth
-              className='inputStyle'
+              className='inputStyle mb-3'
               {...register('password')}
+              type={showPassword ? 'text' : 'password'}
+              InputProps={{ // <-- This is where the toggle button is added.
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
             />
             <span id='passwordHelp' className='mb-4 error text-danger'>{errors.password?.message}</span>
-
+            {/*
             <FormControlLabel
               className='inputStyle'
               control={
@@ -121,25 +162,25 @@ const FormLogin = ({ rol }) => {
                   checkedIcon={<Favorite className='heartStyle' />}
                 />
               } label='Recordar Usuario'
-            />
+            /> */}
 
             <Button
               type='submit'
-              className='buttonStyle'
+              className='buttonStyle mb-2'
               variant='contained'
               fullWidth
             >
-              Ingresar
+              Iniciar sesión
             </Button>
           </form>
         </div>
       </div>
 
       <div className='remember'>
-        <a className='pass' href={url}>¿Olvidaste la contraseña?</a>
-        <div className='pass'>¿No tienes cuenta?<a href={url}>Registrate</a></div>
+        <a className='forgetPass' href={url}>Olvidé mi contraseña</a>
+        <Image src={imageLogin} width='300' height='150' />
+        <div className='register'>¿No tienes una cuenta?<Link href={`${URL_BASE}/Cuenta/RegisterPage`} underline='none'> ¡Registrate!</Link></div>
       </div>
-
     </>
   )
 }

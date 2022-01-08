@@ -4,10 +4,16 @@
     text-align:center;
 }
 
-.pass{
-    font-size: 12px;
-    text-decoration: none;
+.forgetPass{
+    font-size: 14px;
     color:$BlueMarine;
+    margin:10px 0 25px 0 ;
+}
+
+.register{
+    font-size: 14px;
+    color:$BlueMarine;
+    margin:10px 0 25px 0;
 }
 
 .error{
@@ -16,19 +22,27 @@
 
 .paperStyle{
     padding: 10px;
-    height: 520px;
-    width: 300px;
+    height: 560px;
+    width: 320px;
     margin: 20px auto;
 }
 
-.avatarStyle{
-    background-color: $GreenPrincipal;
+.styleBox{
+    background-color: $white;
+    color: $GreenPrincipal;
+    border-radius: 10px;    
 }
 
-.styleBox{
-    background-color: $GreenPrincipal;
-    color:$white;
-    border-radius: 10px;
+.activo{
+    background-color: $GreenPrincipal !important;
+    color:$white !important;
+    font-weight: bold !important;
+}
+
+.inactivo{
+    background-color: $white !important;
+    color:$GreenPrincipal !important;
+    font-weight: bold !important;
 }
 
 .heartStyle{
@@ -36,15 +50,21 @@
 }
 
 .inputStyle{
-    padding: 8px 0;
     font-size: 12px;
 }
 
 .buttonStyle{
-    background-color: $GreenPrincipal;
+    background-color: $BlueMarine !important;
     padding: 5px 0;
-    margin:5px 0;
+    margin:5px 0 15px 0;
     &:hover{
-        background-color:lighten($GreenPrincipal, 20%)
+        background-color:lighten($BlueMarine, 10%) !important
     }
+}
+
+.welcome{
+    color: $GreenPrincipal;
+    font-size:18px;
+    font-weight: bold;
+    margin:5px auto 25px auto;
 }

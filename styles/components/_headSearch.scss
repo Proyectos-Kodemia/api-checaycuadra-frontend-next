@@ -1,0 +1,58 @@
+@import '../abstract/variables';
+
+.boxHead{
+    background: linear-gradient(155deg, rgba(0,100,192,0.75) 43%, rgba(10,161,5,1) 98%, rgba(35,136,198,0.85) 100%);
+    border-radius: 20px;
+    width: 80%;
+    height: 300px;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px auto;
+    text-align: center;
+    h1{
+        padding: 10px 0 0 0 ;
+        font-size: 24px;
+    }
+
+    h3{
+        font-size: 16px;
+        margin: 0px auto 0 auto;
+    }
+}
+
+.boxFind{
+    margin: 20px;
+    border-radius: 8px;
+    background: $white;
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+}
+
+.rowSearch{
+    display: flex;
+    flex-direction: row;
+    color:$black;
+}
+
+.textSearch{
+    text-align: left;
+    margin: 10px;
+    div:first-child{
+        font-size: 20px;
+    }
+    div:nth-child(2) {
+        font-size: 12px;
+    }
+}
+
+.buttonEspecialist{
+    // margin: 50px;
+    border:none;
+    background-color:$black; 
+}

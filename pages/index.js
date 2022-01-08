@@ -1,13 +1,15 @@
+import { Link } from '@mui/material'
 import Layout from '../components/Layout'
-import Login from '../components/Login/Login'
+import { URL_BASE } from '../services/config'
 
 export default function Home () {
   return (
     <Layout>
-      {/* <div className='container'>
+      <div className='container'>
         <img src='/icons/inicio.svg' alt='inicio' width={1500} height={1200} />
-      </div> */}
-      <Login />
+      </div>
+      <Link href={`${URL_BASE}/Buscador`} underline='none'><button>Buscar mas especialistas</button></Link>
     </Layout>
+
   )
 }

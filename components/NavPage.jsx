@@ -1,14 +1,21 @@
 import React from 'react'
 import { Nav, Navbar, Container, Button } from 'react-bootstrap'
 import { useRouter } from 'next/router'
+import { URL_BASE } from '../services/config'
 
 function NavPage () {
   const router = useRouter()
 
   const handlerLogin = (e) => {
     e.preventDefault()
-    router.push('../components/Login')
+    router.push(`${URL_BASE}/Cuenta/LoginPage`, '/auth/loginUser')
   }
+
+  const handlerRegister = (e) => {
+    e.preventDefault()
+    router.push(`${URL_BASE}/Cuenta/RegisterPage`, '/auth/registerUser')
+  }
+
   return (
     <Navbar bg='light' expand='lg'>
       <Container>
@@ -24,7 +31,7 @@ function NavPage () {
           </Nav>
         </div>
         <div>
-          <Button type='button' variant='light'>Registrate</Button>{' '}
+          <Button type='button' variant='light' onClick={handlerRegister}>Registrate</Button>{' '}
           <Button type='button' variant='outline-primary' onClick={handlerLogin}>Ingresar</Button>{' '}
         </div>
       </Container>
