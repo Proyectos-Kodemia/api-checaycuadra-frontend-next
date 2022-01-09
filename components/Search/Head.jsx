@@ -6,7 +6,7 @@ import React from 'react'
 
 function Head () {
   return (
-    <div>
+    <>
       <div className='boxHead'>
         <h1>¡ Encuentra a tu contador !</h1>
         <h3>No estás solo, obtén ayuda profesional con un solo clic desde la comodidad de tu hogar</h3>
@@ -14,17 +14,17 @@ function Head () {
           <div>
             <div className='rowSearch'>
               <div>
-                <WorkspacePremiumOutlinedIcon disabled color='action' fontSize='large' />
+                <WorkspacePremiumOutlinedIcon className='icon' disabled color='action' fontSize='large' />
               </div>
               <div className='textSearch'>
                 <div>Especialista en</div>
                 <div>Elige la especialidad que necesitas</div>
-                <TextField />
+                <TextField className='searchEspecialist' />
               </div>
             </div>
             <div className='rowSearch'>
               <div>
-                <BadgeOutlinedIcon disabled color='action' fontSize='large' />
+                <BadgeOutlinedIcon className='icon' disabled color='action' fontSize='large' />
               </div>
               <div className='textSearch'>
                 <div>Nombre del especialista</div>
@@ -39,7 +39,7 @@ function Head () {
         </div>
       </div>
 
-    </div>
+    </>
   )
 }
 
