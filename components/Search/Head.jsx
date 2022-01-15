@@ -2,12 +2,34 @@ import { Search } from '@material-ui/icons'
 import { Button, TextField } from '@mui/material'
 import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOutlined'
 import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined'
-import React from 'react'
+import React, { useEffect } from 'react'
 
-function Head () {
+const endpoint = 'http://localhost:8000/account'
+function Head ({ setResults, users, setUsers, buscar, setBuscar }) {
+  useEffect(() => {
+    fetch(`${endpoint}`).then((res) => {
+      res.json().then((data) => {
+        setUsers(data.payload)
+      })
+    })
+  }, [])
+
+  const searchCounter = (event) => {
+    const direction = `${endpoint}?name=${buscar}`
+    event.preventDefault()
+    fetch(direction).then((res) => {
+      res.json().then((data) => {
+        const val = parseInt(Object.keys(data.payload).length)
+        setUsers(data.payload)
+        setResults(val)
+        setBuscar('')
+      })
+    })
+  }
+
   return (
     <>
-      <div className='boxHead'>
+      <form className='boxHead' onSubmit={searchCounter}>
         <h1>¡ Encuentra a tu contador !</h1>
         <h3>No estás solo, obtén ayuda profesional con un solo clic desde la comodidad de tu hogar</h3>
         <div className='boxFind'>
@@ -29,15 +51,19 @@ function Head () {
               <div className='textSearch'>
                 <div>Nombre del especialista</div>
                 <div>Coloca el nombre de tu contador</div>
-                <TextField />
+                <TextField
+                  type='text'
+                  value={buscar}
+                  onChange={(e) => setBuscar(e.target.value)}
+                />
               </div>
             </div>
           </div>
           <div>
-            <Button startIcon={<Search />} variant='contained' className='buttonEspecialist'>BUSCAR MI ESPECIALISTA</Button>
+            <Button type='submit' startIcon={<Search />} variant='contained' className='buttonEspecialist'>BUSCAR MI ESPECIALISTA</Button>
           </div>
         </div>
-      </div>
+      </form>
 
     </>
   )

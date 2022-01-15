@@ -1,0 +1,17 @@
+@import '../../abstract/variables';
+
+//clases del archivo Search
+.principalBox{
+    margin: auto;    
+}
+
+.textEspecialist{
+    margin-left: 160px;
+}
+
+.cards{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}

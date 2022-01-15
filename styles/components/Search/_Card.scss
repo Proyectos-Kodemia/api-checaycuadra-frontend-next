@@ -1,0 +1,51 @@
+@import '../../abstract/variables';
+
+.containerCard{
+    margin: 25px auto;
+    max-width: 300px;
+    align-items: center;    
+}
+
+.headCard{
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    align-items: center;
+    margin:10px 0;    
+}
+
+.imgCard{
+    width: 100px;
+    height: 70px;
+    border-radius: 10px;
+    margin: 0 10px;
+}
+
+.textHeadCard{
+    margin: auto 10px;
+    :first-child{
+        font-size: 16px;
+    }
+    :nth-child(2){
+        font-size: 12px;
+    }
+}
+
+.textAboutMe{
+    text-align: justify;
+}
+
+.divButton{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonCard{
+    background-color: $BlueMarine;
+    color: $white;
+    width: 80%;
+    &:hover{
+        background-color:lighten($BlueMarine, 10) ;
+    }
+}

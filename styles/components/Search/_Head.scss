@@ -1,4 +1,4 @@
-@import '../abstract/variables';
+@import '../../abstract/variables';
 
 .boxHead{
     background: linear-gradient(155deg, rgba(0,100,192,0.75) 43%, rgba(10,161,5,1) 98%, rgba(35,136,198,0.85) 100%);
@@ -61,7 +61,6 @@
 }
 
 .buttonEspecialist{
-    // margin: 50px;
     border:none;
     background-color:$black !important; 
 }
