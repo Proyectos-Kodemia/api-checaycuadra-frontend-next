@@ -17,18 +17,28 @@
 .imgCard{
     width: 100px;
     height: 70px;
+    margin:0;
     border-radius: 10px;
-    margin: 0 10px;
 }
 
 .textHeadCard{
-    margin: auto 10px;
+    margin:0 10 0 0;
     :first-child{
         font-size: 16px;
     }
     :nth-child(2){
         font-size: 12px;
     }
+}
+
+.icons{
+    margin: auto 10px;
+    font-size:14px;
+}
+
+.textIcons{
+    margin: auto 29px;
+    font-weight: bold;
 }
 
 .textAboutMe{
