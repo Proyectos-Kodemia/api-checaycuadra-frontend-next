@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import MomentUtils from '@date-io/moment' // choose your lib
-import { Box, TextField, Paper, Card } from '@mui/material'
+import { Box } from '@mui/material'
 import moment from 'moment'
 import 'moment/locale/es'
 
@@ -12,6 +12,10 @@ function Schedule ({ children, title = 'Checa y Cuadra' }) {
   const [selectedDate, changeDate] = useState(new Date())
   const [selectedStar, changeStar] = useState(new Date())
   const [selectedEnd, changeEnd] = useState(new Date())
+
+  console.log(selectedDate)
+  console.log(selectedStar)
+  console.log(selectedEnd)
 
   return (
     <>
@@ -35,8 +39,8 @@ function Schedule ({ children, title = 'Checa y Cuadra' }) {
             value={selectedDate}
             onChange={date => changeDate(date)}
             disablePast='true'
-
           />
+
         </MuiPickersUtilsProvider>
       </Box>
       <Box sx={{ p: 2, mx: 'auto', width: 450, fontSize: '3 rem', fontWeight: '700' }}>
