@@ -7,6 +7,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile'
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread'
 import RestoreIcon from '@mui/icons-material/Restore'
 import FormPerfil from './FormPerfil'
+import Schedule from '../AccountPages/Schedule'
 
 // import { makeStyles } from '@material-ui/core/styles'
 
@@ -90,7 +91,7 @@ function LateralBar () {
           <FormPerfil />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Item Two
+          <Schedule />
         </TabPanel>
         <TabPanel value={value} index={2}>
           Item Three
