@@ -9,7 +9,7 @@ import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pi
 import Head from 'next/head'
 
 function Schedule ({ children, title = 'Checa y Cuadra' }) {
-  const [selectedDate, changeDate] = useState(new Date())
+  const [selectedDate, changeDate] = useState(new Date('25-03-2015'))
   const [selectedStar, changeStar] = useState(new Date())
   const [selectedEnd, changeEnd] = useState(new Date())
 

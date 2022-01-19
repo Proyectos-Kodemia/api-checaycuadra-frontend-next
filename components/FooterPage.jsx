@@ -50,13 +50,8 @@ function FooterPage () {
               <div><InstagramIcon /></div>
             </div>
             <div>
-              <p>
-                @ ChecayCuadra 2021. Todos los derechos reservados
-              </p>
-              <br />
-              <p>
-                Politíca de privacidad
-              </p>
+              <p>@ ChecayCuadra 2021. Todos los derechos reservados</p>
+              <p>Politíca de privacidad</p>
             </div>
 
           </div>
