@@ -118,7 +118,7 @@ function FormPerfil () {
         id='tags-filled'
         sx={{ width: '740px', margin: '20px' }}
         options={especialidades.map((option) => option.title)}
-        defaultValue={[especialidades[1].title]}
+        defaultValue={[especialidades[0].title]}
         freeSolo
         renderTags={(value, getTagProps) =>
           value.map((option, index) => (
