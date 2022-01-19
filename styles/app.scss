@@ -6,5 +6,16 @@
 // components
 @import './components/card-counter';
 @import './components/login';
-@import './components/register';
-@import './components/headSearch';
+
+//Register
+@import './components/Register/register';
+@import './components/Register/FormRegister';
+
+//Search
+@import './components/Search/Search';
+@import './components/Search/Head';
+@import './components/Search/Card';
+
+//Perfil
+@import './components/Perfil/lateralBar';
+@import './components/Perfil/FormPerfil';

@@ -1,7 +1,11 @@
-$GreenPrincipal:#113311;
-$LemonGreen:#8fed4d;
-$cyan:#1dcdd9;
-$BlueMarine:#00244c;
-$white:#fff;
-$red:red;
-$primary-blue:#154880;
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif !important;
+    max-width: 2000px;
+    margin:auto;
+}
+
+a {
+    text-decoration: none;
+}

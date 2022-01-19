@@ -10,46 +10,13 @@ import { Button, Link, TextField, InputAdornment, IconButton } from '@mui/materi
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-// import FormControlLabel from '@mui/material/FormControlLabel'
-// import Checkbox from '@mui/material/Checkbox'
-// import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
-// import Favorite from '@mui/icons-material/Favorite'
-
-// import { makeStyles } from '@material-ui/core'
-
 import imageLogin from '../../images/graphLogin.svg'
 import { URL_BASE } from '../../services/config'
-
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     display: 'flex',
-//     flexDirection: 'column',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     padding: theme.spacing(2),
-
-//     '& .MuiTextField-root': {
-//       margin: theme.spacing(1),
-//       width: '300px'
-//     },
-//     '& .MuiButtonBase-root': {
-//       margin: theme.spacing(2)
-//     }
-//   }
-// }))
 
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(100, '***Máximo 100 caracteres'),
   password: yup.string().required('El campo es requerido')
 }).required('El campo es requerido')
-
-// const validarCorreo = (email) => {
-//   const expReg =
-//     /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
-//   const isValid = expReg.test(email)
-//   // isValid ? setEmailValid(false) : setEmailValid(true)
-//   return isValid
-// }
 
 const FormLogin = ({ rol }) => {
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -62,22 +29,13 @@ const FormLogin = ({ rol }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   const router = useRouter()
-  // const classes = useStyles()
-
-  // useEffect(() => {
-  // if (localStorage.getItem('user-info')) {
-  // }
-  // }, [])
 
   const dataLogin = async (data) => {
     let direction = ''
 
     if (rol === 'Contador') direction = 'http://localhost:8000/auth/account'
     else direction = 'http://localhost:8000/auth/users'
-
-    // if (localStorage.getItem('user-info')) {
-    //   localStorage.removeItem('user-info')
-    // }
+    
     if (sessionStorage.getItem('token')) {
       sessionStorage.removeItem('token')
     }
@@ -153,17 +111,6 @@ const FormLogin = ({ rol }) => {
               }}
             />
             <span id='passwordHelp' className='mb-4 error text-danger'>{errors.password?.message}</span>
-            {/*
-            <FormControlLabel
-              className='inputStyle'
-              control={
-                <Checkbox
-                  icon={<FavoriteBorder />}
-                  checkedIcon={<Favorite className='heartStyle' />}
-                />
-              } label='Recordar Usuario'
-            /> */}
-
             <Button
               type='submit'
               className='buttonStyle mb-2'

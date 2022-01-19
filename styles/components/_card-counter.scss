@@ -1,14 +1,14 @@
-@import '../abstract/_base';
+@import '../abstract/variables';
 
 .bootonCard{
-	background-color: $primary-blue;
+	background-color: $BlueMarine;
 	color: white;
 	border-radius: 8px;
 }
 
 .icons{
 	background-color: #5C5C5C;
-	color: $primary-blue;
+	color: $BlueMarine;
 }
 
 .starts{

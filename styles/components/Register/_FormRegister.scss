@@ -1,0 +1,34 @@
+@import '../../abstract/variables';
+
+.inputStyle{
+    font-size: 12px;
+}
+
+.error{
+    font-size: 12px;
+}
+
+.buttonStyle{
+    background-color: $BlueMarine !important;
+    padding: 10px 10px;
+    margin:15px auto;
+    &:hover{
+        background-color:lighten($BlueMarine, 10%) !important
+    }
+}
+
+.remember{
+    text-align:center;
+}
+
+.forgetPass{
+    font-size: 14px;
+    color:$BlueMarine;
+    margin:10px 0 0px 0 ;
+}
+
+.register{
+    font-size: 14px;
+    color:$BlueMarine;
+    margin:10px 0 25px 0;
+}
