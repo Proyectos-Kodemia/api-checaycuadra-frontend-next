@@ -5,9 +5,10 @@ import { useRouter } from 'next/router'
 
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+
 import { Button, Link, TextField, InputAdornment, IconButton } from '@mui/material'
 import MuiPhoneNumber from 'material-ui-phone-number'
-import * as yup from 'yup'
 
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'

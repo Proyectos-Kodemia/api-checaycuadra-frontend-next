@@ -1,0 +1,35 @@
+@import '../../abstract/variables';
+
+.containerPrincipal{
+    display: flex;
+    justify-content:flex-start;
+    align-items: flex-start;
+    margin: 0 auto;
+}
+
+.containerLateralMenu{
+    display: flex;
+    width: 150px;
+    margin: 0 auto;
+}
+
+.tabElement{
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0 16px;
+}
+
+.MuiSvgIcon-root{
+    margin:0;
+}
+
+.containerPages{
+    // width: 540px;
+    margin: 0;
+}
+
+.MuiTabs-indicator{
+    // background:$BlueMarine;
+    background:none;
+}

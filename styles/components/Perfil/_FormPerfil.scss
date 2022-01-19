@@ -1,0 +1,101 @@
+@import '../../abstract/variables';
+
+.containerFormPerfil{
+    width: 70%;
+    margin: 10px auto 80px auto;
+    text-align: center;
+}
+
+.typografyPerfil{
+    font-weight: bold;
+    color:$BlueMarine;
+}
+
+.textFieldsPerfil{
+    margin: 20px 10px;
+}
+
+.textNomAp{
+    input {
+        width: 340px;
+        height: 36px;
+        padding: 15px 12px 0px 12px;
+      }
+}
+
+.textCP{
+    input {
+        width: 120px;
+        height: 36px;
+        padding: 15px 12px 0px 12px;
+      }
+}
+
+.textGrande{
+  input {
+    width: 720px;
+    height: 36px;
+    padding: 15px 12px 0px 12px;
+  }
+}
+
+.textCP .textNomAp .textGrande{
+  label {
+    height: 36px;
+  }
+  
+  label[data-shrink="true"] {
+    top: 0;
+  }
+}
+
+.orderRowFlex{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+  margin:0;
+}
+
+.textPrecio{
+    .MuiInputAdornment-root {
+        padding:20px 0 0 0;
+    }
+}
+
+.uploadFile{
+  margin: 25px 0;
+}
+
+// .textAboutMe{
+//   .MuiInputBase-inputMultiline {
+//     width: 700px;
+//     padding: 25px 12px 0px 12px;
+//   }
+  
+//   label[data-shrink="true"] {
+//     top: 0;
+//   }
+// }
+.textAutocomplete{
+  .MuiAutocomplete-inputRoot {
+    // width: 680px;
+    height: 60px;
+    margin:10px;
+    padding: 12px 12px 0px 12px;
+  }
+
+  label {
+    padding: 5px 0 0 10px ;
+    height: 60px;
+    margin:0 auto;
+  }
+  label[data-shrink="true"] {
+    top: 0;
+  }
+}
+
+.buttonPerfilAccount{
+  width: 180px;
+  font-size: 20px;
+  background-color: $BlueMarine;
+}
