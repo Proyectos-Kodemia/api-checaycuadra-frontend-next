@@ -22,6 +22,7 @@
     "bootstrap": "^5.1.3",
     "lodash": "^4.17.21",
     "material-ui-phone-number": "^3.0.0",
+    "mercadopago": "^1.5.11",
     "moment": "^2.29.1",
     "next": "12.0.7",
     "react": "17.0.2",
