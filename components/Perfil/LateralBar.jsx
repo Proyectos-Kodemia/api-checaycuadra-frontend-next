@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Tabs, Tab } from '@mui/material'
+import { Tabs, Tab, List } from '@mui/material'
 
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import EventIcon from '@mui/icons-material/Event'
@@ -68,7 +68,8 @@ function LateralBar () {
 
   return (
     <div className='containerPrincipal'>
-      <div className='containerLateralMenu'>
+
+      <List>
         <Tabs
           orientation='vertical'
           value={value}
@@ -85,8 +86,10 @@ function LateralBar () {
           <Tab className='tabElement' icon={<MarkChatUnreadIcon />} iconPosition='start' color='primary' label='Chat' {...a11yProps(3)} />
           <Tab className='tabElement' icon={<RestoreIcon />} iconPosition='start' color='primary' label='Historial' {...a11yProps(4)} />
         </Tabs>
-      </div>
-      <div className='containerPages'>
+      </List>
+
+      <List>
+
         <TabPanel value={value} index={0}>
           <FormPerfil />
         </TabPanel>
@@ -108,7 +111,8 @@ function LateralBar () {
         <TabPanel value={value} index={6}>
           Item Seven
         </TabPanel>
-      </div>
+
+      </List>
     </div>
   )
 }
