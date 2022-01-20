@@ -1,9 +1,19 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, CardMedia, CardContent } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
+const endpoint = 'http://localhost:8000/account'
+
 function Appointment () {
+  const [users, setUsers]=useState({})
+  useEffect(() => {
+    fetch(`${endpoint}`).then((res) => {
+      res.json().then((data) => {
+        setUsers(data.payload)
+      })
+    })
+  }, [])
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
