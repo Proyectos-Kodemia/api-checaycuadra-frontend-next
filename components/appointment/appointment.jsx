@@ -6,7 +6,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 const endpoint = 'http://localhost:8000/account'
 
 function Appointment () {
-  const [users, setUsers]=useState({})
+  const [users, setUsers] = useState({})
   useEffect(() => {
     fetch(`${endpoint}`).then((res) => {
       res.json().then((data) => {

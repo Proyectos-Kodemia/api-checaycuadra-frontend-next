@@ -1,4 +1,4 @@
-@import '../abstract/_base';
+@import '../../abstract/variables';
 
 .remember{
     text-align:center;
@@ -20,19 +20,6 @@
     font-size: 12px;
 }
 
-.paperStyle{
-    padding: 10px;
-    height: 560px;
-    width: 320px;
-    margin: 20px auto;
-}
-
-.styleBox{
-    background-color: $white;
-    color: $GreenPrincipal;
-    border-radius: 10px;    
-}
-
 .activo{
     background-color: $GreenPrincipal !important;
     color:$white !important;
@@ -43,14 +30,6 @@
     background-color: $white !important;
     color:$GreenPrincipal !important;
     font-weight: bold !important;
-}
-
-.heartStyle{
-    color:$red;
-}
-
-.inputStyle{
-    font-size: 12px;
 }
 
 .buttonStyle{
@@ -64,7 +43,7 @@
 
 .welcome{
     color: $GreenPrincipal;
-    font-size:18px;
+    font-size:16px;
     font-weight: bold;
     margin:5px auto 25px auto;
 }

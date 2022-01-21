@@ -27,21 +27,22 @@ const Login = () => {
 
   return (
     <Grid>
-      <Paper elevation={12} className='paperStyle'>
+      <Paper
+        elevation={12} sx={{ p: 3, h: 560, width: 320, my: 10 }}
+      >
         <Grid align='center'>
           <div className='welcome'>¡Bienvenido! Accede a tu cuenta</div>
         </Grid>
-        <Box>
+        <Box sx={{ mx: 'auto' }}>
           <Tabs
-            className='styleBox'
+            sx={{ bgcolor: '#fff', color: '#00244C' }}
             value={value}
             onChange={handleChange}
             TabIndicatorProps={styleTabs}
             textColor='inherit'
-            variant='fullWidth'
           >
-            <Tab label='Usuario' className={`${!value ? 'activo' : 'inactivo'}`} />
-            <Tab label='Contador' className={`${value ? 'activo' : 'inactivo'}`} />
+            <Tab sx={{ borderRadius: 1, width: 120 }} label='Usuario' className={`${!value ? 'activo' : 'inactivo'}`} />
+            <Tab sx={{ borderRadius: 1, width: 120 }} label='Contador' className={`${value ? 'activo' : 'inactivo'}`} />
           </Tabs>
           <TabPanel value={value} index={0}>
             <FormLogin rol='Usuario' />

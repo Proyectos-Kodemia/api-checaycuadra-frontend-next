@@ -69,7 +69,7 @@ function FormRegister ({ rol }) {
           color='secondary'
           required
           fullWidth
-          className='inputStyle'
+          sx={{ fontSize: ' 12px' }}
           {...register('email')}
         />
         <div id='emailHelp' className='mb-4 error text-danger'>{errors.email?.message}</div>
@@ -103,11 +103,10 @@ function FormRegister ({ rol }) {
         <TextField
           label='Contraseña'
           placeholder='Ingrese contraseña'
-                  // falta checar cambio de color de contorno input
           color='secondary'
           required
           fullWidth
-          className='inputStyle mb-2'
+          sx={{ fontSize: ' 12px', mb: 2 }}
           type={showPassword ? 'text' : 'password'}
           name='password'
           {...register('password')}
@@ -135,7 +134,7 @@ function FormRegister ({ rol }) {
           type='password'
           required
           fullWidth
-          className='inputStyle mb-2'
+          sx={{ fontSize: ' 12px', mb: 2 }}
           name='passwordConfirmation'
           {...register('passwordConfirmation')}
         />
@@ -145,6 +144,7 @@ function FormRegister ({ rol }) {
           <Button
             type='submit'
             className='buttonStyle'
+            sx={{ px: 2, py: 1, my: 1, mx: 'auto' }}
             variant='contained'
           >
             ¡ Registrarme !

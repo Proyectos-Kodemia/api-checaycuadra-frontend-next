@@ -10,7 +10,7 @@ export default function Home () {
         <img src='/icons/inicio.svg' alt='inicio' width={1500} height={1200} />
       </div>
       <Link href={`${URL_BASE}/Perfil/Perfil`}><a>perfil contador</a></Link>
-      <Link href={`${URL_BASE}/Buscador`} underline='none'><button>Buscar mas especialistas</button></Link>
+      <Link href={`${URL_BASE}/principal/Buscador`} underline='none'><button>Buscar mas especialistas</button></Link>
     </Layout>
 
   )

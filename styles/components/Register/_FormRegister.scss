@@ -1,17 +1,11 @@
 @import '../../abstract/variables';
 
-.inputStyle{
-    font-size: 12px;
-}
-
 .error{
     font-size: 12px;
 }
 
 .buttonStyle{
     background-color: $BlueMarine !important;
-    padding: 10px 10px;
-    margin:15px auto;
     &:hover{
         background-color:lighten($BlueMarine, 10%) !important
     }

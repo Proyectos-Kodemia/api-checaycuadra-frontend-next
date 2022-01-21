@@ -1,9 +1,10 @@
 import React from 'react'
-import { TextField, Typography, InputAdornment, Button, styled, Autocomplete, Chip } from '@mui/material'
+import { Box, TextField, Typography, InputAdornment, Button, styled, Autocomplete, Chip, Grid } from '@mui/material'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
+import styles from './FormPerfil.module.scss'
 
 const schema = yup.object({
   nombre: yup.string().max(80, '***Máximo 80 caracteres'),
@@ -28,141 +29,181 @@ function FormPerfil () {
   }
 
   return (
-    <form className='containerFormPerfil' onSubmit={handleSubmit(dataFormPerfil)}>
-      <span id='passwordHelp' className='mb-2 error text-danger'>{errors.nombre?.message}</span>
-      <Typography className='typografyPerfil' align='center' variant='h4' component='div'>Perfil</Typography>
-      <TextField
-        label='Nombre'
-        color='secondary'
-        variant='filled'
-        className='textFieldsPerfil textNomAp'
-        {...register('nombre')}
-      />
+    <form className={`${styles.containerFormPerfil}`} onSubmit={handleSubmit(dataFormPerfil)}>
+      <div>
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.nombre?.message}</span>
+        <Typography sx={{ fontWeight: 'bold', color: '#00244C' }} align='center' variant='h4' component='div'>Perfil</Typography>
+      </div>
 
-      <TextField
-        label='Apellidos'
-        color='secondary'
-        variant='filled'
-        className='textFieldsPerfil textNomAp'
-        {...register('apellidos')}
-      />
+      <Box sx={{ width: '60%', flexGrow: 1 }}>
+        <Grid container spacing={2} justifyContent='center' alignItems='center'>
+          <Grid item xs={3} sm={5} md={5}>
+            <TextField
+              label='Nombre'
+              color='secondary'
+              variant='filled'
+              fullWidth
+              // sx={{ m: 2 }}
+              {...register('nombre')}
+            />
+          </Grid>
 
-      <span className='orderRowFlex'>
-        <TextField
-          label='Estado'
-          color='secondary'
-          variant='filled'
-          className='textFieldsPerfil'
-          {...register('estado')}
-        />
+          <Grid item xs={3} sm={5} md={5}>
+            <TextField
+              label='Apellidos'
+              color='secondary'
+              variant='filled'
+              fullWidth
+              // sx={{ m: 2 }}
+              {...register('apellidos')}
+            />
+          </Grid>
 
-        <TextField
-          label='Delegación o Municipio'
-          color='secondary'
-          variant='filled'
-          className='textFieldsPerfil'
-          {...register('municipio')}
-        />
+          <Grid item xs={2} sm={4} md={4}>
+            <TextField
+              label='Estado'
+              color='secondary'
+              variant='filled'
+              fullWidth
+              {...register('estado')}
+            />
+          </Grid>
 
-        <TextField
-          label='Código Postal'
-          color='secondary'
-          variant='filled'
-          inputProps={{ maxLength: 5 }}
-          onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') }}
-          className='textFieldsPerfil textCP'
-          {...register('cp')}
-        />
-      </span>
+          <Grid item xs={2} sm={4} md={4}>
+            <TextField
+              label='Delegación o Municipio'
+              color='secondary'
+              variant='filled'
+              fullWidth
+              {...register('municipio')}
+            />
+          </Grid>
 
-      <span className='orderRowFlex'>
-        <TextField
-          label='Precio Hora'
-          placeholder='Precio Honorarios'
-          color='secondary'
-          variant='filled'
-          className='textFieldsPerfil textPrecio'
-          InputProps={{ startAdornment: <InputAdornment position='start'>$</InputAdornment> }}
-          inputProps={{ maxLength: 5 }}
-          onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') }}
-          {...register('precio')}
-        />
+          <Grid item xs={2} sm={4} md={4}>
+            <TextField
+              label='Código Postal'
+              color='secondary'
+              variant='filled'
+              fullWidth
+              inputProps={{ maxLength: 5 }}
+              onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') }}
+              {...register('cp')}
+            />
+          </Grid>
 
-        <TextField
-          label='Cédula'
-          placeholder='Cédula Profesional'
-          color='secondary'
-          variant='filled'
-          className='textFieldsPerfil'
-          {...register('cedula')}
-        />
+          <Grid item xs={2} sm={4} md={4}>
+            <TextField
+              label='Precio Hora'
+              placeholder='Precio Honorarios'
+              color='secondary'
+              variant='filled'
+              fullWidth
+              sx={{
+                width: '230px',
+                label: { width: '100px', mt: 0 }
+              }}
+              InputProps={{ startAdornment: <InputAdornment sx={{ my: 0 }} position='start'>$</InputAdornment> }}
+              inputProps={{ maxLength: 5 }}
+              onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') }}
+              {...register('precio')}
+            />
+          </Grid>
 
-        <label htmlFor='contained-button-file' className='uploadFile'>
-          <Input accept='image/*' id='contained-button-file' multiple type='file' {...register('fotoPerfil')} />
-          <Button variant='text' component='span' endIcon={<AttachFileIcon />}>
-            Adjunta tu Foto
-          </Button>
-        </label>
-      </span>
+          <Grid item xs={2} sm={4} md={4}>
+            <TextField
+              label='Cédula'
+              placeholder='Cédula Profesional'
+              color='secondary'
+              variant='filled'
+              fullWidth
+              sx={{ my: 2 }}
+              {...register('cedula')}
+            />
+          </Grid>
 
-      <TextField
-        label='Formación Académica'
-        color='secondary'
-        variant='filled'
-        className='textFieldsPerfil textGrande'
-        {...register('formacion')}
-      />
+          <Grid item xs={2} sm={4} md={4}>
+            <label htmlFor='contained-button-file' className={`${styles.uploadFile}`}>
+              <Input accept='image/*' id='contained-button-file' multiple type='file' {...register('fotoPerfil')} />
+              <Button variant='text' component='span' endIcon={<AttachFileIcon />}>
+                Adjunta tu Foto
+              </Button>
+            </label>
+          </Grid>
 
-      <Autocomplete
-        multiple
-        id='tags-filled'
-        sx={{ width: '740px', margin: '20px' }}
-        options={especialidades.map((option) => option.title)}
-        defaultValue={[especialidades[0].title]}
-        freeSolo
-        renderTags={(value, getTagProps) =>
-          value.map((option, index) => (
-            <Chip key={index} variant='outlined' label={option} {...getTagProps({ index })} />
-          ))}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label='Especialidades'
-            color='secondary'
-            variant='filled'
-            className='textFieldsPerfil textAutocomplete'
-            {...register('especialidades')}
-          />
-        )}
-      />
+          <Grid item xs={6} sm={12} md={12}>
+            <TextField
+              label='Formación Académica'
+              fullWidth
+              sx={{ my: 2 }}
+              color='secondary'
+              variant='filled'
+              {...register('formacion')}
+            />
+          </Grid>
 
-      <TextField
-        label='Servicios Profesionales'
-        color='secondary'
-        variant='filled'
-        className='textFieldsPerfil textGrande'
-        {...register('servicios')}
-      />
+          <Grid item xs={6} sm={12} md={12}>
+            <Autocomplete
+              multiple
+              id='tags-filled'
+              options={especialidades.map((option) => option.title)}
+              defaultValue={[especialidades[0].title]}
+              freeSolo
+              fullWidth
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip key={index} variant='outlined' label={option} {...getTagProps({ index })} />
+                ))}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label='Especialidades'
+                  color='secondary'
+                  variant='filled'
+                  fullWidth
+                  sx={{ my: 1 }}
+                  {...register('especialidades')}
+                />
+              )}
+            />
+          </Grid>
 
-      <TextField
-        label='Acerca de Mí'
-        color='secondary'
-        inputProps={{ maxLength: 450 }}
-        multiline
-        fullWidth
-        rows={4}
-        variant='filled'
-        className='textFieldsPerfil textAboutMe'
-        {...register('acercade')}
-      />
+          <Grid item xs={6} sm={12} md={12}>
+            <TextField
+              label='Servicios Profesionales'
+              color='secondary'
+              variant='filled'
+              sx={{ my: 1 }}
+              fullWidth
+              {...register('servicios')}
+            />
+          </Grid>
 
-      <Button
-        className='buttonPerfilAccount'
-        variant='contained'
-        type='submit'
-        fullWidth
-      >Guardar
-      </Button>
+          <Grid item xs={6} sm={12} md={12}>
+            <TextField
+              label='Acerca de Mí'
+              color='secondary'
+              inputProps={{ maxLength: 450 }}
+              multiline
+              fullWidth
+              rows={4}
+              variant='filled'
+              sx={{ my: 1 }}
+              // className='textFieldsPerfil textAboutMe'
+              {...register('acercade')}
+            />
+          </Grid>
+
+          <Grid item xs={3} sm={5} md={5}>
+            <Button
+              className='buttonPerfilAccount'
+              variant='contained'
+              type='submit'
+              fullWidth
+            >Guardar
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
     </form>
   )
 }

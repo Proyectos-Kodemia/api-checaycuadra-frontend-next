@@ -8,18 +8,14 @@ import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pi
 
 import Head from 'next/head'
 
-function Schedule ({ children, title = 'Checa y Cuadra' }) {
+function Schedule () {
   const [selectedDate, changeDate] = useState(new Date('25-03-2015'))
   const [selectedStar, changeStar] = useState(new Date())
   const [selectedEnd, changeEnd] = useState(new Date())
 
-  console.log(selectedDate)
-  console.log(selectedStar)
-  console.log(selectedEnd)
-
   return (
-    <>
-      <Box className='calendar'>
+    <div style={{ flexGrow: 1 }}>
+      <Box sx={{ p: 2, mx: 'auto', width: 450, fontSize: '3 rem', fontWeight: '700' }}>
         1. Selecciona el dia
         <br /><br />
         <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
@@ -35,7 +31,7 @@ function Schedule ({ children, title = 'Checa y Cuadra' }) {
 
         </MuiPickersUtilsProvider>
       </Box>
-      <Box className='calendar'>
+      <Box sx={{ textAling: 'center', p: 2, mx: 'auto', width: 150, fontSize: '3 rem', fontWeight: '700' }}>
         2. Selecciona el horario
       </Box>
       <Box sclassName='calendar'>
@@ -66,12 +62,12 @@ function Schedule ({ children, title = 'Checa y Cuadra' }) {
           </div>
         </Box>
       </Box>
-      <Box className='calendar'>
+      <Box sx={{ p: 2, mx: 'auto', width: 450, fontSize: '3 rem', fontWeight: '700' }}>
         3. Confirma el horario
       </Box>
-      <Box className='calendar' />
+      <Box sx={{ p: 2, mx: 'auto', width: 200, fontSize: '3 rem', fontWeight: '700' }} />
 
-    </>
+    </div>
   )
 }
 

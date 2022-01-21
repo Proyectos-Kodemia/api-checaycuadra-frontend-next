@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Tabs, Tab, List } from '@mui/material'
+import { Tabs, Tab, List, Box } from '@mui/material'
 
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import EventIcon from '@mui/icons-material/Event'
@@ -8,30 +8,8 @@ import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread'
 import RestoreIcon from '@mui/icons-material/Restore'
 import FormPerfil from './FormPerfil'
 import Schedule from '../AccountPages/Schedule'
-
-// import { makeStyles } from '@material-ui/core/styles'
-
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     flexGrow: 1,
-//     backgroundColor: theme.palette.background.paper,
-//     display: 'block',
-//     height: 400
-//   },
-//   tabs: {
-//     borderRight: `1px solid ${theme.palette.divider}`
-//     width: 100
-//   },
-//   flexContainerVertical: {
-//     display: 'flex',
-//     alignItems: 'center'
-//   },
-//   flexOuter: {
-//     display: 'flex',
-//     flexDirection: 'row',
-//     width: '100%'
-//   }
-// }))
+import Calendario from '../AccountPages/Calendario'
+import styles from './LateralBar.module.scss'
 
 function TabPanel (props) {
   const { children, value, index, ...other } = props
@@ -45,7 +23,7 @@ function TabPanel (props) {
       {...other}
     >
       {value === index && (
-        <>{children}</>
+        <Box sx={{ p: 3 }}>{children}</Box>
       )}
     </div>
   )
@@ -60,14 +38,13 @@ function a11yProps (index) {
 
 function LateralBar () {
   const [value, setValue] = useState(0)
-  //   const classes = useStyles()
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
 
   return (
-    <div className='containerPrincipal'>
+    <div className={`${styles.containerPrincipal}`}>
 
       <List>
         <Tabs
@@ -80,24 +57,27 @@ function LateralBar () {
           selectionFollowsFocus
           sx={{ borderRight: 2, borderColor: 'divider' }}
         >
-          <Tab className='tabElement' icon={<ManageAccountsIcon />} iconPosition='start' color='primary' label='Mi perfil' {...a11yProps(0)} />
-          <Tab className='tabElement' icon={<EventIcon />} iconPosition='start' color='primary' label='Calendario' {...a11yProps(1)} />
-          <Tab className='tabElement' icon={<AttachFileIcon />} iconPosition='start' color='primary' label='Archivos' {...a11yProps(2)} />
-          <Tab className='tabElement' icon={<MarkChatUnreadIcon />} iconPosition='start' color='primary' label='Chat' {...a11yProps(3)} />
-          <Tab className='tabElement' icon={<RestoreIcon />} iconPosition='start' color='primary' label='Historial' {...a11yProps(4)} />
+          <Tab
+            sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }}
+            icon={<ManageAccountsIcon />} iconPosition='start' color='primary' label='Mi perfil' {...a11yProps(0)}
+          />
+          <Tab sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }} icon={<EventIcon />} iconPosition='start' color='primary' label='Calendario' {...a11yProps(1)} />
+          <Tab sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }} icon={<AttachFileIcon />} iconPosition='start' color='primary' label='Archivos' {...a11yProps(2)} />
+          <Tab sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }} icon={<MarkChatUnreadIcon />} iconPosition='start' color='primary' label='Chat' {...a11yProps(3)} />
+          <Tab sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }} icon={<RestoreIcon />} iconPosition='start' color='primary' label='Historial' {...a11yProps(4)} />
         </Tabs>
       </List>
 
       <List>
-
         <TabPanel value={value} index={0}>
           <FormPerfil />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Schedule />
+          {/* <Schedule /> */}
+          <Calendario />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Item Three
+          Item Four
         </TabPanel>
         <TabPanel value={value} index={3}>
           Item Four
