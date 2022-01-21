@@ -2,16 +2,6 @@ import * as React from 'react'
 import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, CardMedia, CardContent } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-// import MercadoPago from 'mercadopago'
-
-// SDK MercadoPago.js V2
-/* <script src="https://sdk.mercadopago.com/js/v2"></script> */
-
-console.log(process.env.MERCADOPAGO_PUBLIC_KEY)
-
-// const mercadopago = new MercadoPago(process.env.MERCADOPAGO_PUBLIC_KEY, {
-//   locale: 'es-MX'  // The most common are: 'pt-BR', 'es-AR' and 'en-US'
-// });
 
 
 const endpoint = 'http://localhost:8000/mercadopago/checkout'
@@ -58,12 +48,6 @@ function Appointment () {
   }
 
 
-    // fetch(`${endpoint}`, servicio).then((res) => {
-    //   res.json().then((data) => {
-    //     console.log(data)
-    //   })
-    // })
-  
     
       
 
@@ -155,3 +139,8 @@ function Appointment () {
   )
 }
 export default Appointment
+
+
+/*
+http://localhost:4000/mercadopago/success?collection_id=1245561890&collection_status=approved&payment_id=1245561890&status=approved&external_reference=null&payment_type=credit_card&merchant_order_id=4003030641&preference_id=1059347414-9d0161c7-480f-436a-9cf5-0c7ee7455ac6&site_id=MLM&processing_mode=aggregator&merchant_account_id=null
+*/

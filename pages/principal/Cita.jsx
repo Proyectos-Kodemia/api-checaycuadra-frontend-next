@@ -3,8 +3,37 @@ import Head from 'next/head'
 import FooterPage from '../../components/FooterPage'
 import NavPage from '../../components/NavPage'
 import Appointment from '../../components/appointment/appointment'
+import { useRouter } from "next/router";
+// Import material component (toast)
+// Opcion crear componente de toast para reausarlo
 
 function Cita ({ children, title = 'Checa y Cuadra' }) {
+
+  // useEffect(() => {
+    // const statusPayment = router.query.collection_status    
+    //   //codigo correo solo al cargar la pagina por primera vez 
+    // statusPayment ? console.log("si") : console.log("no")   
+  // }, []);
+
+  // // local states (toast)
+  // const [successToast, setSuccesToast] = useState(False);
+  // const [failToast, setFailToast] = useState(False);
+  // const [pendentToast, setPendentToast] = useState(False);
+
+  // comments
+  const router = useRouter();
+
+
+//   // // if (statusPayment == 'approved')  {
+  // //   // deploy succes toast
+  // //   setSuccesToast(True);
+  // }
+  // buscar lo del set time out
+
+  // Construir el post para mandar el pago al back
+
+  // Enviar en el post el token de JWT
+
   return (
     <>
       <Head>
