@@ -2,13 +2,16 @@ import * as React from 'react'
 import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, CardMedia, CardContent } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+// import MercadoPago from 'mercadopago'
 
 // SDK MercadoPago.js V2
-<script src="https://sdk.mercadopago.com/js/v2"></script>
+/* <script src="https://sdk.mercadopago.com/js/v2"></script> */
 
-const mercadopago = new MercadoPago(process.env.MERCADOPAGO_PUBLIC_KEY, {
-  locale: es-MX // The most common are: 'pt-BR', 'es-AR' and 'en-US'
-});
+console.log(process.env.MERCADOPAGO_PUBLIC_KEY)
+
+// const mercadopago = new MercadoPago(process.env.MERCADOPAGO_PUBLIC_KEY, {
+//   locale: 'es-MX'  // The most common are: 'pt-BR', 'es-AR' and 'en-US'
+// });
 
 
 const endpoint = 'http://localhost:8000/mercadopago/checkout'
@@ -20,17 +23,17 @@ const servicio = {
 }
 
 
-
+    
+    // mode: 'no-cors'
 
 async function LoginAccount (url, credentials) {
   console.log("entrando a la funcion")
   const options = {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(credentials),
-    // mode: 'cors'
+    body: JSON.stringify(credentials)
   }
   // return fetch(url, options)
   const response = await fetch(url, options)
@@ -46,7 +49,7 @@ function Appointment () {
     e.preventDefault()
       LoginAccount(endpoint,servicio)
       .then(data =>{
-        console.log(data)
+        location.href = data
         })
       .catch(error =>{
         console.log(error)
