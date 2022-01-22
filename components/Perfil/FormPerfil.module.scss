@@ -1,15 +1,12 @@
 @import '../../styles/abstract/variables';
 
-
-.containerFormPerfil{
-    
+.containerFormPerfil{    
     margin: 10px auto 80px auto;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-
 }
 
 .gridContainer{
@@ -86,10 +83,4 @@
   label[data-shrink="true"] {
     top: 0;
   }
-}
-
-.buttonPerfilAccount{
-  width: 180px;
-  font-size: 20px;
-  background-color: $BlueMarine;
 }

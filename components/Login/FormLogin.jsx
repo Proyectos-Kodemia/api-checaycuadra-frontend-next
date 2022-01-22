@@ -14,7 +14,7 @@ import imageLogin from '../../images/graphLogin.svg'
 import { URL_BASE } from '../../services/config'
 
 const schema = yup.object({
-  email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(100, '***Máximo 100 caracteres'),
+  email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres'),
   password: yup.string().required('El campo es requerido')
 }).required('El campo es requerido')
 

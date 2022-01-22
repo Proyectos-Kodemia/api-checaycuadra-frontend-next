@@ -195,7 +195,7 @@ function FormPerfil () {
 
           <Grid item xs={3} sm={5} md={5}>
             <Button
-              className='buttonPerfilAccount'
+              sx={{ width: '180px', fontSize: '20px', bgcolor: '#00244C', '& hover': { bgcolor: '#00244C' } }}
               variant='contained'
               type='submit'
               fullWidth

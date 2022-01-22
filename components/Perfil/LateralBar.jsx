@@ -7,6 +7,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile'
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread'
 import RestoreIcon from '@mui/icons-material/Restore'
 import FormPerfil from './FormPerfil'
+import FormUser from './FormUser'
 import Schedule from '../AccountPages/Schedule'
 import Calendario from '../AccountPages/Calendario'
 import styles from './LateralBar.module.scss'
@@ -69,26 +70,26 @@ function LateralBar () {
       </List>
 
       <List>
-        <TabPanel value={value} index={0}>
+        <TabPanel sx={{ flexGrow: 1 }} value={value} index={0}>
           <FormPerfil />
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel sx={{ flexGrow: 1 }} value={value} index={1}>
           {/* <Schedule /> */}
+          <FormUser />
+        </TabPanel>
+        <TabPanel sx={{ flexGrow: 1 }} value={value} index={2}>
           <Calendario />
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel sx={{ flexGrow: 1 }} value={value} index={3}>
           Item Four
         </TabPanel>
-        <TabPanel value={value} index={3}>
-          Item Four
-        </TabPanel>
-        <TabPanel value={value} index={4}>
+        <TabPanel sx={{ flexGrow: 1 }} value={value} index={4}>
           Item Five
         </TabPanel>
-        <TabPanel value={value} index={5}>
+        <TabPanel sx={{ flexGrow: 1 }} value={value} index={5}>
           Item Six
         </TabPanel>
-        <TabPanel value={value} index={6}>
+        <TabPanel sx={{ flexGrow: 1 }} value={value} index={6}>
           Item Seven
         </TabPanel>
 
