@@ -11,24 +11,26 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function CustomizedSnackbars({statusPayment}) {
 
   const severityOptions = (statusPayment)=>{
+    let result =""
     switch (statusPayment) {
       case "approved":
         result = "success"
         break
       case "failure":
-        result =  "error"
+        result = "error"
         break
       case "pending":
         result = "warning"
         break
       default:
         result ="warning"
-  
+        break
     }
     return result
   }
   
   const messageOptions = (statusPayment)=>{
+    let result =""
     switch (statusPayment) {
       case "approved":
         result = "Pago realizado exitosamente"
@@ -41,22 +43,23 @@ export default function CustomizedSnackbars({statusPayment}) {
         break
       default:
         result ="Pago no realizado, intente de nuevo"
+        break
     }
     return result
   }
 
 
-
+  let severity = severityOptions(statusPayment)
+  let message = messageOptions(statusPayment)
 
   const [open, setOpen] = React.useState(false);
 
 
   // 
   const handleOpen = (event, statusPayment) => {
-    setOpen(true)
-    let severity = severityOptions(statusPayment)
-    let message = messageOptions(statusPayment)
-  };
+    statusPayment? setOpen(true) : setOpen(false)
+    
+  }
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -69,9 +72,9 @@ export default function CustomizedSnackbars({statusPayment}) {
   return (
   
       <Snackbar
-        value={open}
-        onChange ={e => setOpen(e.target.value)}
-        open={open} 
+        // value={open}
+        // onChange ={e => setOpen(e.target.value)}
+        open={handleOpen} 
         autoHideDuration={6000} 
         onClose={handleClose}>
         <Alert onClose={handleClose} 

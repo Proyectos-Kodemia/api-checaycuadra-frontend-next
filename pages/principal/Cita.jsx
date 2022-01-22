@@ -16,7 +16,9 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
     
 
   useEffect(() => {
-        statusPayment ? console.log("si") : console.log("no")   
+        if(statusPayment){
+          // post
+        } 
   }, []);
 
 
@@ -54,7 +56,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       <NavPage />
       {children}
       <Appointment />
-       <Snackbar{statusPayment} /> 
+       <Snackbar statusPayment={statusPayment}/> 
       <FooterPage />
     </>
   )
