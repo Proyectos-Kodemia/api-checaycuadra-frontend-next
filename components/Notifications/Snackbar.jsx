@@ -73,7 +73,7 @@ export default function CustomizedSnackbars({statusPayment}) {
   
       <Snackbar
         // value={open}
-        // onChange ={e => setOpen(e.target.value)}
+        // onChange ={handleOpen}
         open={handleOpen} 
         autoHideDuration={6000} 
         onClose={handleClose}>

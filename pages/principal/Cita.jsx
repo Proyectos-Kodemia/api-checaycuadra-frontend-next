@@ -11,22 +11,67 @@ import Snackbar from '../../components/Notifications/Snackbar'
 function Cita ({ children, title = 'Checa y Cuadra' }) {
     const router = useRouter();  
     const statusPayment = router.query.collection_status
-    console.log(statusPayment)    
-    
-    
+    console.log(statusPayment)
 
-  useEffect(() => {
+     // const token = localStorage.getItem('datauser')
+
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWVjM2I4NjYyZDQ0NzBlMzZmYjAwNDUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTY0Mjg3MTcwMX0.o03cOXtbt1svKO3BhwotZ1OEl-SaHH_mbRAydzL4gS0"
+      const endpoint = 'http://localhost:8000/metting'
         if(statusPayment){
-          // post
-        } 
-  }, []);
+            const data = {
+              userAccount:"61dfb63142eee3cf8d16de99",
+              starDate:"2022-01-16T21:30",
+              endDateTime:"2022-01-16T22:30",
+              title:"consultoria",
+              unit_price:"1000",
+              quantity:"1",
+              statusPayment: statusPayment  
+            }
+            // post
+            const options = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'token': token
+              },
+              body: JSON.stringify(data)
+            }
+            const response = fetch(endpoint, options)
+          }
+
+
+    // useEffect((statusPayment) => {
+      
+    //   const statusPayment = statusPayment
+    //   console.log(statusPayment)
+    //   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWVjM2I4NjYyZDQ0NzBlMzZmYjAwNDUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTY0Mjg3MTcwMX0.o03cOXtbt1svKO3BhwotZ1OEl-SaHH_mbRAydzL4gS0"
+    //   const endpoint = 'http://localhost:8000/mercadopago/checkout'
+    //     if(statusPayment){
+    //         const data = {
+    //           userAccount:"61dfb63142eee3cf8d16de99",
+    //           starDate:"2022-01-16T21:30",
+    //           endDateTime:"2022-01-16T22:30",
+    //           service:"consultoria",
+    //           total:"1000",
+    //           statusPayment: statusPayment  
+    //         }
+    //         // post
+    //         const options = {
+    //           method: 'POST',
+    //           headers: {
+    //             'Content-Type': 'application/json',
+    //             'token': token
+    //           },
+    //           body: JSON.stringify(data)
+    //         }
+    //         const response = fetch(endpoint, options)
+    //         return response.json()
+    //       }
+    //     },[])  
 
 
   // Probar flujo completo con la autenticacion del usuario
-  const token = "sdfadfasdfasdf"
-  // const token = localStorage.getItem('datauser')
-  console.log(token)
-
+ 
   // // local states (toast)
   // const [successToast, setSuccesToast] = useState(False);
   // const [failToast, setFailToast] = useState(False);
