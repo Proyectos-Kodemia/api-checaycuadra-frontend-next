@@ -1,27 +1,37 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 import FooterPage from '../../components/FooterPage'
 import NavPage from '../../components/NavPage'
 import Appointment from '../../components/appointment/appointment'
 import { useRouter } from "next/router";
+import Snackbar from '../../components/Notifications/Snackbar'
 // Import material component (toast)
 // Opcion crear componente de toast para reausarlo
 
 function Cita ({ children, title = 'Checa y Cuadra' }) {
+    const router = useRouter();  
+    const statusPayment = router.query.collection_status
+    console.log(statusPayment)    
+    
+    
 
-  // useEffect(() => {
-    // const statusPayment = router.query.collection_status    
-    //   //codigo correo solo al cargar la pagina por primera vez 
-    // statusPayment ? console.log("si") : console.log("no")   
-  // }, []);
+  useEffect(() => {
+        statusPayment ? console.log("si") : console.log("no")   
+  }, []);
+
+
+  // Probar flujo completo con la autenticacion del usuario
+  const token = "sdfadfasdfasdf"
+  // const token = localStorage.getItem('datauser')
+  console.log(token)
 
   // // local states (toast)
   // const [successToast, setSuccesToast] = useState(False);
   // const [failToast, setFailToast] = useState(False);
-  // const [pendentToast, setPendentToast] = useState(False);
+  // const [pendeningtToast, setPendeningtToast] = useState(False);
 
   // comments
-  const router = useRouter();
+  
 
 
 //   // // if (statusPayment == 'approved')  {
@@ -44,6 +54,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       <NavPage />
       {children}
       <Appointment />
+       <Snackbar{statusPayment} /> 
       <FooterPage />
     </>
   )
