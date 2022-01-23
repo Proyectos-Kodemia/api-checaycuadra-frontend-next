@@ -76,16 +76,27 @@ function Appointment () {
           Elije tu horario y agenda tu cita
         </Typography>
       </Box>
+      <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
+        <Button
+          href='../../pages/Cuenta/RegisterPage.js'
+          variant='contained'
+          disableElevation
+          size='large'
+          marginrigth='0'
+          endIcon={<ArrowForwardIcon />}
+        >Realizar Pago
+        </Button>
 
-      <Button
-        href='../../pages/Cuenta/RegisterPage.js'
-        variant='contained'
-        disableElevation
-        size='large'
-        marginRigth='0'
-        endIcon={<ArrowForwardIcon />}
-      >Realizar Pago
-      </Button>
+        <Button
+          href='../../pages/Cuenta/RegisterPage.js'
+          variant='contained'
+          disableElevation
+          size='large'
+          marginRigth='0'
+
+        >Confirmar Cita
+        </Button>
+      </Box>
     </>
   )
 }
