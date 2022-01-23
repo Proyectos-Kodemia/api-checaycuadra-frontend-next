@@ -36,12 +36,12 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar }) {
           <div>
             <div className='rowSearch'>
               <div>
-                <WorkspacePremiumOutlinedIcon className='icon' disabled color='action' fontSize='large' />
+                <WorkspacePremiumOutlinedIcon sx={{ mt: 1 }} disabled color='action' fontSize='large' />
               </div>
               <div className='textSearch'>
                 <div>Especialista en</div>
                 <div>Elige la especialidad que necesitas</div>
-                <TextField className='searchEspecialist' />
+                <TextField sx={{ p: 0 }} />
               </div>
             </div>
             <div className='rowSearch'>
@@ -60,7 +60,16 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar }) {
             </div>
           </div>
           <div>
-            <Button type='submit' startIcon={<Search />} variant='contained' className='buttonEspecialist'>BUSCAR MI ESPECIALISTA</Button>
+            <Button
+              type='submit' startIcon={<Search />} variant='contained' sx={{
+                border: 'none',
+                bgcolor: '#000',
+                '&:hover': {
+                  background: '#005'
+                }
+              }}
+            >BUSCAR MI ESPECIALISTA
+            </Button>
           </div>
         </div>
       </form>

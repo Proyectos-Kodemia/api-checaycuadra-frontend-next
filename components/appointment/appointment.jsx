@@ -1,9 +1,70 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, CardMedia, CardContent } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
+// SDK MercadoPago.js V2
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+
+const mercadopago = new MercadoPago(process.env.MERCADOPAGO_PUBLIC_KEY, {
+  locale: es-MX // The most common are: 'pt-BR', 'es-AR' and 'en-US'
+});
+
+
+const endpoint = 'http://localhost:8000/mercadopago/checkout'
+
+const servicio = {
+  title:"consultoria",
+  unit_price:"1000",
+  quantity:"1"
+}
+
+
+
+
+async function LoginAccount (url, credentials) {
+  console.log("entrando a la funcion")
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: JSON.stringify(credentials),
+    // mode: 'cors'
+  }
+  // return fetch(url, options)
+  const response = await fetch(url, options)
+  return response.json()
+}
+
+
+
 function Appointment () {
+
+  const handlerPago = (e)=>{
+    console.log("entrando al handler")
+    e.preventDefault()
+      LoginAccount(endpoint,servicio)
+      .then(data =>{
+        console.log(data)
+        })
+      .catch(error =>{
+        console.log(error)
+      })
+        
+  }
+
+
+    // fetch(`${endpoint}`, servicio).then((res) => {
+    //   res.json().then((data) => {
+    //     console.log(data)
+    //   })
+    // })
+  
+    
+      
+
+
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
@@ -87,6 +148,7 @@ function Appointment () {
         >Realizar Pago
         </Button>
 
+<<<<<<< HEAD
         <Button
           href='../../pages/Cuenta/RegisterPage.js'
           variant='contained'
@@ -97,6 +159,18 @@ function Appointment () {
         >Confirmar Cita
         </Button>
       </Box>
+=======
+      <Button
+        // href='../../pages/Cuenta/RegisterPage.js'
+        onClick={handlerPago}
+        variant='contained'
+        disableElevation
+        size='large'
+        marginRigth='0'
+        endIcon={<ArrowForwardIcon />}
+      >Realizar Pago
+      </Button>
+>>>>>>> 641ebd720a3e02dc1c864747678b864a2248b956
     </>
   )
 }

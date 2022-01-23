@@ -1,24 +1,20 @@
-@import '../../abstract/variables';
+@import '../../styles/abstract/variables';
 
-
-.containerFormPerfil{
-
-    padding: 35px;
-    width: 90%;
+.containerFormPerfil{    
+    margin: 10px auto 80px auto;
     text-align: center;
-    //background-color: pink;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
+.gridContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-.typografyPerfil{
-    font-weight: bold;
-    color:$BlueMarine;
 }
-
-.textFieldsPerfil{
-    margin: 10px ;
-}
-
 
 .typografyPerfil{
     font-weight: bold;
@@ -53,12 +49,12 @@
 
 .textPrecio{
     .MuiInputAdornment-root {
-        padding:10px 2px ;
+        padding:20px 0 0 0;
     }
 }
 
 .uploadFile{
-  margin: 0px ;
+  margin: 25px 0;
 }
 
 // .textAboutMe{
@@ -74,8 +70,9 @@
 .textAutocomplete{
   .MuiAutocomplete-inputRoot {
     // width: 680px;
-    height: 80px;
-    padding: 20px 12px 0px 10px;
+    height: 60px;
+    margin:10px;
+    padding: 12px 12px 0px 12px;
   }
 
   label {
@@ -86,10 +83,4 @@
   label[data-shrink="true"] {
     top: 0;
   }
-}
-
-.buttonPerfilAccount{
-  width: 180px;
-  font-size: 20px;
-  background-color: $BlueMarine;
 }
