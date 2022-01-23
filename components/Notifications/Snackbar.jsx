@@ -3,12 +3,18 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { useState } from 'react';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export default function CustomizedSnackbars({statusPayment}) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const callBack = () => {
+    setIsOpen(false)
+  };
 
   const severityOptions = (statusPayment)=>{
     let result =""
@@ -22,9 +28,9 @@ export default function CustomizedSnackbars({statusPayment}) {
       case "pending":
         result = "warning"
         break
-      default:
-        result ="warning"
-        break
+      // default:
+      //   result ="warning"
+      //   break
     }
     return result
   }
@@ -41,9 +47,9 @@ export default function CustomizedSnackbars({statusPayment}) {
       case "pending":
         result = "Pago no concluido"
         break
-      default:
-        result ="Pago no realizado, intente de nuevo"
-        break
+      // default:
+      //   result ="Pago no realizado, intente de nuevo"
+      //   break
     }
     return result
   }
@@ -52,32 +58,14 @@ export default function CustomizedSnackbars({statusPayment}) {
   let severity = severityOptions(statusPayment)
   let message = messageOptions(statusPayment)
 
-  const [open, setOpen] = React.useState(false);
-
-
-  // 
-  const handleOpen = (event, statusPayment) => {
-    statusPayment? setOpen(true) : setOpen(false)
-    
-  }
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   return (
   
       <Snackbar
-        // value={open}
-        // onChange ={handleOpen}
-        open={handleOpen} 
+        open={isOpen} 
         autoHideDuration={6000} 
-        onClose={handleClose}>
-        <Alert onClose={handleClose} 
+        onClose={callBack}>
+        <Alert onClose={callBack} 
         severity= {severity} 
         x={{ width: '100%' }}>
           {message}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import Head from 'next/head'
 import FooterPage from '../../components/FooterPage'
 import NavPage from '../../components/NavPage'
@@ -9,88 +9,40 @@ import Snackbar from '../../components/Notifications/Snackbar'
 // Opcion crear componente de toast para reausarlo
 
 function Cita ({ children, title = 'Checa y Cuadra' }) {
-    const router = useRouter();  
-    const statusPayment = router.query.collection_status
-    console.log(statusPayment)
+  const router = useRouter(); 
+  const statusPayment = router.query.collection_status
 
-     // const token = localStorage.getItem('datauser')
-
+    // const token = localStorage.getItem('datauser')
+    
+    // Enviar el post de cita con el boton de confirmar cita
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWVjM2I4NjYyZDQ0NzBlMzZmYjAwNDUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTY0Mjg3MTcwMX0.o03cOXtbt1svKO3BhwotZ1OEl-SaHH_mbRAydzL4gS0"
-      const endpoint = 'http://localhost:8000/metting'
-        if(statusPayment){
-            const data = {
-              userAccount:"61dfb63142eee3cf8d16de99",
-              starDate:"2022-01-16T21:30",
-              endDateTime:"2022-01-16T22:30",
-              title:"consultoria",
-              unit_price:"1000",
-              quantity:"1",
-              statusPayment: statusPayment  
-            }
-            // post
-            const options = {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'token': token
-              },
-              body: JSON.stringify(data)
-            }
-            const response = fetch(endpoint, options)
+    const endpoint = 'http://localhost:8000/metting'
+      if(statusPayment === "approved"){
+          const data = {
+            userAccount:"61dfb63142eee3cf8d16de99",
+            starDate:"2022-01-16T8:00",
+            endDateTime:"2022-01-16T9:00",
+            title:"consultoria Ferdi",
+            unit_price:"10000",
+            quantity:"1",
+            statusPayment: statusPayment  
           }
+          // post
+          const options = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'token': token  // Enviar en el post el token de JWT
+            },
+            body: JSON.stringify(data)
+          }
+          const response = fetch(endpoint, options)
+        }
 
 
-    // useEffect((statusPayment) => {
-      
-    //   const statusPayment = statusPayment
-    //   console.log(statusPayment)
-    //   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWVjM2I4NjYyZDQ0NzBlMzZmYjAwNDUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTY0Mjg3MTcwMX0.o03cOXtbt1svKO3BhwotZ1OEl-SaHH_mbRAydzL4gS0"
-    //   const endpoint = 'http://localhost:8000/mercadopago/checkout'
-    //     if(statusPayment){
-    //         const data = {
-    //           userAccount:"61dfb63142eee3cf8d16de99",
-    //           starDate:"2022-01-16T21:30",
-    //           endDateTime:"2022-01-16T22:30",
-    //           service:"consultoria",
-    //           total:"1000",
-    //           statusPayment: statusPayment  
-    //         }
-    //         // post
-    //         const options = {
-    //           method: 'POST',
-    //           headers: {
-    //             'Content-Type': 'application/json',
-    //             'token': token
-    //           },
-    //           body: JSON.stringify(data)
-    //         }
-    //         const response = fetch(endpoint, options)
-    //         return response.json()
-    //       }
-    //     },[])  
+     
 
-
-  // Probar flujo completo con la autenticacion del usuario
- 
-  // // local states (toast)
-  // const [successToast, setSuccesToast] = useState(False);
-  // const [failToast, setFailToast] = useState(False);
-  // const [pendeningtToast, setPendeningtToast] = useState(False);
-
-  // comments
   
-
-
-//   // // if (statusPayment == 'approved')  {
-  // //   // deploy succes toast
-  // //   setSuccesToast(True);
-  // }
-  // buscar lo del set time out
-
-  // Construir el post para mandar el pago al back
-
-  // Enviar en el post el token de JWT
-
   return (
     <>
       <Head>
@@ -101,7 +53,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       <NavPage />
       {children}
       <Appointment />
-       <Snackbar statusPayment={statusPayment}/> 
+        {statusPayment && (<Snackbar statusPayment={statusPayment} /> )}
       <FooterPage />
     </>
   )
