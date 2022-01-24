@@ -3,7 +3,55 @@ import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Ca
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
+
+const endpoint = 'http://localhost:8000/mercadopago/checkout'
+
+const servicio = {
+  title:"consultoria",
+  unit_price:"1000",
+  quantity:"1"
+}
+
+
+    
+    // mode: 'no-cors'
+
+async function LoginAccount (url, credentials) {
+  console.log("entrando a la funcion")
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  }
+  // return fetch(url, options)
+  const response = await fetch(url, options)
+  return response.json()
+}
+
+
+
 function Appointment () {
+
+  const handlerPago = (e)=>{
+    console.log("entrando al handler")
+    e.preventDefault()
+      LoginAccount(endpoint,servicio)
+      .then(data =>{
+        location.href = data
+        })
+      .catch(error =>{
+        console.log(error)
+      })
+        
+  }
+
+
+    
+      
+
+
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
@@ -77,15 +125,17 @@ function Appointment () {
         </Typography>
       </Box>
       <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
-        <Button
-          href='../../pages/Cuenta/RegisterPage.js'
-          variant='contained'
-          disableElevation
-          size='large'
-          marginrigth='0'
-          endIcon={<ArrowForwardIcon />}
-        >Realizar Pago
-        </Button>
+
+      <Button
+        // href='../../pages/Cuenta/RegisterPage.js'
+        onClick={handlerPago}
+        variant='contained'
+        disableElevation
+        size='large'
+        marginRigth='0'
+        endIcon={<ArrowForwardIcon />}
+      >Realizar Pago
+      </Button>
 
         <Button
           href='../../pages/Cuenta/RegisterPage.js'
@@ -97,7 +147,13 @@ function Appointment () {
         >Confirmar Cita
         </Button>
       </Box>
+
     </>
   )
 }
 export default Appointment
+
+
+/*
+http://localhost:4000/mercadopago/success?collection_id=1245561890&collection_status=approved&payment_id=1245561890&status=approved&external_reference=null&payment_type=credit_card&merchant_order_id=4003030641&preference_id=1059347414-9d0161c7-480f-436a-9cf5-0c7ee7455ac6&site_id=MLM&processing_mode=aggregator&merchant_account_id=null
+*/
