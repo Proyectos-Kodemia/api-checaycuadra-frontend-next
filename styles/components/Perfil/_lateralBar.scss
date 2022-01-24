@@ -2,22 +2,18 @@
 
 .containerPrincipal{
     display: flex;
-    justify-content:flex-start;
-    align-items: flex-start;
-    margin: 0 auto;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 350px;
 }
 
 .containerLateralMenu{
-    display: flex;
-    width: 150px;
-    margin: 0 auto;
+   
 }
 
 .tabElement{
-    display: flex;
-    justify-content: space-between;
-    margin: 0;
-    padding: 0 16px;
+    margin: 2px;
+    padding: 0 16px 0 12px;
 }
 
 .MuiSvgIcon-root{
@@ -26,7 +22,7 @@
 
 .containerPages{
     // width: 540px;
-    margin: 0;
+    margin: 10;
 }
 
 .MuiTabs-indicator{
