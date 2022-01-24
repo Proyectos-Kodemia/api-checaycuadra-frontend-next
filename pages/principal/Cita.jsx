@@ -1,48 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import FooterPage from '../../components/FooterPage'
 import NavPage from '../../components/NavPage'
 import Appointment from '../../components/appointment/appointment'
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
 import Snackbar from '../../components/Notifications/Snackbar'
 // Import material component (toast)
 // Opcion crear componente de toast para reausarlo
 
 function Cita ({ children, title = 'Checa y Cuadra' }) {
-  const router = useRouter(); 
+  const router = useRouter()
   const statusPayment = router.query.collection_status
 
-    // const token = localStorage.getItem('datauser')
-    
-    // Enviar el post de cita con el boton de confirmar cita
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWVjM2I4NjYyZDQ0NzBlMzZmYjAwNDUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTY0Mjg3MTcwMX0.o03cOXtbt1svKO3BhwotZ1OEl-SaHH_mbRAydzL4gS0"
-    const endpoint = 'http://localhost:8000/metting'
-      if(statusPayment === "approved"){
-          const data = {
-            userAccount:"61dfb63142eee3cf8d16de99",
-            starDate:"2022-01-16T8:00",
-            endDateTime:"2022-01-16T9:00",
-            title:"consultoria Ferdi",
-            unit_price:"10000",
-            quantity:"1",
-            statusPayment: statusPayment  
-          }
-          // post
-          const options = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'token': token  // Enviar en el post el token de JWT
-            },
-            body: JSON.stringify(data)
-          }
-          const response = fetch(endpoint, options)
-        }
+  // const token = localStorage.getItem('datauser')
 
+  // Enviar el post de cita con el boton de confirmar cita
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWVjM2I4NjYyZDQ0NzBlMzZmYjAwNDUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTY0Mjg3MTcwMX0.o03cOXtbt1svKO3BhwotZ1OEl-SaHH_mbRAydzL4gS0'
+  const endpoint = 'http://localhost:8000/metting'
+  if (statusPayment === 'approved') {
+    const data = {
+      userAccount: '61dfb63142eee3cf8d16de99',
+      starDate: '2022-01-16T8:00',
+      endDateTime: '2022-01-16T9:00',
+      title: 'consultoria Ferdi',
+      unit_price: '10000',
+      quantity: '1',
+      statusPayment: statusPayment
+    }
+    // post
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        token: token // Enviar en el post el token de JWT
+      },
+      body: JSON.stringify(data)
+    }
+    const response = fetch(endpoint, options)
+  }
 
-     
-
-  
   return (
     <>
       <Head>
@@ -53,7 +49,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       <NavPage />
       {children}
       <Appointment />
-        {statusPayment && (<Snackbar statusPayment={statusPayment} /> )}
+      {statusPayment && (<Snackbar statusPayment={statusPayment} />)}
       <FooterPage />
     </>
   )
