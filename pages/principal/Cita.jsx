@@ -1,43 +1,106 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import Head from 'next/head'
 import FooterPage from '../../components/FooterPage'
 import NavPage from '../../components/NavPage'
 import Appointment from '../../components/appointment/appointment'
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import Snackbar from '../../components/Notifications/Snackbar'
+import { URL_BASE } from '../../services/config';
 // Import material component (toast)
 // Opcion crear componente de toast para reausarlo
 
 function Cita ({ children, title = 'Checa y Cuadra' }) {
-  const router = useRouter()
+  const [accountUser, setAccountUser]=useState({})
+  // Fetch de seleccion de card
+  let data = localStorage.getItem("post");
+  let id = JSON.parse(data);
+  console.log('id cita',id)
+  // localStorage.clear(); //clean the localstorage
+  const endpoint=`http://localhost:8000/account/${id}`
+  
+  
+  useEffect(() => {
+    fetch(`${endpoint}`).then((res) => {
+      res.json().then((value) => {
+        console.log('resultado value', value)
+        setAccountUser(value)
+        // setUsers(data.payload)
+      })
+    })
+  }, [])
+
+  const {name, lastname, degree,degreeId,profileImage, description, role, evaluation, address, Schedule} = accountUser
+  const token = sessionStorage.getItem('token')
+  
+  const router = useRouter(); 
   const statusPayment = router.query.collection_status
 
-  // const token = localStorage.getItem('datauser')
 
-  // Enviar el post de cita con el boton de confirmar cita
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWVjM2I4NjYyZDQ0NzBlMzZmYjAwNDUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTY0Mjg3MTcwMX0.o03cOXtbt1svKO3BhwotZ1OEl-SaHH_mbRAydzL4gS0'
-  const endpoint = 'http://localhost:8000/metting'
-  if (statusPayment === 'approved') {
-    const data = {
-      userAccount: '61dfb63142eee3cf8d16de99',
-      starDate: '2022-01-16T8:00',
-      endDateTime: '2022-01-16T9:00',
-      title: 'consultoria Ferdi',
-      unit_price: '10000',
-      quantity: '1',
-      statusPayment: statusPayment
+
+    // const token = localStorage.getItem('datauser')
+    
+    
+    async function LoginAccount (url) {
+      console.log("entrando a la funcion")
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      const response = await fetch(url, options)
+      return response.json()
     }
-    // post
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        token: token // Enviar en el post el token de JWT
-      },
-      body: JSON.stringify(data)
+
+    // Enviar el post de cita con el boton de confirmar cita
+    const handlerAuthGoogle = async (e)=>{
+      e.preventDefault()
+
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWVjM2I4NjYyZDQ0NzBlMzZmYjAwNDUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTY0Mjg3MTcwMX0.o03cOXtbt1svKO3BhwotZ1OEl-SaHH_mbRAydzL4gS0"
+      const endpointMeeting = 'http://localhost:8000/metting'
+      const endpointAuthGoogle = 'http://localhost:8000/google/auth'
+
+      if(statusPayment === "approved"){
+          const data = {
+            userAccount:"61dfb63142eee3cf8d16de99",
+            starDate:"2022-01-24T17:00",
+            endDateTime:"2022-01-24T18:00",
+            title:"consultoria Kraken rules",
+            unit_price:"10000",
+            quantity:"1",
+            statusPayment: statusPayment  
+          }
+          // post
+          const optionsMeeting = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'token': token  // Enviar en el post el token de JWT
+            },
+            body: JSON.stringify(data)
+          }
+          const response = await fetch(endpointMeeting, optionsMeeting)
+          // Obtener el id de la cita 
+
+          const optionsAuthGoogle = {
+            method: 'POST',
+            redirect:'follow',
+            headers: {
+              'Content-Type': 'application/json',
+              'token': token  // Enviar en el post el token de JWT
+            },
+          }
+
+          await LoginAccount(endpointAuthGoogle)
+          .then(response =>{
+            location.href = response.payload.authUrl
+            })
+          .catch(error =>{
+            console.log(error)
+          })
+      }
     }
-    const response = fetch(endpoint, options)
-  }
+
 
   return (
     <>
@@ -48,8 +111,21 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       </Head>
       <NavPage />
       {children}
-      <Appointment />
-      {statusPayment && (<Snackbar statusPayment={statusPayment} />)}
+      <Appointment 
+      handlerAuthGoogle = {handlerAuthGoogle}
+      name = {name}
+      lastname ={lastname}
+      degree = {degree}
+      degreeId = {degreeId}
+      profileImage = {profileImage}
+      description = {description}
+      role={role}
+      evaluation= {evaluation}
+      address ={address}
+      Schedule = {Schedule}
+      
+      />
+        {statusPayment && (<Snackbar statusPayment={statusPayment} /> )}
       <FooterPage />
     </>
   )

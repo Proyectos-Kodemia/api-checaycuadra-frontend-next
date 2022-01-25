@@ -47,9 +47,16 @@ const FormLogin = ({ rol }) => {
       const res = await result.json()
       if (res.status) {
         console.log('se creo el token y se almaceno')
-        sessionStorage.setItem('token', JSON.stringify(res.token))
+        const response = {
+          token: res.token,
+          id: res.sub,
+          role: res.role
+        }
+
+        sessionStorage.setItem('token', JSON.stringify(response))
         // localStorage.setItem('user-info', JSON.stringify(res.token))
         setLoading(false)
+
         router.push(`${URL_BASE}/principal/Buscador`)
       } else {
         setError(true)
