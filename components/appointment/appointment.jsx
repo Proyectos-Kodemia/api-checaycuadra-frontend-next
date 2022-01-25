@@ -3,67 +3,42 @@ import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Ca
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
-// SDK MercadoPago.js V2
-<script src="https://sdk.mercadopago.com/js/v2"></script>
-
-const mercadopago = new MercadoPago(process.env.MERCADOPAGO_PUBLIC_KEY, {
-  locale: es-MX // The most common are: 'pt-BR', 'es-AR' and 'en-US'
-});
-
-
 const endpoint = 'http://localhost:8000/mercadopago/checkout'
 
 const servicio = {
-  title:"consultoria",
-  unit_price:"1000",
-  quantity:"1"
+  title: 'consultoria',
+  unit_price: '1000',
+  quantity: '1'
 }
 
-
-
+// mode: 'no-cors'
 
 async function LoginAccount (url, credentials) {
-  console.log("entrando a la funcion")
+  console.log('entrando a la funcion')
   const options = {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(credentials),
-    // mode: 'cors'
+    body: JSON.stringify(credentials)
   }
   // return fetch(url, options)
   const response = await fetch(url, options)
   return response.json()
 }
 
-
-
 function Appointment () {
-
-  const handlerPago = (e)=>{
-    console.log("entrando al handler")
+  const handlerPago = (e) => {
+    console.log('entrando al handler')
     e.preventDefault()
-      LoginAccount(endpoint,servicio)
-      .then(data =>{
-        console.log(data)
-        })
-      .catch(error =>{
+    LoginAccount(endpoint, servicio)
+      .then(data => {
+        location.href = data
+      })
+      .catch(error => {
         console.log(error)
       })
-        
   }
-
-
-    // fetch(`${endpoint}`, servicio).then((res) => {
-    //   res.json().then((data) => {
-    //     console.log(data)
-    //   })
-    // })
-  
-    
-      
-
 
   return (
     <>
@@ -137,40 +112,29 @@ function Appointment () {
           Elije tu horario y agenda tu cita
         </Typography>
       </Box>
+
       <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
+
         <Button
-          href='../../pages/Cuenta/RegisterPage.js'
+        // href='../../pages/Cuenta/RegisterPage.js'
+          onClick={handlerPago}
           variant='contained'
           disableElevation
           size='large'
-          marginrigth='0'
           endIcon={<ArrowForwardIcon />}
         >Realizar Pago
         </Button>
-
-<<<<<<< HEAD
         <Button
-          href='../../pages/Cuenta/RegisterPage.js'
+          // href='../../pages/Cuenta/RegisterPage.js'
+          onClick={handlerPago}
           variant='contained'
           disableElevation
           size='large'
           marginRigth='0'
-
-        >Confirmar Cita
+          endIcon={<ArrowForwardIcon />}
+        >Realizar Pago
         </Button>
       </Box>
-=======
-      <Button
-        // href='../../pages/Cuenta/RegisterPage.js'
-        onClick={handlerPago}
-        variant='contained'
-        disableElevation
-        size='large'
-        marginRigth='0'
-        endIcon={<ArrowForwardIcon />}
-      >Realizar Pago
-      </Button>
->>>>>>> 641ebd720a3e02dc1c864747678b864a2248b956
     </>
   )
 }
