@@ -11,6 +11,8 @@ import Snackbar from '../../components/Notifications/Snackbar'
 function Cita ({ children, title = 'Checa y Cuadra' }) {
   const router = useRouter(); 
   const statusPayment = router.query.collection_status
+  
+
 
     // const token = localStorage.getItem('datauser')
     
@@ -55,6 +57,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
             body: JSON.stringify(data)
           }
           const response = await fetch(endpointMeeting, optionsMeeting)
+          // Obtener el id de la cita 
 
           const optionsAuthGoogle = {
             method: 'POST',
@@ -67,9 +70,6 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
 
           await LoginAccount(endpointAuthGoogle)
           .then(response =>{
-            console.log(response)
-
-            console.log(response.payload.authUrl)
             location.href = response.payload.authUrl
             })
           .catch(error =>{
@@ -77,6 +77,8 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
           })
       }
     }
+
+
   return (
     <>
       <Head>

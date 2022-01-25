@@ -5,7 +5,7 @@
 
 // components
 @import './components/card-counter';
-@import './components/login';
+@import './components/Login/login';
 
 //Register
 @import './components/Register/register';
@@ -19,3 +19,6 @@
 //Perfil
 @import './components/Perfil/lateralBar';
 @import './components/Perfil/FormPerfil';
+
+//calendario
+@import './components/Calendario/Box';

@@ -14,7 +14,7 @@ import imageLogin from '../../images/graphLogin.svg'
 import { URL_BASE } from '../../services/config'
 
 const schema = yup.object({
-  email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(100, '***Máximo 100 caracteres'),
+  email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres'),
   password: yup.string().required('El campo es requerido')
 }).required('El campo es requerido')
 
@@ -35,7 +35,7 @@ const FormLogin = ({ rol }) => {
 
     if (rol === 'Contador') direction = 'http://localhost:8000/auth/account'
     else direction = 'http://localhost:8000/auth/users'
-    
+
     if (sessionStorage.getItem('token')) {
       sessionStorage.removeItem('token')
     }
@@ -63,64 +63,60 @@ const FormLogin = ({ rol }) => {
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
 
-
   if (error) {
-    return <div className='pass'>Error al obtener los datos. Favor de recargar la página</div>
+    return <div>Error al obtener los datos. Favor de recargar la página</div>
   }
 
   if (loading) return <>Please wait a moment...</>
 
   return (
     <>
-      <div className='container'>
-        <div className='row'>
-          <form className='rounded mt-3 justify-content-center' onSubmit={handleSubmit(dataLogin)}>
-            <TextField
-              label='Correo electrónico'
-              placeholder='midirección@mail.com'
-              color='secondary'
-              required
-              fullWidth
-              className='inputStyle'
-              {...register('email')}
-            />
-            <div id='emailHelp' className='mb-4 error text-danger'>{errors.email?.message}</div>
+      <div>
+        <form className='rounded mt-3 justify-content-center' onSubmit={handleSubmit(dataLogin)}>
+          <TextField
+            label='Correo electrónico'
+            placeholder='midirección@mail.com'
+            color='secondary'
+            required
+            fullWidth
+            sx={{ fontSize: '12' }}
+            {...register('email')}
+          />
+          <div id='emailHelp' className='mb-4 error text-danger'>{errors.email?.message}</div>
 
-            <TextField
-              label='Contraseña'
-              placeholder='Ingrese contraseña'
-              // falta checar cambio de color de contorno input
-              color='secondary'
-              required
-              fullWidth
-              className='inputStyle mb-3'
-              {...register('password')}
-              type={showPassword ? 'text' : 'password'}
-              InputProps={{ // <-- This is where the toggle button is added.
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton
-                      aria-label='toggle password visibility'
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                )
-              }}
-            />
-            <span id='passwordHelp' className='mb-4 error text-danger'>{errors.password?.message}</span>
-            <Button
-              type='submit'
-              className='buttonStyle mb-2'
-              variant='contained'
-              fullWidth
-            >
-              Iniciar sesión
-            </Button>
-          </form>
-        </div>
+          <TextField
+            label='Contraseña'
+            placeholder='Ingrese contraseña'
+            color='secondary'
+            required
+            fullWidth
+            sx={{ fontSize: '12', mb: 3 }}
+            {...register('password')}
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{ // <-- This is where the toggle button is added.
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <IconButton
+                    aria-label='toggle password visibility'
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
+          <span id='passwordHelp' className='mb-4 error text-danger'>{errors.password?.message}</span>
+          <Button
+            type='submit'
+            className='buttonStyle mb-2'
+            variant='contained'
+            fullWidth
+          >
+            Iniciar sesión
+          </Button>
+        </form>
       </div>
 
       <div className='remember'>

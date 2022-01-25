@@ -10,7 +10,8 @@ import StaticDatePicker from '@mui/lab/StaticDatePicker'
 
 import TimePicker from '@mui/lab/TimePicker'
 
-function Schedule () {
+
+function Schedule() {
   const [selectedDate, changeDate] = useState(moment())
   const [selectedStar, changeStar] = useState(moment())
   const [selectedEnd, changeEnd] = useState(moment())
@@ -54,6 +55,7 @@ function Schedule () {
           2. Selecciona el horario<br /><br />
         </Box>
         <Box sx={{ mx: 'auto', width: 450, textAlign: 'start', fontSize: '3 rem', fontWeight: '500' }}>
+
           <p> Hora inicial</p>
         </Box>
         <Box sx={{ textAling: 'center', p: 2 }}>
@@ -85,8 +87,11 @@ function Schedule () {
           <p> calendario</p>
         </Box>
 
+
       </Box>
     </>
+
+
   )
 }
 

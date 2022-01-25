@@ -26,21 +26,21 @@ function Register () {
   }
   return (
     <Grid>
-      <Paper elevation={12} className='cardStyle'>
+      <Paper elevation={12} sx={{ p: 3, h: 560, width: 420, my: 10 }}>
         <Grid align='center'>
           <div className='regCount'>¡Bienvenido! Crea tu cuenta</div>
         </Grid>
         <Box>
           <Tabs
-            className='styleBox'
+            sx={{ bgcolor: '#fff', color: '#00244C' }}
             value={value}
             onChange={handleChange}
             TabIndicatorProps={styleTabs}
             textColor='inherit'
-            variant='fullWidth'
+            fullWidth
           >
-            <Tab label='Necesito asesoría' className={`${!value ? 'activo' : 'inactivo'}`} />
-            <Tab label='Soy contador' className={`${value ? 'activo' : 'inactivo'}`} />
+            <Tab sx={{ borderRadius: 1, width: 180 }} label='Necesito asesoría' className={`${!value ? 'activo' : 'inactivo'}`} />
+            <Tab sx={{ borderRadius: 1, width: 180 }} label='Soy contador' className={`${value ? 'activo' : 'inactivo'}`} />
           </Tabs>
           <TabPanel value={value} index={0}>
             <FormRegister rol='Usuario' />
