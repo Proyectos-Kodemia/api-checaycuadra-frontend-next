@@ -27,9 +27,12 @@ async function LoginAccount (url, credentials) {
   return response.json()
 }
 
-function Appointment () {
-  const handlerPago = (e) => {
-    console.log('entrando al handler')
+
+
+function Appointment ({handlerAuthGoogle, name, lastname, degree, degreeId,profileImage, description, role, evaluation,specialities, address, Schedule}) {
+
+  const handlerPago = (e)=>{
+    console.log("entrando al handler")
     e.preventDefault()
     LoginAccount(endpoint, servicio)
       .then(data => {
@@ -52,15 +55,15 @@ function Appointment () {
 
           <CardContent sx={{ width: 220, margin: 3, marginTop: 6 }}>
             <Typography variant='h6' style={{ fontWeight: '600' }}>
-              Ana Paula Gomez
+              {name} {lastname}
             </Typography>
             <br />
             <Typography variant='subtitle1'>
-              Contador Publico
+              {degree}
             </Typography>
             <br />
             <Typography variant='body2'>
-              Cedula 123443455656
+              Cedula {degreeId}
             </Typography>
           </CardContent>
         </Box>
@@ -81,11 +84,13 @@ function Appointment () {
                   <img src='/icons/iconsCard2/especialidad.svg' alt='especialidad' ml={0} />
                 </ListItemIcon>
                 <ListItemText primary='Especialista en: ' />
+                {specialities}
               </ListItem>
               <ListItem disableGutters>
                 <ListItemIcon>
                   <img src='/icons/iconsCard2/price.svg' alt='price' ml={0} />
                 </ListItemIcon>
+                  {Schedule.costHour}
                 <ListItemText primary='MXN' />
               </ListItem>
               <ListItem disableGutters>
@@ -93,6 +98,8 @@ function Appointment () {
                   <img src='/icons/iconsCard2/local.svg' alt='local' ml={0} />
                 </ListItemIcon>
                 <ListItemText primary='Ubicacion:' />
+                  {address.town}, {address.state}
+                
               </ListItem>
             </List>
             <Typography variant='h5'>
@@ -100,7 +107,7 @@ function Appointment () {
             </Typography>
             <br />
             <Typography variant='body1'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lacus ut etiam quam lacus, neque, nibh consectetur. Velit vulputate tortor amet vulputate. Ipsum semper.
+              {description}
             </Typography>
           </CardContent>
         </Box>
@@ -116,17 +123,8 @@ function Appointment () {
       <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
 
         <Button
-        // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerPago}
-          variant='contained'
-          disableElevation
-          size='large'
-          endIcon={<ArrowForwardIcon />}
-        >Realizar Pago
-        </Button>
-        <Button
           // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerPago}
+          onClick={handlerAuthGoogle}
           variant='contained'
           disableElevation
           size='large'

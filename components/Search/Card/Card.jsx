@@ -1,5 +1,5 @@
 
-// import { URL_BASE } from '../../../services/config'
+import { URL_BASE } from '../../../services/config'
 import { Card, CardContent, Typography, Rating, Button } from '@mui/material'
 import imageCard from '../../../images/LogoCard.svg'
 import Image from 'next/image'
@@ -7,8 +7,10 @@ import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
+import { useRouter } from 'next/router'
 
-function Cards ({ id, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) {
+
+function Cards ({id, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) {
   let val, ubication, hourCost, valDegree
   if (evaluation > 6 || evaluation < 0 || !evaluation) val = 0
   else val = evaluation
@@ -16,6 +18,8 @@ function Cards ({ id, name, lastname, degree, profileImage, description, role, e
   if (!profileImage) {
     profileImage = imageCard
   }
+ 
+  const router=useRouter()
 
   if (!address) ubication = 'No disponible'
   else ubication = `${address.town}, ${address.state}`
@@ -28,8 +32,23 @@ function Cards ({ id, name, lastname, degree, profileImage, description, role, e
 
   console.log(id, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule)
 
+ 
+
+  const handlerSendSpecificCard =()=>{
+    localStorage.clear();
+    localStorage.setItem("post", JSON.stringify(id));
+    router.push(`${URL_BASE}/principal/Cita`)
+    
+    console.log("enviar")
+    console.log(">>>>>>")
+    console.log("este es el _id", id)
+  }
+
+
+
   return (
     <Card className='containerCard'>
+      
       <div className='headCard'>
         <div>
           <Image className='imgCard' src={profileImage} alt={name} />
@@ -73,7 +92,10 @@ function Cards ({ id, name, lastname, degree, profileImage, description, role, e
         </Typography>
       </CardContent>
       <div className='divButton'>
-        <Button className='buttonCard '>AGENDAR CITA</Button>
+        <Button 
+        className='buttonCard '
+        onClick={handlerSendSpecificCard}
+        >AGENDAR CITA</Button>
       </div>
     </Card>
   )
