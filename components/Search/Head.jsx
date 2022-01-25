@@ -10,6 +10,7 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar }) {
     fetch(`${endpoint}`).then((res) => {
       res.json().then((data) => {
         setUsers(data.payload)
+        console.log(data.payload)
       })
     })
   }, [])

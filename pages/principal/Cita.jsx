@@ -5,13 +5,36 @@ import NavPage from '../../components/NavPage'
 import Appointment from '../../components/appointment/appointment'
 import { useRouter } from "next/router";
 import Snackbar from '../../components/Notifications/Snackbar'
+import { URL_BASE } from '../../services/config';
 // Import material component (toast)
 // Opcion crear componente de toast para reausarlo
 
 function Cita ({ children, title = 'Checa y Cuadra' }) {
+  const [accountUser, setAccountUser]=useState({})
+  // Fetch de seleccion de card
+  let data = localStorage.getItem("post");
+  let id = JSON.parse(data);
+  console.log('id cita',id)
+  // localStorage.clear(); //clean the localstorage
+  const endpoint=`http://localhost:8000/account/${id}`
+  
+  
+  useEffect(() => {
+    fetch(`${endpoint}`).then((res) => {
+      res.json().then((value) => {
+        console.log('resultado value', value)
+        setAccountUser(value)
+        // setUsers(data.payload)
+      })
+    })
+  }, [])
+
+  const {name, lastname, degree,degreeId,profileImage, description, role, evaluation, address, Schedule} = accountUser
+  const token = sessionStorage.getItem('token')
+  
   const router = useRouter(); 
   const statusPayment = router.query.collection_status
-  
+
 
 
     // const token = localStorage.getItem('datauser')
@@ -90,6 +113,17 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       {children}
       <Appointment 
       handlerAuthGoogle = {handlerAuthGoogle}
+      name = {name}
+      lastname ={lastname}
+      degree = {degree}
+      degreeId = {degreeId}
+      profileImage = {profileImage}
+      description = {description}
+      role={role}
+      evaluation= {evaluation}
+      address ={address}
+      Schedule = {Schedule}
+      
       />
         {statusPayment && (<Snackbar statusPayment={statusPayment} /> )}
       <FooterPage />
