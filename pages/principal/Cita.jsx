@@ -14,21 +14,39 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
 
     // const token = localStorage.getItem('datauser')
     
+    
+    async function LoginAccount (url) {
+      console.log("entrando a la funcion")
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      const response = await fetch(url, options)
+      return response.json()
+    }
+
     // Enviar el post de cita con el boton de confirmar cita
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWVjM2I4NjYyZDQ0NzBlMzZmYjAwNDUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTY0Mjg3MTcwMX0.o03cOXtbt1svKO3BhwotZ1OEl-SaHH_mbRAydzL4gS0"
-    const endpoint = 'http://localhost:8000/metting'
+    const handlerAuthGoogle = async (e)=>{
+      e.preventDefault()
+
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWVjM2I4NjYyZDQ0NzBlMzZmYjAwNDUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTY0Mjg3MTcwMX0.o03cOXtbt1svKO3BhwotZ1OEl-SaHH_mbRAydzL4gS0"
+      const endpointMeeting = 'http://localhost:8000/metting'
+      const endpointAuthGoogle = 'http://localhost:8000/google/auth'
+
       if(statusPayment === "approved"){
           const data = {
             userAccount:"61dfb63142eee3cf8d16de99",
-            starDate:"2022-01-16T8:00",
-            endDateTime:"2022-01-16T9:00",
-            title:"consultoria Ferdi",
+            starDate:"2022-01-24T17:00",
+            endDateTime:"2022-01-24T18:00",
+            title:"consultoria Kraken rules",
             unit_price:"10000",
             quantity:"1",
             statusPayment: statusPayment  
           }
           // post
-          const options = {
+          const optionsMeeting = {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -36,13 +54,29 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
             },
             body: JSON.stringify(data)
           }
-          const response = fetch(endpoint, options)
-        }
+          const response = await fetch(endpointMeeting, optionsMeeting)
 
+          const optionsAuthGoogle = {
+            method: 'POST',
+            redirect:'follow',
+            headers: {
+              'Content-Type': 'application/json',
+              'token': token  // Enviar en el post el token de JWT
+            },
+          }
 
-     
+          await LoginAccount(endpointAuthGoogle)
+          .then(response =>{
+            console.log(response)
 
-  
+            console.log(response.payload.authUrl)
+            location.href = response.payload.authUrl
+            })
+          .catch(error =>{
+            console.log(error)
+          })
+      }
+    }
   return (
     <>
       <Head>
@@ -52,7 +86,9 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       </Head>
       <NavPage />
       {children}
-      <Appointment />
+      <Appointment 
+      handlerAuthGoogle = {handlerAuthGoogle}
+      />
         {statusPayment && (<Snackbar statusPayment={statusPayment} /> )}
       <FooterPage />
     </>

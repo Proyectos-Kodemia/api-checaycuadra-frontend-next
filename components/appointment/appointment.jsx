@@ -32,7 +32,7 @@ async function LoginAccount (url, credentials) {
 
 
 
-function Appointment () {
+function Appointment ({handlerAuthGoogle}) {
 
   const handlerPago = (e)=>{
     console.log("entrando al handler")
@@ -138,7 +138,8 @@ function Appointment () {
       </Button>
 
         <Button
-          href='../../pages/Cuenta/RegisterPage.js'
+          // href='../../pages/Cuenta/RegisterPage.js'
+          onClick={handlerAuthGoogle}
           variant='contained'
           disableElevation
           size='large'
