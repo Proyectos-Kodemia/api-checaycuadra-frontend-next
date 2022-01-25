@@ -7,7 +7,9 @@ function LoginAccount (url, credentials) {
     body: JSON.stringify(credentials),
     mode: 'cors'
   }
-  return fetch(url, options)
+  const query = fetch(url, options)
+  // console.log(query)
+  return query
 }
 
 export default LoginAccount

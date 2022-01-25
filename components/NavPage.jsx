@@ -18,10 +18,7 @@ function NavPage () {
 
   return (
     <Navbar bg='light' expand='lg'>
-
-   
       <Container>
-
         <div>
           <a href='#home'> <img src='/icons/Logo.svg' alt='Logo' width={200} height={100} /> </a>
         </div>

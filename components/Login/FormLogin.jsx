@@ -13,6 +13,8 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import imageLogin from '../../images/graphLogin.svg'
 import { URL_BASE } from '../../services/config'
 
+import LoginAccount from './LoginAccount'
+
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres'),
   password: yup.string().required('El campo es requerido')
@@ -43,13 +45,12 @@ const FormLogin = ({ rol }) => {
     try {
       const result = await LoginAccount(direction, data)
       const res = await result.json()
-      console.log(res.status)
       if (res.status) {
         console.log('se creo el token y se almaceno')
         sessionStorage.setItem('token', JSON.stringify(res.token))
         // localStorage.setItem('user-info', JSON.stringify(res.token))
         setLoading(false)
-        router.push('/Login/Login')
+        router.push(`${URL_BASE}/principal/Buscador`)
       } else {
         setError(true)
         console.log('error en login ')

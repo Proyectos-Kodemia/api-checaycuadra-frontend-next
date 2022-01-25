@@ -38,6 +38,7 @@ function FormRegister ({ rol }) {
 
   const [showPassword, setShowPassword] = useState(false)
 
+  
   const dataLogin = async (data) => {
     let direction = ''
 

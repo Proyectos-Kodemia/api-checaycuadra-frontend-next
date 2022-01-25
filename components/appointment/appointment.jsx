@@ -124,16 +124,6 @@ function Appointment () {
           endIcon={<ArrowForwardIcon />}
         >Realizar Pago
         </Button>
-        <Button
-          // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerPago}
-          variant='contained'
-          disableElevation
-          size='large'
-          marginRigth='0'
-          endIcon={<ArrowForwardIcon />}
-        >Realizar Pago
-        </Button>
       </Box>
     </>
   )
