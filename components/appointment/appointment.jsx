@@ -11,8 +11,6 @@ const servicio = {
   quantity: '1'
 }
 
-// mode: 'no-cors'
-
 async function LoginAccount (url, credentials) {
   console.log('entrando a la funcion')
   const options = {
