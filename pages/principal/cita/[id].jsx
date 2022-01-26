@@ -1,41 +1,75 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head'
-import FooterPage from '../../components/FooterPage'
-import NavPage from '../../components/NavPage'
-import Appointment from '../../components/appointment/appointment'
+import FooterPage from '../../../components/FooterPage'
+import NavPage from '../../../components/NavPage'
+import Appointment from '../../../components/appointment/appointment'
 import { useRouter } from "next/router";
-import Snackbar from '../../components/Notifications/Snackbar'
-import { URL_BASE } from '../../services/config';
+import Snackbar from '../../../components/Notifications/Snackbar'
+import { URL_BASE } from '../../../services/config';
+import { RouterTwoTone } from '@material-ui/icons';
 // Import material component (toast)
 // Opcion crear componente de toast para reausarlo
 
 function Cita ({ children, title = 'Checa y Cuadra' }) {
-  const [accountUser, setAccountUser]=useState({})
+  
+  const router = useRouter()
+  const {id} = router.query
+  const code = router.query.code
+  console.log("code google", code)
+  
+  const [accountUser, setAccountUser]=useState({
+    name:"",
+    lastname:"",
+    degree:"",
+    degreeId:"",
+    profileImage:"",
+    description:"",
+    role:"",
+    evaluation:"",
+    specialities:"",
+    address:{
+      town:"",
+      state:""
+    },
+    Schedule:{
+      costHour:"",
+    }
+  })
   // Fetch de seleccion de card
-  let data = localStorage.getItem("post");
-  let id = JSON.parse(data);
-  console.log('id cita',id)
-  // localStorage.clear(); //clean the localstorage
-  const endpoint=`http://localhost:8000/account/${id}`
-  
-  
+ 
   useEffect(() => {
-    fetch(`${endpoint}`).then((res) => {
-      res.json().then((value) => {
-        console.log('resultado value', value)
-        setAccountUser(value)
-        // setUsers(data.payload)
+    
+    console.log("llega el id <use effect>",router)
+    if(router.isReady){
+      const endpoint=`http://localhost:8000/account/${id}`
+    
+      console.log(endpoint)
+      const optionsAccount = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }
+      console.log(endpoint)
+      fetch(`${endpoint}`,optionsAccount).then((res) => {
+        res.json().then((value) => {
+          console.log('resultado value', value)
+          setAccountUser(value)
+          // setUsers(data.payload)
+        })
       })
-    })
-  }, [])
+    }
+    
+  }, [id])
 
-  const {name, lastname, degree,degreeId,profileImage, description, role, evaluation, address, Schedule} = accountUser
-  const token = sessionStorage.getItem('token')
+  const {name, lastname, degree,degreeId,profileImage, description, role, evaluation, specialities, address, Schedule} = accountUser
+
   
-  const router = useRouter(); 
+
+  // proceso de pago
   const statusPayment = router.query.collection_status
 
-
+  console.log(statusPayment)
 
     // const token = localStorage.getItem('datauser')
     
@@ -52,21 +86,26 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       return response.json()
     }
 
+    // const token = sessionStorage.getItem('token')
+    //   console.log(token.token)
+    //   console.log(token)  
+
+
     // Enviar el post de cita con el boton de confirmar cita
     const handlerAuthGoogle = async (e)=>{
       e.preventDefault()
-
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MWVjM2I4NjYyZDQ0NzBlMzZmYjAwNDUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTY0Mjg3MTcwMX0.o03cOXtbt1svKO3BhwotZ1OEl-SaHH_mbRAydzL4gS0"
+      const token = sessionStorage.getItem('token')
+      console.log("tokenn en el handler",token)
       const endpointMeeting = 'http://localhost:8000/metting'
       const endpointAuthGoogle = 'http://localhost:8000/google/auth'
 
       if(statusPayment === "approved"){
           const data = {
-            userAccount:"61dfb63142eee3cf8d16de99",
+            userAccount: id,
             starDate:"2022-01-24T17:00",
             endDateTime:"2022-01-24T18:00",
-            title:"consultoria Kraken rules",
-            unit_price:"10000",
+            title:`consultoria ${name} ${lastname}`,
+            unit_price:Schedule.costHour,
             quantity:"1",
             statusPayment: statusPayment  
           }
@@ -113,6 +152,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       {children}
       <Appointment 
       handlerAuthGoogle = {handlerAuthGoogle}
+      id = {id}
       name = {name}
       lastname ={lastname}
       degree = {degree}
@@ -121,9 +161,9 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       description = {description}
       role={role}
       evaluation= {evaluation}
+      specialities = {specialities}
       address ={address}
       Schedule = {Schedule}
-      
       />
         {statusPayment && (<Snackbar statusPayment={statusPayment} /> )}
       <FooterPage />
