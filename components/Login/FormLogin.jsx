@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
@@ -32,31 +31,42 @@ const FormLogin = ({ rol }) => {
 
   const router = useRouter()
 
-  const dataLogin = async (data) => {
-    let direction = ''
+  async function LoginAccount (url, data) {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }
+    console.log(data)
+    const response = await fetch(url, options)
+    console.log('response fetch',response)
+    return response.json()
 
+  }
+
+  const dataLogin = async (data) => {
+    let direction=''
     if (rol === 'Contador') direction = 'http://localhost:8000/auth/account'
     else direction = 'http://localhost:8000/auth/users'
 
-    if (sessionStorage.getItem('token')) {
-      sessionStorage.removeItem('token')
-    }
-
     try {
-      const result = await LoginAccount(direction, data)
-      const res = await result.json()
-      console.log(res.status)
-      if (res.status) {
-        console.log('se creo el token y se almaceno')
-        const response={
-          token:res.token,
-          id:res.sub,
-          role:res.role
-        }
-        
+      if (sessionStorage.getItem('token')) {
+        sessionStorage.removeItem('token')
+      }
 
-        sessionStorage.setItem('token', JSON.stringify(response))
-        // localStorage.setItem('user-info', JSON.stringify(res.token))
+      const res = await LoginAccount(direction, data)
+
+      // console.log('recibiendo el fetch',response)
+
+      console.log('mostrando estatus',res.status)
+      console.log('mostrando completo', res)
+      
+      if (res.status) {
+        console.log('se creo el token y se almaceno',res.token)
+        sessionStorage.setItem('token',res.token)
+   
         setLoading(false)
        
         router.push(`${URL_BASE}/principal/Buscador`)
