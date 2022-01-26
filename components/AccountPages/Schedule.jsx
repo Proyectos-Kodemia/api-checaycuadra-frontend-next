@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Stack, Typography, Box } from '@mui/material'
+import { Button, Stack, Typography, Box } from '@mui/material'
 import moment from 'moment'
 import 'moment/locale/es'
 import isWeekend from 'date-fns/isWeekend'
@@ -8,11 +8,67 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import StaticDatePicker from '@mui/lab/StaticDatePicker'
 import TimePicker from '@mui/lab/TimePicker'
+import Collapse from '@mui/material/Collapse'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { TransitionGroup } from 'react-transition-group'
+
+const Horas = [
+  '9:00',
+  '10:00',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+  '17:00',
+  '18:00',
+  '19:00'
+
+]
+console.log(Horas)
+function renderItem ({ item, handleRemoveHour }) {
+  return (
+    <ListItem
+      sx={{ textAlign: 'center' }}
+      secondaryAction={
+        <IconButton
+          edge='end'
+          aria-label='delete'
+          title='Delete'
+          onClick={() => handleRemoveHour(item)}
+        >
+          <DeleteIcon />
+        </IconButton>
+      }
+    >
+      <ListItemText primary={item} sx={{ backgroundColor: '#2388C6;', color: 'white' }} />
+    </ListItem>
+  )
+}
+
+const Confirmar = (
+  <Button
+    sx={{ backgroundColor: '#2388C6;', color: 'white' }}
+    variant='contained'
+    onClick='confirmarHorario' // accion
+  >
+    Confirmar Horario
+  </Button>
+)
 
 function Schedule () {
   const [selectedDate, changeDate] = useState(moment())
   const [selectedStar, changeStar] = useState(moment())
-  const [selectedEnd, changeEnd] = useState(moment())
+
+  // const add = Horas.push(selectedStar)
+  // console.log(add)
+  const hourSelected = (moment(selectedStar).hour())
+  const hourFormat = moment().day(hourSelected).format('LT')
+  console.log(hourFormat)
 
   const daySelected = (moment(selectedDate).date())
   const numberWeek = (moment(selectedDate).day())
@@ -39,12 +95,11 @@ function Schedule () {
   const nameMonth = moment().month(numberMonth).format('MMMM')
   // console.log(nameMonth)
 
-  const nextNumber = (moment(selectedDate).day())
-  const nextName = moment().day(numberWeek).format('dddd')
-  // console.log(nextName)
+  const [InBasket, setInBasket] = React.useState(Horas.slice())
 
-  // console.log(moment(selectedStar).hour())
-  // console.log(moment(selectedEnd).hour())
+  const handleRemoveHour = (item) => {
+    setInBasket((prev) => [...prev.filter((i) => i !== item)])
+  }
 
   return (
     <>
@@ -52,10 +107,13 @@ function Schedule () {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        p: 15,
-        backgroundColor: 'primary.dark'
+        m: 1
+
       }}
       >
+        <Typography className='typografyPerfil' align='center' variant='h4' component='div'>Calendario</Typography>
+        <br />
+        <br />
 
         <Box sx={{ p: 2, width: 450, fontSize: '3 rem', fontWeight: '700' }}>
           1. Selecciona el dia<br />
@@ -76,14 +134,12 @@ function Schedule () {
             />
           </LocalizationProvider>
         </Box>
+        <br />
         <Box sx={{ p: 2, width: 450, fontSize: '3 rem', fontWeight: '700' }}>
-          2. Selecciona el horario<br /><br />
+          2. Selecciona mas horas<br /><br />
         </Box>
-        <Box sx={{ mx: 'auto', width: 450, textAlign: 'start', fontSize: '3 rem', fontWeight: '500' }}>
 
-          <p> Hora inicial</p>
-        </Box>
-        <Box sx={{ textAling: 'center', mx: 'auto' }}>
+        <Box sx={{ textAling: 'center', mx: 'auto', mb: 5 }}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <TimePicker
               value={selectedStar}
@@ -92,74 +148,44 @@ function Schedule () {
             />
           </LocalizationProvider>
         </Box>
+
         <br /><br />
-        <Box sx={{ mx: 'auto', width: 450, textAlign: 'start', fontSize: '3 rem', fontWeight: '500' }}>
-          <p> Hora Final</p>
-        </Box>
-        <Box sx={{ textAling: 'center', mx: 'auto' }}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <TimePicker
-              value={selectedEnd}
-              onChange={changeEnd}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
-        </Box><br /><br />
+
         <Box sx={{ p: 2, width: 450, fontSize: '3 rem', fontWeight: '700' }}>
           3. Confirma el horario
         </Box>
-        <Box sx={{ mx: 'auto', width: 450, textAlign: 'start', fontSize: '3 rem', fontWeight: '500' }}>
-          <Typography sx={{ fontWeight: 'bold', color: '#00244C', mb: 3 }} align='center' variant='h4' component='div'> {nameMonth}</Typography>
+        <Box sx={{ mx: 'auto', width: 450, textAlign: 'start', fontWeight: '500' }}>
+
+          <Typography sx={{ fontWeight: 'bold' }} align='center' variant='h4' component='div' style={{ margin: '1rem' }}>
+            {nameMonth}
+          </Typography>
+          <Typography sx={{ color: '#00244C' }} align='center' variant='h5' component='div'>
+            {nameWeek}
+          </Typography>
+          <Typography sx={{ color: '#00244C' }} align='center' variant='h6' component='div' style={{ marginBottom: '1rem' }}>
+            {daySelected}
+          </Typography>
         </Box>
+      </Box>
 
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            bgcolor: 'background.paper',
-            borderRadius: 1
-          }}
-        >
+      <Box sx={{ mx: 'auto', width: 300 }}>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', width: 120, ml: 3, border: 1, p: 2 }}>
-            <Typography variant='h6' component='div'>
-              {nextName}
-              <br />
-              {daySelected}
-            </Typography>
-
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'center', width: 120, ml: 3, border: 1, p: 2 }}>
-            <Typography variant='h6' component='div'>
-              {nextName1}
-              <br />
-              {nextNumber1}
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'center', width: 120, ml: 3, border: 1, p: 2 }}>
-            <Typography variant='h6' component='div'>
-              {nextName2}
-              <br />
-              {nextNumber2}
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'center', width: 120, ml: 3, border: 1, p: 2 }}>
-            <Typography variant='h6' component='div'>
-              {nextName3}
-              <br />
-              {nextNumber3}
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'center', width: 120, ml: 3, border: 1, p: 2 }}>
-            <Typography variant='h6' component='div'>
-              {nextName4}
-              <br />
-              {nextNumber4}
-            </Typography>
-          </Box>
-        </Box>
+        <List>
+          <TransitionGroup>
+            {InBasket.map((item) => (
+              <Collapse key={item} sx={{ pl: 5 }}>
+                {renderItem({ item, handleRemoveHour })}
+              </Collapse>
+            ))}
+          </TransitionGroup>
+        </List>
 
       </Box>
+
+      <Box sx={{ mx: 'auto', width: 150, mt: 5 }}>
+        {Confirmar}
+      </Box>
+
     </>
 
   )

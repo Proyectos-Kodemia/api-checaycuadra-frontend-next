@@ -1,22 +1,16 @@
 import React, { useState } from 'react'
-import { Box, Toolbar } from '@mui/material'
-
-import { ThemeProvider } from '@material-ui/core/styles'
-
-import Navandslider from '../../components/AccountPages/Navandslider'
+import Layout from '../../components/Layout'
+import LateralBar from '../../components/Perfil/LateralBar'
 import Schedule from '../../components/AccountPages/Schedule'
-import Form from '../../components/Perfil/FormPerfil'
 
 function calendar () {
-  const drawerWidth = 240
-
   return (
-    <>
-
-      <Navandslider />
+    <div>
+      <Layout>
       <Schedule />
 
-    </>
+    </Layout>
+    </div>
   )
 }
 export default calendar
