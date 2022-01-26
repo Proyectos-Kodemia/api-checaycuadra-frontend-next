@@ -8,9 +8,9 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
-
-function Cards ({id, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) {
+function Cards ({idAccount, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) {
   let val, ubication, hourCost, valDegree
   if (evaluation > 6 || evaluation < 0 || !evaluation) val = 0
   else val = evaluation
@@ -30,18 +30,20 @@ function Cards ({id, name, lastname, degree, profileImage, description, role, ev
   if (!degree) valDegree = 'No disponible'
   else valDegree = degree
 
-  console.log(id, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule)
+  console.log(idAccount, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule)
 
  
 
   const handlerSendSpecificCard =()=>{
-    localStorage.clear();
-    localStorage.setItem("post", JSON.stringify(id));
-    router.push(`${URL_BASE}/principal/Cita`)
     
-    console.log("enviar")
-    console.log(">>>>>>")
-    console.log("este es el _id", id)
+    // router.push({
+    //   pathname:`${URL_BASE}/principal/Cita/[id]`,
+    //   query:{id:id}
+    // })
+
+
+
+    
   }
 
 
@@ -92,10 +94,17 @@ function Cards ({id, name, lastname, degree, profileImage, description, role, ev
         </Typography>
       </CardContent>
       <div className='divButton'>
+        <Link href={{
+          pathname:`${URL_BASE}/principal/cita/[id]`,
+          query:{id:idAccount},
+        }}
+        >
         <Button 
         className='buttonCard '
         onClick={handlerSendSpecificCard}
-        >AGENDAR CITA</Button>
+        >AGENDAR CITA
+        </Button>
+        </Link>
       </div>
     </Card>
   )
