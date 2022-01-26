@@ -4,7 +4,7 @@ import { Box } from '@mui/material'
 import moment from 'moment'
 import 'moment/locale/es'
 
-import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { DatePicker, TimePicker, MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 const drawerWidth = 240
 
 function Schedule () {
@@ -48,7 +48,6 @@ function Schedule () {
           />
         </MuiPickersUtilsProvider>
 
-        
       </Box>
       <Box sx={{ p: 2, mx: 'auto', width: 450, fontSize: '3 rem', fontWeight: '700' }}>
         2. Selecciona el horario

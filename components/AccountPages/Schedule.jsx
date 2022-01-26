@@ -10,16 +10,15 @@ import StaticDatePicker from '@mui/lab/StaticDatePicker'
 
 import TimePicker from '@mui/lab/TimePicker'
 
-
-function Schedule() {
+function Schedule () {
   const [selectedDate, changeDate] = useState(moment())
   const [selectedStar, changeStar] = useState(moment())
   const [selectedEnd, changeEnd] = useState(moment())
 
-  console.log(selectedDate)
+  console.log(moment(selectedDate).dayOfYear())
   // console.log(selectedDate.dayOfYear())
-  console.log(selectedStar.hour())
-  console.log(selectedEnd.hour())
+  console.log(moment(selectedStar).hour())
+  console.log(moment(selectedEnd).hour())
 
   return (
     <>
@@ -37,7 +36,7 @@ function Schedule() {
         <Box sx={{ textAling: 'center', p: 2 }}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <StaticDatePicker
-              format="MM-DD-YYYY"
+              format='MM-DD-YYYY'
               orientation='portrait'
               openTo='day'
               value={moment('selectedDate')}
@@ -87,10 +86,8 @@ function Schedule() {
           <p> calendario</p>
         </Box>
 
-
       </Box>
     </>
-
 
   )
 }

@@ -9,7 +9,7 @@ import RestoreIcon from '@mui/icons-material/Restore'
 import FormPerfil from './FormPerfil'
 import FormUser from './FormUser'
 import Schedule from '../AccountPages/Schedule'
-import Calendario from '../AccountPages/Calendario'
+import CalendarioPicker from '../AccountPages/CalendarioPicker'
 import styles from './LateralBar.module.scss'
 
 function TabPanel (props) {
@@ -78,10 +78,10 @@ function LateralBar () {
           <FormUser />
         </TabPanel>
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={2}>
-          <Calendario />
+          <CalendarioPicker />
         </TabPanel>
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={3}>
-          Item Four
+          <Schedule />
         </TabPanel>
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={4}>
           Item Five
