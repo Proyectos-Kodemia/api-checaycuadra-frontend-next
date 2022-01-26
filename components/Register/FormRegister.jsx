@@ -38,16 +38,34 @@ function FormRegister ({ rol }) {
 
   const [showPassword, setShowPassword] = useState(false)
 
+  const router = useRouter()
+
+  async function sendFetchNoToken (url, data) {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }
+    const response = await fetch(url, options)
+    return response.json()
+  }
+
   const dataLogin = async (data) => {
     let direction = ''
 
     console.log(data)
-    if (rol === 'Contador') direction = 'http://localhost:8000/auth/account'
-    else direction = 'http://localhost:8000/auth/users'
+    if (rol === 'Contador') direction = 'http://localhost:8000/account'
+    else direction = 'http://localhost:8000/users'
 
     if (sessionStorage.getItem('token')) {
       sessionStorage.removeItem('token')
     }
+    // aqui pondriamos aviso al usuario que se creo correctamente
+    const response = sendFetchNoToken(direction, data)
+
+    router.push(`${URL_BASE}/Cuenta/LoginPage`)
   }
 
   const handleClickShowPassword = () => setShowPassword(!showPassword)

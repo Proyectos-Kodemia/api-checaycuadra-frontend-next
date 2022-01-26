@@ -1,5 +1,5 @@
 
-// import { URL_BASE } from '../../../services/config'
+import { URL_BASE } from '../../../services/config'
 import { Card, CardContent, Typography, Rating, Button } from '@mui/material'
 import imageCard from '../../../images/LogoCard.svg'
 import Image from 'next/image'
@@ -7,8 +7,10 @@ import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
-function Cards ({ id, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) {
+function Cards ({idAccount, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) {
   let val, ubication, hourCost, valDegree
   if (evaluation > 6 || evaluation < 0 || !evaluation) val = 0
   else val = evaluation
@@ -16,6 +18,8 @@ function Cards ({ id, name, lastname, degree, profileImage, description, role, e
   if (!profileImage) {
     profileImage = imageCard
   }
+ 
+  const router=useRouter()
 
   if (!address) ubication = 'No disponible'
   else ubication = `${address.town}, ${address.state}`
@@ -26,10 +30,27 @@ function Cards ({ id, name, lastname, degree, profileImage, description, role, e
   if (!degree) valDegree = 'No disponible'
   else valDegree = degree
 
-  console.log(id, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule)
+  console.log(idAccount, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule)
+
+ 
+
+  const handlerSendSpecificCard =()=>{
+    
+    // router.push({
+    //   pathname:`${URL_BASE}/principal/Cita/[id]`,
+    //   query:{id:id}
+    // })
+
+
+
+    
+  }
+
+
 
   return (
     <Card className='containerCard'>
+      
       <div className='headCard'>
         <div>
           <Image className='imgCard' src={profileImage} alt={name} />
@@ -73,7 +94,17 @@ function Cards ({ id, name, lastname, degree, profileImage, description, role, e
         </Typography>
       </CardContent>
       <div className='divButton'>
-        <Button className='buttonCard '>AGENDAR CITA</Button>
+        <Link href={{
+          pathname:`${URL_BASE}/principal/cita/[id]`,
+          query:{id:idAccount},
+        }}
+        >
+        <Button 
+        className='buttonCard '
+        onClick={handlerSendSpecificCard}
+        >AGENDAR CITA
+        </Button>
+        </Link>
       </div>
     </Card>
   )

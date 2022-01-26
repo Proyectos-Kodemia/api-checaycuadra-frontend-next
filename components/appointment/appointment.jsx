@@ -5,14 +5,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 const endpoint = 'http://localhost:8000/mercadopago/checkout'
 
-const servicio = {
-  title: 'consultoria',
-  unit_price: '1000',
-  quantity: '1'
-}
-
-// mode: 'no-cors'
-
 async function LoginAccount (url, credentials) {
   console.log('entrando a la funcion')
   const options = {
@@ -27,7 +19,14 @@ async function LoginAccount (url, credentials) {
   return response.json()
 }
 
-function Appointment () {
+function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
+  const servicio = {
+    title: 'consultoria',
+    unit_price: Schedule.costHour,
+    quantity: '1',
+    id: id
+  }
+
   const handlerPago = (e) => {
     console.log('entrando al handler')
     e.preventDefault()
@@ -40,6 +39,12 @@ function Appointment () {
       })
   }
 
+  console.log('campo especialista inicial', specialities)
+  const listEspecialities = specialities[0]
+  // .map((item, index) =>( <span key={index}>{item}</span>))
+  console.log('campo especialista despues del map', listEspecialities)
+
+  console.log(name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule)
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
@@ -47,20 +52,20 @@ function Appointment () {
           <CardMedia
             component='img'
             sx={{ width: 250, margin: 3, borderRadius: 4 }}
-            image='https://media-exp1.licdn.com/dms/image/C4E03AQFLWyN2KG8eZw/profile-displayphoto-shrink_200_200/0/1642529783595?e=1648080000&v=beta&t=pJtCPe8HmFsi05fx4ad-rqHlg2ENSnhMkNUioRXFp_Y'
+            image={profileImage}
           />
 
           <CardContent sx={{ width: 220, margin: 3, marginTop: 6 }}>
             <Typography variant='h6' style={{ fontWeight: '600' }}>
-              Ana Paula Gomez
+              {name} {lastname}
             </Typography>
             <br />
             <Typography variant='subtitle1'>
-              Contador Publico
+              {degree}
             </Typography>
             <br />
             <Typography variant='body2'>
-              Cedula 123443455656
+              Cedula {degreeId}
             </Typography>
           </CardContent>
         </Box>
@@ -81,18 +86,23 @@ function Appointment () {
                   <img src='/icons/iconsCard2/especialidad.svg' alt='especialidad' ml={0} />
                 </ListItemIcon>
                 <ListItemText primary='Especialista en: ' />
+                {specialities}
               </ListItem>
-              <ListItem disableGutters>
-                <ListItemIcon>
-                  <img src='/icons/iconsCard2/price.svg' alt='price' ml={0} />
-                </ListItemIcon>
-                <ListItemText primary='MXN' />
-              </ListItem>
+              {Schedule?.costHour &&
+                <ListItem disableGutters>
+                  <ListItemIcon>
+                    <img src='/icons/iconsCard2/price.svg' alt='price' ml={0} />
+                  </ListItemIcon>
+                  {Schedule?.costHour || 'NA'}
+                  <ListItemText primary='MXN' />
+                </ListItem>}
               <ListItem disableGutters>
                 <ListItemIcon>
                   <img src='/icons/iconsCard2/local.svg' alt='local' ml={0} />
                 </ListItemIcon>
                 <ListItemText primary='Ubicacion:' />
+                {address?.town}, {address?.state}
+
               </ListItem>
             </List>
             <Typography variant='h5'>
@@ -100,7 +110,7 @@ function Appointment () {
             </Typography>
             <br />
             <Typography variant='body1'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lacus ut etiam quam lacus, neque, nibh consectetur. Velit vulputate tortor amet vulputate. Ipsum semper.
+              {description}
             </Typography>
           </CardContent>
         </Box>
@@ -116,7 +126,7 @@ function Appointment () {
       <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
 
         <Button
-        // href='../../pages/Cuenta/RegisterPage.js'
+          // href='../../pages/Cuenta/RegisterPage.js'
           onClick={handlerPago}
           variant='contained'
           disableElevation
@@ -126,13 +136,13 @@ function Appointment () {
         </Button>
         <Button
           // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerPago}
+          onClick={handlerAuthGoogle}
           variant='contained'
           disableElevation
           size='large'
           marginRigth='0'
           endIcon={<ArrowForwardIcon />}
-        >Realizar Pago
+        >Confirmar Cita
         </Button>
       </Box>
     </>
