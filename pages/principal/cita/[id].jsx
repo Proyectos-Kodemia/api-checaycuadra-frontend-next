@@ -14,8 +14,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
   
   const router = useRouter()
   const {id} = router.query
-  const code = router.query.code
-  console.log("code google", code)
+
   
   const [accountUser, setAccountUser]=useState({
     name:"",
@@ -118,8 +117,24 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
             },
             body: JSON.stringify(data)
           }
-          const response = await fetch(endpointMeeting, optionsMeeting)
+          const response = await fetch(endpointMeeting, optionsMeeting).then((res) => {
+            res.json().then((value) => {
+              console.log('Objeto Id cita', value)
+
+              const idMeeting = value.payload.meetCreated._id
+              
+              console.log("id Meeting",idMeeting)
+
+              return idMeeting
+            })
+          })
+
+
+
+          
+          console.log("response Prueba Id", responsePrueba)
           // Obtener el id de la cita 
+      
 
           const optionsAuthGoogle = {
             method: 'POST',
@@ -132,7 +147,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
 
           await LoginAccount(endpointAuthGoogle)
           .then(response =>{
-            location.href = response.payload.authUrl
+            // location.href = response.payload.authUrl
             })
           .catch(error =>{
             console.log(error)
