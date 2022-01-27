@@ -26,7 +26,7 @@ const Horas = [
   '15:00',
   '17:00',
   '18:00',
-  '19:00'
+  '19:00',
 
 ]
 console.log(Horas)
@@ -67,29 +67,14 @@ function Schedule () {
   // const add = Horas.push(selectedStar)
   // console.log(add)
   const hourSelected = (moment(selectedStar).hour())
-  const hourFormat = moment().day(hourSelected).format('LT')
-  console.log(hourFormat)
+  const hourFormat = moment().hour(hourSelected).format('LT')
+  console.log('hora buena', hourFormat)
+  console.log('hora buena', hourSelected)
 
   const daySelected = (moment(selectedDate).date())
   const numberWeek = (moment(selectedDate).day())
   const nameWeek = moment().day(numberWeek).format('dddd')
   console.log(daySelected, nameWeek)
-
-  const nextNumber1 = moment().date(daySelected).add(1, 'd').date()
-  const nextName1 = moment().date(daySelected).add(1, 'd').format('dddd')
-  console.log(nextNumber1, nextName1)
-
-  const nextNumber2 = moment().date(daySelected).add(2, 'd').date()
-  const nextName2 = moment().date(daySelected).add(2, 'd').format('dddd')
-  console.log(nextNumber2, nextName2)
-
-  const nextNumber3 = moment().date(daySelected).add(3, 'd').date()
-  const nextName3 = moment().date(daySelected).add(3, 'd').format('dddd')
-  console.log(nextNumber3, nextName3)
-
-  const nextNumber4 = moment().date(daySelected).add(4, 'd').date()
-  const nextName4 = moment().date(daySelected).add(4, 'd').format('dddd')
-  console.log(nextNumber4, nextName4)
 
   const numberMonth = (moment(selectedDate).month())
   const nameMonth = moment().month(numberMonth).format('MMMM')
@@ -101,6 +86,7 @@ function Schedule () {
     setInBasket((prev) => [...prev.filter((i) => i !== item)])
   }
 
+  console.log('hora puesta', selectedStar)
   return (
     <>
       <Box sx={{
@@ -144,6 +130,7 @@ function Schedule () {
             <TimePicker
               value={selectedStar}
               onChange={changeStar}
+              views='hours'
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>

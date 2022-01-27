@@ -29,16 +29,17 @@ function NavPage () {
 
   const handlerLogout = (e) => {
     e.preventDefault()
-    sessionStorage.removeItem('token')
+    window.sessionStorage.removeItem('token')
+    window.sessionStorage.removeItem('role')
     setSessionOn(false)
     router.push(`${URL_BASE}/principal/Buscador`)
   }
 
   useEffect(() => {
-    if (typeof sessionStorage !== 'undefined') {
-      console.log('entro a session storage')
-      if (sessionStorage.getItem('token')) {
-        console.log('agrego datos a useState')
+    if (typeof window.sessionStorage !== 'undefined') {
+      // console.log('entro a session storage')
+      if (window.sessionStorage.getItem('token')) {
+        // console.log('agrego datos a useState')
         setSessionOn(true)
       } else {
         console.log('error en session storage')
@@ -50,14 +51,16 @@ function NavPage () {
     <Navbar bg='light' expand='lg'>
       <Container>
         <div>
-          <a href={`${URL_BASE}/principal/Buscador`}> <img src='/icons/Logo.svg' alt='Logo' width={200} height={100} /> </a>
+          <a href={`${URL_BASE}/`}> 
+            <img src='/icons/Logo.svg' alt='Logo' width={200} height={100} /> 
+          </a>
         </div>
         <div>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Nav className='me-auto'>
-            <Nav.Link href={`${URL_BASE}/principal/Buscador`}>Inicio</Nav.Link>
+            <Nav.Link href={`${URL_BASE}/`}>Inicio</Nav.Link>
             <Nav.Link href='#Asi funciona'>Asi funciona</Nav.Link>
-            <Nav.Link href='#Profesionales'>Profesionales</Nav.Link>
+            <Nav.Link href={`${URL_BASE}/principal/Buscador`}>Profesionales</Nav.Link>
           </Nav>
         </div>
         <div>

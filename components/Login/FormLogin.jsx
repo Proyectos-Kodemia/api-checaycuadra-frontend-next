@@ -10,6 +10,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import imageLogin from '../../images/graphLogin.svg'
+
 import { URL_BASE } from '../../services/config'
 
 const schema = yup.object({
@@ -49,8 +50,12 @@ const FormLogin = ({ rol }) => {
     else direction = 'http://localhost:8000/auth/users'
 
     try {
-      if (sessionStorage.getItem('token')) {
-        sessionStorage.removeItem('token')
+      if (window.sessionStorage.getItem('token')) {
+        window.sessionStorage.removeItem('token')
+      }
+
+      if (window.sessionStorage.getItem('token')) {
+        window.sessionStorage.removeItem('token')
       }
 
       const res = await LoginAccount(direction, data)
@@ -62,7 +67,8 @@ const FormLogin = ({ rol }) => {
 
       if (res.status) {
         console.log('se creo el token y se almaceno', res.token)
-        sessionStorage.setItem('token', res.token)
+        window.sessionStorage.setItem('token', res.token)
+        window.sessionStorage.setItem('role', rol)
 
         setLoading(false)
 
