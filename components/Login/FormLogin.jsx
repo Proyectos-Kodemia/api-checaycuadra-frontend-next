@@ -12,8 +12,6 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import imageLogin from '../../images/graphLogin.svg'
 import { URL_BASE } from '../../services/config'
 
-import LoginAccount from './LoginAccount'
-
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres'),
   password: yup.string().required('El campo es requerido')
@@ -129,9 +127,18 @@ const FormLogin = ({ rol }) => {
           <span id='passwordHelp' className='mb-4 error text-danger'>{errors.password?.message}</span>
           <Button
             type='submit'
-            className='buttonStyle mb-2'
             variant='contained'
             fullWidth
+            sx={{
+              bgcolor: '#00244C',
+              py: 1,
+              mt: 1,
+              mb: 1,
+              '& hover': {
+                bgcolor: '#00244C'
+              }
+
+            }}
           >
             Iniciar sesión
           </Button>
