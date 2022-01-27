@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Button, Stack, Typography, Box } from '@mui/material'
 import moment from 'moment'
 import 'moment/locale/es-mx'
+
 import isWeekend from 'date-fns/isWeekend'
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import locale from 'date-fns/locale/es'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import StaticDatePicker from '@mui/lab/StaticDatePicker'
 import StaticTimePicker from '@mui/lab/StaticTimePicker'
@@ -16,20 +18,6 @@ import ListItemText from '@mui/material/ListItemText'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { TransitionGroup } from 'react-transition-group'
 
-const Horas = [
-  '9:00',
-  '10:00',
-  '11:00',
-  '12:00',
-  '13:00',
-  '14:00',
-  '15:00',
-  '17:00',
-  '18:00',
-  '19:00'
-
-]
-console.log(Horas)
 function renderItem ({ item, handleRemoveHour }) {
   return (
     <ListItem
@@ -61,15 +49,25 @@ const Confirmar = (
 )
 
 function Schedule () {
+  const [theArray, setTheArray] = useState([])
+  const [selectedHour, setSelecterHour] = useState(moment())
+
+  const changeHour = (newValue) => {
+    const newHour = (moment(newValue).hour())
+    if (!theArray.includes(newHour)) {
+      setSelecterHour(newHour)
+      setTheArray(array => [...array, `${newHour}:00`])
+
+      console.log(newHour)
+    }
+  }
+  console.log(theArray)
+
+  const handleRemoveHour = (item) => {
+    setTheArray((prev) => [...prev.filter((i) => i !== item)])
+  }
+
   const [selectedDate, changeDate] = useState(moment())
-  const [selectedStar, changeStar] = useState(moment())
-
-  // const add = Horas.push(selectedStar)
-  // console.log(add)
-  const hourSelected = (moment(selectedStar).hour())
-  const hourFormat = moment().hour(hourSelected).format('H')
-  console.log(hourFormat)
-
   const daySelected = (moment(selectedDate).date())
   const numberWeek = (moment(selectedDate).day())
   const nameWeek = moment().day(numberWeek).format('dddd')
@@ -78,13 +76,6 @@ function Schedule () {
   const numberMonth = (moment(selectedDate).month())
   const nameMonth = moment().month(numberMonth).format('MMMM')
   console.log(nameMonth)
-
-  const [InBasket, setInBasket] = React.useState(Horas.slice())
-
-  const handleRemoveHour = (item) => {
-    setInBasket((prev) => [...prev.filter((i) => i !== item)])
-  }
-
   return (
     <>
       <Box sx={{
@@ -103,13 +94,14 @@ function Schedule () {
           1. Selecciona el dia<br />
         </Box>
         <Box sx={{ textAling: 'center', mx: 'auto', mb: 5 }}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} locale={locale}>
             <StaticDatePicker
               format='MM-DD-YYYY'
               orientation='portrait'
               openTo='day'
               value='selectedDate'
               disablePast='true'
+              toolbarTitle=''
               shouldDisableDate={isWeekend}
               onChange={(newValue) => {
                 changeDate(newValue)
@@ -120,23 +112,27 @@ function Schedule () {
         </Box>
         <br />
         <Box sx={{ p: '2 2 0 2', width: 450, fontSize: '3 rem', fontWeight: '700' }}>
-          2. Selecciona mas horas<br /><br />
+          2. Selecciona tu horario disponible<br /><br />
           <Box sx={{ fontSize: '0 rem', fontWeight: '200' }}>
             Recuerda solo se utilizan horas completas<br /><br />
           </Box>
         </Box>
-
         <Box sx={{ textAling: 'center', mx: 'auto', mb: 5 }}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <StaticTimePicker
-              displayStaticWrapperAs='mobile'
-              value={selectedStar}
-              onChange={changeStar}
-              renderInput={(params) => <TextField {...params} />}
+              toolbarTitle=''
               views='hours'
-              am PM={false}
-
+              am PM='false'
+              orientation='landscape'
+              displayStaticWrapperAs='mobile'
+              value='selectedHour'
+              onClick='addEntryClick'
+              onChange={(newValue) => {
+                changeHour(newValue)
+              }}
+              renderInput={(params) => <TextField {...params} />}
             />
+
           </LocalizationProvider>
         </Box>
 
@@ -163,9 +159,10 @@ function Schedule () {
 
         <List>
           <TransitionGroup>
-            {InBasket.map((item) => (
-              <Collapse key={item} sx={{ pl: 5 }}>
+            {theArray.map((item) => (
+              <Collapse key={item}>
                 {renderItem({ item, handleRemoveHour })}
+
               </Collapse>
             ))}
           </TransitionGroup>
@@ -176,7 +173,7 @@ function Schedule () {
       <Box sx={{ mx: 'auto', width: 150, mt: 5 }}>
         {Confirmar}
       </Box>
-
+      <Box sx={{ mx: 'auto', width: 150, mt: 5 }} />
     </>
 
   )
@@ -185,6 +182,31 @@ function Schedule () {
 export default Schedule
 
 /*
+
+  {renderItem({ item: `${item}:00`, handleRemoveHour })}
+
+ <input type='button' onClick={addEntryClick} value='Add' />,
+ <List>
+          <TransitionGroup>
+
+            {theArray.map((entry) => (
+              <div>{entry}</div>
+
+            ))}
+
+          </TransitionGroup>
+        </List>
+
+   <List>
+          <TransitionGroup>
+            {InBasket.map((item) => (
+              <Collapse key={item}>
+                {renderItem({ item, handleRemoveHour })}
+              </Collapse>
+            ))}
+          </TransitionGroup>
+        </List>
+
   const dia = (moment(selectedDate).date())
   const dia2 = 2
   const dia3 = 3
