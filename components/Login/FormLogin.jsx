@@ -10,9 +10,8 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import imageLogin from '../../images/graphLogin.svg'
-import { URL_BASE } from '../../services/config'
 
-import LoginAccount from './LoginAccount'
+import { URL_BASE } from '../../services/config'
 
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres'),
@@ -51,8 +50,12 @@ const FormLogin = ({ rol }) => {
     else direction = 'http://localhost:8000/auth/users'
 
     try {
-      if (sessionStorage.getItem('token')) {
-        sessionStorage.removeItem('token')
+      if (window.sessionStorage.getItem('token')) {
+        window.sessionStorage.removeItem('token')
+      }
+
+      if (window.sessionStorage.getItem('token')) {
+        window.sessionStorage.removeItem('token')
       }
 
       const res = await LoginAccount(direction, data)
@@ -64,7 +67,8 @@ const FormLogin = ({ rol }) => {
 
       if (res.status) {
         console.log('se creo el token y se almaceno', res.token)
-        sessionStorage.setItem('token', res.token)
+        window.sessionStorage.setItem('token', res.token)
+        window.sessionStorage.setItem('role', rol)
 
         setLoading(false)
 
@@ -129,9 +133,18 @@ const FormLogin = ({ rol }) => {
           <span id='passwordHelp' className='mb-4 error text-danger'>{errors.password?.message}</span>
           <Button
             type='submit'
-            className='buttonStyle mb-2'
             variant='contained'
             fullWidth
+            sx={{
+              bgcolor: '#00244C',
+              py: 1,
+              mt: 1,
+              mb: 1,
+              '& hover': {
+                bgcolor: '#00244C'
+              }
+
+            }}
           >
             Iniciar sesión
           </Button>

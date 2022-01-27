@@ -10,7 +10,7 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar }) {
     fetch(`${endpoint}`).then((res) => {
       res.json().then((data) => {
         setUsers(data.payload)
-        console.log(data.payload)
+        // console.log(data.payload)
       })
     })
   }, [])
@@ -21,7 +21,7 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar }) {
     fetch(direction).then((res) => {
       res.json().then((data) => {
         const val = parseInt(Object.keys(data.payload).length)
-        setUsers(data.payload)
+        // setUsers(data.payload)
         setResults(val)
         setBuscar('')
       })

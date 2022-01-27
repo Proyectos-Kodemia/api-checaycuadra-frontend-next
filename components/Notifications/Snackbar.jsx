@@ -1,32 +1,32 @@
-import * as React from 'react';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import { useState } from 'react';
+import * as React from 'react'
+// import Stack from '@mui/material/Stack'
+// import Button from '@mui/material/Button'
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert from '@mui/material/Alert'
+import { useState } from 'react'
 
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+const Alert = React.forwardRef(function Alert (props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
+})
 
-export default function CustomizedSnackbars({statusPayment}) {
-  const [isOpen, setIsOpen] = useState(true);
+export default function CustomizedSnackbars ({ statusPayment }) {
+  const [isOpen, setIsOpen] = useState(true)
 
   const callBack = () => {
     setIsOpen(false)
-  };
+  }
 
-  const severityOptions = (statusPayment)=>{
-    let result =""
+  const severityOptions = (statusPayment) => {
+    let result = ''
     switch (statusPayment) {
-      case "approved":
-        result = "success"
+      case 'approved':
+        result = 'success'
         break
-      case "failure":
-        result = "error"
+      case 'failure':
+        result = 'error'
         break
-      case "pending":
-        result = "warning"
+      case 'pending':
+        result = 'warning'
         break
       // default:
       //   result ="warning"
@@ -34,18 +34,18 @@ export default function CustomizedSnackbars({statusPayment}) {
     }
     return result
   }
-  
-  const messageOptions = (statusPayment)=>{
-    let result =""
+
+  const messageOptions = (statusPayment) => {
+    let result = ''
     switch (statusPayment) {
-      case "approved":
-        result = "Pago realizado exitosamente"
+      case 'approved':
+        result = 'Pago realizado exitosamente'
         break
-      case "failure":
-        result =  "Pago no realizado"
+      case 'failure':
+        result = 'Pago no realizado'
         break
-      case "pending":
-        result = "Pago no concluido"
+      case 'pending':
+        result = 'Pago no concluido'
         break
       // default:
       //   result ="Pago no realizado, intente de nuevo"
@@ -54,22 +54,23 @@ export default function CustomizedSnackbars({statusPayment}) {
     return result
   }
 
-
-  let severity = severityOptions(statusPayment)
-  let message = messageOptions(statusPayment)
-
+  const severity = severityOptions(statusPayment)
+  const message = messageOptions(statusPayment)
 
   return (
-  
-      <Snackbar
-        open={isOpen} 
-        autoHideDuration={6000} 
-        onClose={callBack}>
-        <Alert onClose={callBack} 
-        severity= {severity} 
-        x={{ width: '100%' }}>
-          {message}
-        </Alert>
-      </Snackbar>
-  );
+
+    <Snackbar
+      open={isOpen}
+      autoHideDuration={6000}
+      onClose={callBack}
+    >
+      <Alert
+        onClose={callBack}
+        severity={severity}
+        x={{ width: '100%' }}
+      >
+        {message}
+      </Alert>
+    </Snackbar>
+  )
 }

@@ -26,7 +26,7 @@ const Login = () => {
   }
 
   return (
-    <Grid>
+    <Grid align='center'>
       <Paper
         elevation={12} sx={{ p: 3, h: 560, width: 320, my: 10 }}
       >

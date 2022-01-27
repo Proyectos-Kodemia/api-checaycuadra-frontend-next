@@ -74,7 +74,9 @@ function Schedule () {
 
   const numberMonth = (moment(selectedDate).month())
   const nameMonth = moment().month(numberMonth).format('MMMM')
+
   console.log(nameMonth)
+
   return (
     <>
       <Box sx={{
