@@ -25,7 +25,7 @@ function Register () {
     setValue(newValue)
   }
   return (
-    <Grid>
+    <Grid align='center'>
       <Paper elevation={12} sx={{ p: 3, h: 560, width: 420, my: 10 }}>
         <Grid align='center'>
           <div className='regCount'>¡Bienvenido! Crea tu cuenta</div>
