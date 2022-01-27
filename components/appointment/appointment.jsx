@@ -104,6 +104,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
                 </ListItem>}
               <ListItem disableGutters>
                 <ListItemIcon>
+
                   <img src='/icons/iconsCard2/local.svg' alt='local' ml={0} />
                 </ListItemIcon>
                 <ListItemText primary='Ubicacion:' />
