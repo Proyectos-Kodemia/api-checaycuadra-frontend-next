@@ -1,7 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
 import imageLogin from '../../images/img1.jpg'
-import { URL_BASE } from '../../services/config'
 import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Avatar, CardContent, Chip } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
@@ -23,6 +22,7 @@ async function LoginAccount (url, credentials) {
 }
 
 function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
+  
   const servicio = {
     title: 'consultoria',
     unit_price: Schedule.costHour,
@@ -47,15 +47,14 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
   // console.log(name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule)
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
-        <Box sx={{ display: 'flex', margin: 3, h: 300, boxShadow: 2, borderRadius: 3 }}>
-          <Image src={imageLogin} sx={{ width: '50px' }}  />
-          {/* <Avatar alt={name} src={`${URL_BASE}/${imageLogin}`} /> */}
-          {/* <CardMedia
-            component='img'
-            sx={{ width: 250, height: 50, margin: 3, borderRadius: 4 }}
-            image={imageLogin}
-          /> */}
+      <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', margin: 2, height: 300, boxShadow: 2, borderRadius: 3 }}>
+          <Image
+            src={imageLogin}
+            layout='fixed'
+            width={200}
+            quality={100}
+          />
 
           <CardContent sx={{ width: 220, margin: 3, marginTop: 6 }}>
             <Typography variant='h6' style={{ fontWeight: '600' }}>
@@ -89,10 +88,10 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
                 </ListItemIcon>
                 <ListItemText primary='Especialista en: ' />
               </ListItem>
-              <ListItem>
-                {/* {specialities.map((index) => (
+              <ListItem sx={{ justifyContent: 'space-evenly' }}>
+                {specialities && specialities?.map((index) => (
                   <Chip key={index} align='center' label={index} variant='outlined' />
-                ))} */}
+                ))}
               </ListItem>
               {Schedule?.costHour &&
                 <ListItem disableGutters>
@@ -116,7 +115,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
               Acerca de mi:
             </Typography>
             <br />
-            <Typography variant='body1'>
+            <Typography variant='body1' sx={{ textAlign: 'justify' }}>
               {description}
             </Typography>
           </CardContent>
@@ -147,7 +146,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
           variant='contained'
           disableElevation
           size='large'
-          marginRigth='0'
+          sx={{ mr: 0 }}
           endIcon={<ArrowForwardIcon />}
         >Confirmar Cita
         </Button>

@@ -5,7 +5,7 @@ import NavPage from '../../../components/NavPage'
 import Appointment from '../../../components/appointment/appointment'
 import { useRouter } from "next/router";
 import Snackbar from '../../../components/Notifications/Snackbar'
-// import { URL_BASE } from '../../../services/config';
+
 // import { RouterTwoTone } from '@material-ui/icons';
 // Import material component (toast)
 // Opcion crear componente de toast para reausarlo

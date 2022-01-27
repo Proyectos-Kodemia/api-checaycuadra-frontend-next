@@ -1,5 +1,4 @@
 
-import { URL_BASE } from '../../../services/config'
 import { Card, CardContent, Typography, Rating, Button } from '@mui/material'
 import imageCard from '../../../images/LogoCard.svg'
 import Image from 'next/image'
@@ -10,8 +9,11 @@ import LocationOnIcon from '@mui/icons-material/LocationOn'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-function Cards ({ idAccount, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) {
+function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) {
+  
   let val, ubication, hourCost, valDegree
+  // console.log("datos completos", dataUser)
+  // console.log('datos incompletos', name, lastname, degree, profileImage, description, role, evaluation, address, Schedule )
   if (evaluation > 6 || evaluation < 0 || !evaluation) val = 0
   else val = evaluation
 
@@ -44,7 +46,7 @@ function Cards ({ idAccount, name, lastname, degree, profileImage, description, 
         </div>
       </div>
 
-      <div className='icons'>
+      <div className='iconsCard'>
         <div>
           <VideoCameraFrontIcon color='primary' /> Consultoria Online
         </div>
@@ -76,7 +78,7 @@ function Cards ({ idAccount, name, lastname, degree, profileImage, description, 
       </CardContent>
       <div className='divButton'>
         <Link href={{
-          pathname: `${URL_BASE}/principal/cita/[id]`,
+          pathname: '/principal/cita/[id]',
           query: { id: idAccount }
         }}
         >

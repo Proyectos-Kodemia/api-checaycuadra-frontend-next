@@ -11,7 +11,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import imageLogin from '../../images/graphLogin.svg'
 
-import { URL_BASE } from '../../services/config'
+
 
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres'),
@@ -72,7 +72,7 @@ const FormLogin = ({ rol }) => {
 
         setLoading(false)
 
-        router.push(`${URL_BASE}/principal/Buscador`)
+        router.push('/')
       } else {
         setError(true)
         console.log('error en login ')
@@ -154,7 +154,7 @@ const FormLogin = ({ rol }) => {
       <div className='remember'>
         <a className='forgetPass' href={url}>Olvidé mi contraseña</a>
         <Image src={imageLogin} width='300' height='150' />
-        <div className='register'>¿No tienes una cuenta?<Link href={`${URL_BASE}/Cuenta/RegisterPage`} underline='none'> ¡Registrate!</Link></div>
+        <div className='register'>¿No tienes una cuenta?<Link href={'/Cuenta/RegisterPage'} underline='none'> ¡Registrate!</Link></div>
       </div>
     </>
   )

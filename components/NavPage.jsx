@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Nav, Navbar, Container } from 'react-bootstrap'
 import { Button } from '@mui/material'
 import { useRouter } from 'next/router'
-import { URL_BASE } from '../services/config'
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined'
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined'
@@ -14,17 +13,17 @@ function NavPage () {
 
   const handlerLogin = (e) => {
     e.preventDefault()
-    router.push(`${URL_BASE}/Cuenta/LoginPage`, '/auth/loginUser')
+    router.push('/Cuenta/LoginPage')
   }
 
   const handlerRegister = (e) => {
     e.preventDefault()
-    router.push(`${URL_BASE}/Cuenta/RegisterPage`, '/auth/registerUser')
+    router.push('/Cuenta/RegisterPage')
   }
 
   const handlerPerfil = (e) => {
     e.preventDefault()
-    router.push(`${URL_BASE}/Perfil/Perfil`, '/user/perfil')
+    router.push('/Perfil/Perfil')
   }
 
   const handlerLogout = (e) => {
@@ -32,7 +31,7 @@ function NavPage () {
     window.sessionStorage.removeItem('token')
     window.sessionStorage.removeItem('role')
     setSessionOn(false)
-    router.push(`${URL_BASE}/principal/Buscador`)
+    router.push('/principal/Buscador')
   }
 
   useEffect(() => {
@@ -51,16 +50,16 @@ function NavPage () {
     <Navbar bg='light' expand='lg'>
       <Container>
         <div>
-          <a href={`${URL_BASE}/`}> 
+          <a href=''> 
             <img src='/icons/Logo.svg' alt='Logo' width={200} height={100} /> 
           </a>
         </div>
         <div>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Nav className='me-auto'>
-            <Nav.Link href={`${URL_BASE}/`}>Inicio</Nav.Link>
+            <Nav.Link href=''>Inicio</Nav.Link>
             <Nav.Link href='#Asi funciona'>Asi funciona</Nav.Link>
-            <Nav.Link href={`${URL_BASE}/principal/Buscador`}>Profesionales</Nav.Link>
+            <Nav.Link href='/principal/Buscador'>Profesionales</Nav.Link>
           </Nav>
         </div>
         <div>
