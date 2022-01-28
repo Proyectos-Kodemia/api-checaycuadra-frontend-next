@@ -183,7 +183,6 @@ function Schedule () {
 export default Schedule
 
 /*
-
   {renderItem({ item: `${item}:00`, handleRemoveHour })}
 
  <input type='button' onClick={addEntryClick} value='Add' />,
