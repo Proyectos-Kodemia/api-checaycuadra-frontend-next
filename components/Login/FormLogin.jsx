@@ -10,8 +10,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import imageLogin from '../../images/graphLogin.svg'
-
-
+import URL_FULL from '../../services/config'
 
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres'),
@@ -46,8 +45,8 @@ const FormLogin = ({ rol }) => {
 
   const dataLogin = async (data) => {
     let direction = ''
-    if (rol === 'Contador') direction = 'http://localhost:8000/auth/account'
-    else direction = 'http://localhost:8000/auth/users'
+    if (rol === 'Contador') direction = `${URL_FULL}/auth/account`
+    else direction = `${URL_FULL}/auth/users`
 
     try {
       if (window.sessionStorage.getItem('token')) {
@@ -154,7 +153,7 @@ const FormLogin = ({ rol }) => {
       <div className='remember'>
         <a className='forgetPass' href={url}>Olvidé mi contraseña</a>
         <Image src={imageLogin} width='300' height='150' />
-        <div className='register'>¿No tienes una cuenta?<Link href={'/Cuenta/RegisterPage'} underline='none'> ¡Registrate!</Link></div>
+        <div className='register'>¿No tienes una cuenta?<Link href="/Cuenta/RegisterPage" underline='none'> ¡Registrate!</Link></div>
       </div>
     </>
   )

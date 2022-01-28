@@ -4,7 +4,7 @@ import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOu
 import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined'
 import React, { useEffect } from 'react'
 
-const endpoint = 'http://localhost:8000/account'
+const endpoint = 'http://localhost:5000/account'
 function Head ({ setResults, users, setUsers, buscar, setBuscar }) {
   useEffect(() => {
     fetch(`${endpoint}`).then((res) => {

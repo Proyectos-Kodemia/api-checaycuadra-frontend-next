@@ -10,11 +10,7 @@ function FooterPage () {
       <div className='container'>
         <div className='row'>
           <div className='col-md-3 col-xs-6 '>
-            <a
-              href='https://kodemia.mx/'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
+            <a href=''>
               <span>
                 <img src='/icons/Logo.svg' alt='Logo' width={200} height={100} />
               </span>
@@ -31,13 +27,13 @@ function FooterPage () {
             <h5>Navegacion </h5>
             <ul className='list-unstyled'>
               <li>
-                <a href='#home'>Inicio</a>
+                <a href=''>Inicio</a>
               </li>
               <li>
                 <a href='#Asi funciona'>Asi funciona</a>
               </li>
               <li>
-                <a href='#Profesionales'>Profesionales</a>
+                <a href='/principal/Buscador'>Profesionales</a>
               </li>
             </ul>
           </div>

@@ -1,5 +1,5 @@
-const URL_BASE = process.env.NEXT_PUBLIC_URL_API
+const URL_FULL = process.env.URL_BASE
 
 export {
-  URL_BASE
+  URL_FULL
 }

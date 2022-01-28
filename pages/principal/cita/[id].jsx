@@ -5,6 +5,7 @@ import NavPage from '../../../components/NavPage'
 import Appointment from '../../../components/appointment/appointment'
 import { useRouter } from "next/router";
 import Snackbar from '../../../components/Notifications/Snackbar'
+import URL_FULL from '../../services/config'
 
 // import { RouterTwoTone } from '@material-ui/icons';
 // Import material component (toast)
@@ -41,7 +42,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
     
     // console.log("llega el id <use effect>",router)
     if(router.isReady){
-      const endpoint=`http://localhost:8000/account/${id}`
+      const endpoint=`${URL_FULL}/account/${id}`
     
       // console.log(endpoint)
       const optionsAccount = {
@@ -62,7 +63,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
   }, [id])
 
   const {name, lastname, degree,degreeId,profileImage, description, role, evaluation, specialities, address, Schedule} = accountUser
-  console.log('especialidades',specialities)
+  // console.log('especialidades',specialities)
 
   // proceso de pago
   const statusPayment = router.query.collection_status
@@ -91,8 +92,8 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       e.preventDefault()
       const token = sessionStorage.getItem('token')
       // console.log("tokenn en el handler",token)
-      const endpointMeeting = 'http://localhost:8000/metting'
-      const endpointAuthGoogle = 'http://localhost:8000/google/auth'
+      const endpointMeeting = `${URL_FULL}/metting`
+      const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
       if(statusPayment === "approved"){
           const data = {
@@ -102,8 +103,9 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
             title:`consultoria ${name} ${lastname}`,
             unit_price:Schedule.costHour,
             quantity:"1",
-            statusPayment: statusPayment  
+            statusPayment: statusPayment
           }
+          console.log('entro 1')
           // post
           const optionsMeeting = {
             method: 'POST',
@@ -112,8 +114,10 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
               'token': token  // Enviar en el post el token de JWT
             },
             body: JSON.stringify(data)
+            
           }
           const response = await fetch(endpointMeeting, optionsMeeting)
+          console.log('entro 2')
           // Obtener el id de la cita 
 
           const optionsAuthGoogle = {
@@ -127,6 +131,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
 
           await LoginAccount(endpointAuthGoogle)
           .then(response =>{
+            console.log('entro 3')
             location.href = response.payload.authUrl
             })
           .catch(error =>{

@@ -4,8 +4,8 @@ import imageLogin from '../../images/img1.jpg'
 import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Avatar, CardContent, Chip } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-
-const endpoint = 'http://localhost:8000/mercadopago/checkout'
+import URL_FULL from '../../services/config'
+const endpoint = `${URL_FULL}/mercadopago/checkout`
 
 async function LoginAccount (url, credentials) {
   // console.log('entrando a la funcion')
@@ -22,7 +22,6 @@ async function LoginAccount (url, credentials) {
 }
 
 function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
-  
   const servicio = {
     title: 'consultoria',
     unit_price: Schedule.costHour,
