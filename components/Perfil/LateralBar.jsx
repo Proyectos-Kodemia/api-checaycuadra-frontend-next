@@ -47,7 +47,7 @@ function LateralBar () {
     if (typeof window.sessionStorage !== 'undefined') {
       if (window.sessionStorage.getItem('role')) {
         const user = window.sessionStorage.getItem('role')
-        console.log(user)
+        // console.log(user)
         setRol(user)
       } else {
         console.log('error en session storage')

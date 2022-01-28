@@ -12,10 +12,10 @@ function Schedule () {
   const [selectedStar, changeStar] = useState(moment())
   const [selectedEnd, changeEnd] = useState(moment())
 
-  console.log(selectedDate.month())
-  console.log(selectedDate.dayOfYear())
-  console.log(selectedStar.hour())
-  console.log(selectedEnd.hour())
+  // console.log(selectedDate.month())
+  // console.log(selectedDate.dayOfYear())
+  // console.log(selectedStar.hour())
+  // console.log(selectedEnd.hour())
 
   return (
     <>

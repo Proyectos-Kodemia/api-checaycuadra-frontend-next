@@ -23,23 +23,23 @@ function ScheduleCita () {
   const daySelected = (moment(selectedDate).date())
   const numberWeek = (moment(selectedDate).day())
   const nameWeek = moment().day(numberWeek).format('dddd')
-  console.log(daySelected, nameWeek)
+  // console.log(daySelected, nameWeek)
 
   const nextNumber1 = moment().date(daySelected).add(1, 'd').date()
   const nextName1 = moment().date(daySelected).add(1, 'd').format('dddd')
-  console.log(nextNumber1, nextName1)
+  // console.log(nextNumber1, nextName1)
 
   const nextNumber2 = moment().date(daySelected).add(2, 'd').date()
   const nextName2 = moment().date(daySelected).add(2, 'd').format('dddd')
-  console.log(nextNumber2, nextName2)
+  // console.log(nextNumber2, nextName2)
 
   const nextNumber3 = moment().date(daySelected).add(3, 'd').date()
   const nextName3 = moment().date(daySelected).add(3, 'd').format('dddd')
-  console.log(nextNumber3, nextName3)
+  // console.log(nextNumber3, nextName3)
 
   const nextNumber4 = moment().date(daySelected).add(4, 'd').date()
   const nextName4 = moment().date(daySelected).add(4, 'd').format('dddd')
-  console.log(nextNumber4, nextName4)
+  // console.log(nextNumber4, nextName4)
 
   const numberMonth = (moment(selectedDate).month())
   const nameMonth = moment().month(numberMonth).format('MMMM')

@@ -37,9 +37,9 @@ const FormLogin = ({ rol }) => {
       },
       body: JSON.stringify(data)
     }
-    console.log(data)
+    // console.log(data)
     const response = await fetch(url, options)
-    console.log('response fetch', response)
+    // console.log('response fetch', response)
     return response.json()
   }
 
@@ -61,11 +61,11 @@ const FormLogin = ({ rol }) => {
 
       // console.log('recibiendo el fetch',response)
 
-      console.log('mostrando estatus', res.status)
-      console.log('mostrando completo', res)
+      // console.log('mostrando estatus', res.status)
+      // console.log('mostrando completo', res)
 
       if (res.status) {
-        console.log('se creo el token y se almaceno', res.token)
+        // console.log('se creo el token y se almaceno', res.token)
         window.sessionStorage.setItem('token', res.token)
         window.sessionStorage.setItem('role', rol)
 
@@ -74,11 +74,11 @@ const FormLogin = ({ rol }) => {
         router.push('/')
       } else {
         setError(true)
-        console.log('error en login ')
+        // console.log('error en login ')
       }
     } catch (err) {
       setError(true)
-      console.log(err)
+      // console.log(err)
     }
   }
 

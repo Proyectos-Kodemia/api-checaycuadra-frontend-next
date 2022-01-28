@@ -71,7 +71,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
   // console.log(statusPayment)
     
     async function LoginAccount (url) {
-      console.log("entrando a la funcion")
+      // console.log("entrando a la funcion")
       const options = {
         method: 'POST',
         headers: {
@@ -105,7 +105,6 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
             quantity:"1",
             statusPayment: statusPayment
           }
-          console.log('entro 1')
           // post
           const optionsMeeting = {
             method: 'POST',
@@ -117,7 +116,6 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
             
           }
           const response = await fetch(endpointMeeting, optionsMeeting)
-          console.log('entro 2')
           // Obtener el id de la cita 
 
           const optionsAuthGoogle = {
@@ -131,7 +129,6 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
 
           await LoginAccount(endpointAuthGoogle)
           .then(response =>{
-            console.log('entro 3')
             location.href = response.payload.authUrl
             })
           .catch(error =>{

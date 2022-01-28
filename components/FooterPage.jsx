@@ -29,7 +29,6 @@ function FooterPage () {
             <ul className='list-unstyled'>
               <li>
                 <Link href='' underline='none'>Inicio</Link>
-                <a href=''>Inicio</a>
               </li>
               <li>
                 <Link href='#Asi funciona' underline='none'>Asi funciona</Link>

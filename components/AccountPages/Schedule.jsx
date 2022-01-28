@@ -57,10 +57,10 @@ function Schedule () {
       setSelecterHour(newHour)
       setTheArray(array => [...array, `${newHour}:00`])
 
-      console.log(newHour)
+      // console.log(newHour)
     }
   }
-  console.log(theArray)
+  // console.log(theArray)
 
   const handleRemoveHour = (item) => {
     setTheArray((prev) => [...prev.filter((i) => i !== item)])
@@ -70,12 +70,12 @@ function Schedule () {
   const daySelected = (moment(selectedDate).date())
   const numberWeek = (moment(selectedDate).day())
   const nameWeek = moment().day(numberWeek).format('dddd')
-  console.log(daySelected, nameWeek)
+  // console.log(daySelected, nameWeek)
 
   const numberMonth = (moment(selectedDate).month())
   const nameMonth = moment().month(numberMonth).format('MMMM')
 
-  console.log(nameMonth)
+  // console.log(nameMonth)
 
   return (
     <>
@@ -213,12 +213,12 @@ export default Schedule
   const dia3 = 3
   const dia4 = 4
   const dia5 = 5
-  console.log(dia)
+  // console.log(dia)
 
  // console.log(moment(selectedDate).month())
  const numberMonth = (moment(selectedDate).month())
  const mess = moment().month(numberMonth).format('MMMM')
- console.log(mess)
+//  console.log(mess)
 
  const nameMonth = ''
  switch (numberMonth) {
@@ -259,7 +259,7 @@ export default Schedule
      nameMonth = 'Diciembre'
      break
  }
- console.log(nameMonth)
+//  console.log(nameMonth)
 
  // console.log(moment(selectedDate).day()) semana
   const numberWeek = (moment(selectedDate).day())
@@ -287,6 +287,6 @@ export default Schedule
       nextName = 'Sabado'
       break
   }
-  console.log(nextName)
+  // console.log(nextName)
 
  */
