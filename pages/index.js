@@ -1,10 +1,6 @@
 import Layout from '../components/Layout'
-import { Box, Button } from '@mui/material'
-<<<<<<< HEAD
+
 import { URL_FULL } from '../services/config'
-=======
-import { URL_BASE } from '../services/config'
->>>>>>> 5f6925b3a0eced795535d7cda66baab2b621a215
 
 export default function Home () {
   return (
