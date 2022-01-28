@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Tabs, Tab, List, Box } from '@mui/material'
+import { useSearchParams } from 'react-router-dom'
 
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import EventIcon from '@mui/icons-material/Event'
@@ -10,6 +11,7 @@ import FormPerfil from './FormPerfil'
 import FormUser from './FormUser'
 import Schedule from '../AccountPages/Schedule'
 import ScheduleCita from '../AccountPages/ScheduleCita'
+import { URL_FULL } from '../../services/config'
 
 // import CalendarioPicker from '../AccountPages/CalendarioPicker'
 import styles from './LateralBar.module.scss'
@@ -42,6 +44,7 @@ function a11yProps (index) {
 function LateralBar () {
   const [value, setValue] = useState(0)
   const [rol, setRol] = useState('')
+  const [paramsGoogle, setParamsGoogle]=useSearchParams()
 
   useEffect(() => {
     if (typeof window.sessionStorage !== 'undefined') {
@@ -54,6 +57,23 @@ function LateralBar () {
       }
     }
   }, [])
+
+  const code = paramsGoogle.get('code')
+  console.log('code recibido', code)
+
+  const datos={
+    method:'POST',
+    headers:{ 'Content-Type':'application/json'},
+    body:JSON.stringify(code)
+
+  }
+  const url=`${URL_FULL}/google/callback`
+
+  const response = fetch(url, options ).then((res) => {
+    res.json().then((data) => {
+      console.log(data)
+    })
+  })
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
