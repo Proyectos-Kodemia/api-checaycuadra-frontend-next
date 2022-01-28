@@ -41,7 +41,7 @@ function NavPage () {
         // console.log('agrego datos a useState')
         setSessionOn(true)
       } else {
-        console.log('error en session storage')
+        console.log('Log Nav storage')
       }
     }
   }, [])
