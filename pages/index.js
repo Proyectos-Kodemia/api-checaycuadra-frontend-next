@@ -33,11 +33,9 @@ export default function Home () {
           variant='contained'
           type='submit'
           fullWidth
-<<<<<<< HEAD
+
           href={`${URL_FULL}/principal/Buscador`}
-=======
-          href={`${URL_BASE}/principal/Buscador`}
->>>>>>> 5f6925b3a0eced795535d7cda66baab2b621a215
+
         >Buscar especialistas
         </Button>
       </Box>
