@@ -3,7 +3,7 @@ import { Button, TextField } from '@mui/material'
 import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOutlined'
 import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined'
 import React, { useEffect } from 'react'
-import URL_FULL from '../../services/config'
+import { URL_FULL } from '../../services/config'
 
 const endpoint = `${URL_FULL}/account`
 function Head ({ setResults, users, setUsers, buscar, setBuscar }) {

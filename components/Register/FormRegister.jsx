@@ -15,7 +15,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import imageLogin from '../../images/graphLogin.svg'
 
-import URL_FULL from '../../services/config'
+import { URL_FULL } from '../../services/config'
 // esquema de validaciones de input
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(100, '***Máximo 100 caracteres'),

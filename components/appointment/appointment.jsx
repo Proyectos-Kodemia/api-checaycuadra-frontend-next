@@ -4,7 +4,7 @@ import imageLogin from '../../images/img1.jpg'
 import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Avatar, CardContent, Chip } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import URL_FULL from '../../services/config'
+import { URL_FULL } from '../../services/config'
 const endpoint = `${URL_FULL}/mercadopago/checkout`
 
 async function LoginAccount (url, credentials) {

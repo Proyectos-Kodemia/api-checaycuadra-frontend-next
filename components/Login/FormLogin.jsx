@@ -10,7 +10,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import imageLogin from '../../images/graphLogin.svg'
-import URL_FULL from '../../services/config'
+import { URL_FULL } from '../../services/config'
 
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres'),
