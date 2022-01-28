@@ -48,10 +48,7 @@ function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, des
       <div className='icons'>
         <div className='divVideo'>
           <VideoCameraFrontIcon color='primary' className='iconSpace' /> Consultoria Online
-<<<<<<< HEAD
-=======
 
->>>>>>> main
         </div>
         <div>
           <EmojiEventsIcon color='primary' className='iconSpace' /> Especialista en:
