@@ -10,7 +10,6 @@ import FormUser from './FormUser'
 import Schedule from '../AccountPages/Schedule'
 import ScheduleCita from '../AccountPages/ScheduleCita'
 
-
 // import CalendarioPicker from '../AccountPages/CalendarioPicker'
 import styles from './LateralBar.module.scss'
 
@@ -42,7 +41,6 @@ function a11yProps (index) {
 function LateralBar () {
   const [value, setValue] = useState(0)
   const [rol, setRol] = useState('')
-  
 
   useEffect(() => {
     if (typeof window.sessionStorage !== 'undefined') {
@@ -55,7 +53,7 @@ function LateralBar () {
       }
     }
   }, [])
-  
+
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
@@ -90,12 +88,8 @@ function LateralBar () {
           {rol === 'Contador' ? <FormPerfil /> : <FormUser />}
         </TabPanel>
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={1} />
-        <TabPanel sx={{ flexGrow: 1 }} value={value} index={2}>
-          <Schedule />
-        </TabPanel>
-        <TabPanel sx={{ flexGrow: 1 }} value={value} index={3}>
-          <ScheduleCita />
-        </TabPanel>
+        <TabPanel sx={{ flexGrow: 1 }} value={value} index={2} />
+        <TabPanel sx={{ flexGrow: 1 }} value={value} index={3} />
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={4}>
           Item Five
         </TabPanel>

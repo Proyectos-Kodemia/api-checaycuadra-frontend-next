@@ -132,9 +132,11 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
         <CalendarTodayRoundedIcon sx={{ fontSize: 36, mr: 5 }} />
         <Typography variant='h4'>
-          Elije tu horario y agenda tu cita
+          Elije tu horario y agenda tu cita con tu contador
         </Typography>
-
+        <Box/>
+        <Box sx={{}}>
+        <br /><br />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DesktopDateTimePicker
             value={value}
