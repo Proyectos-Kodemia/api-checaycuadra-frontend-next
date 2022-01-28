@@ -1,10 +1,15 @@
 import React from 'react'
 import Image from 'next/image'
 import imageLogin from '../../images/img1.jpg'
-import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Avatar, CardContent, Chip } from '@mui/material'
+import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Avatar, CardContent, Chip, TextField } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { URL_FULL } from '../../services/config'
+import DesktopDateTimePicker from '@mui/lab/DesktopDateTimePicker'
+
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+
 const endpoint = `${URL_FULL}/mercadopago/checkout`
 
 async function LoginAccount (url, credentials) {
@@ -40,6 +45,8 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         console.log(error)
       })
   }
+
+  const [value, setValue] = React.useState(new Date('2018-01-01T00:00:00.000Z'))
 
   // console.log('campo especialista inicial', specialities)
 
@@ -127,6 +134,17 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         <Typography variant='h4'>
           Elije tu horario y agenda tu cita
         </Typography>
+
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DesktopDateTimePicker
+            value={value}
+            onChange={(newValue) => {
+              setValue(newValue)
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
+
       </Box>
 
       <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
