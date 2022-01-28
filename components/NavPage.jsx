@@ -50,8 +50,8 @@ function NavPage () {
     <Navbar bg='light' expand='lg'>
       <Container>
         <div>
-          <a href=''> 
-            <img src='/icons/Logo.svg' alt='Logo' width={200} height={100} /> 
+          <a href=''>
+            <img src='/icons/Logo.svg' alt='Logo' width={200} height={100} />
           </a>
         </div>
         <div>
