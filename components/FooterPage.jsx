@@ -3,6 +3,7 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import InstagramIcon from '@mui/icons-material/Instagram'
+import { Link } from '@mui/material'
 
 function FooterPage () {
   return (
@@ -27,13 +28,14 @@ function FooterPage () {
             <h5>Navegacion </h5>
             <ul className='list-unstyled'>
               <li>
+                <Link href='' underline='none'>Inicio</Link>
                 <a href=''>Inicio</a>
               </li>
               <li>
-                <a href='#Asi funciona'>Asi funciona</a>
+                <Link href='#Asi funciona' underline='none'>Asi funciona</Link>
               </li>
               <li>
-                <a href='/principal/Buscador'>Profesionales</a>
+                <Link href='/principal/Buscador' underline='none'>Profesionales</Link>
               </li>
             </ul>
           </div>
