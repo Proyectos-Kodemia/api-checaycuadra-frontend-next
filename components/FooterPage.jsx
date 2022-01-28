@@ -6,7 +6,7 @@ import InstagramIcon from '@mui/icons-material/Instagram'
 
 function FooterPage () {
   return (
-    <footer className='footer'>
+    <footer className='footer' 'marginTop:90'>
       <div className='container'>
         <div className='row'>
           <div className='col-md-3 col-xs-6 '>

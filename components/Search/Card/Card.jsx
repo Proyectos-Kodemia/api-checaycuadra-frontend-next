@@ -45,23 +45,23 @@ function Cards ({ idAccount, name, lastname, degree, profileImage, description, 
       </div>
 
       <div className='icons'>
-        <div>
-          <VideoCameraFrontIcon color='primary' /> Consultoria Online
+        <div className='divVideo'>
+          <VideoCameraFrontIcon color='primary' className='iconSpace' /> Consultoria Online
         </div>
         <div>
-          <EmojiEventsIcon color='primary' /> Especialista en:
+          <EmojiEventsIcon color='primary' className='iconSpace' /> Especialista en:
           <div className='textIcons'>
             {valDegree}
           </div>
         </div>
         <div>
-          <LocalOfferIcon color='primary' /> Precio de consultoría:
+          <LocalOfferIcon color='primary' className='iconSpace' /> Precio de consultoría:
           <div className='textIcons'>
             {hourCost}
           </div>
         </div>
         <div>
-          <LocationOnIcon color='primary' /> Dirección
+          <LocationOnIcon color='primary' className='iconSpace' /> Dirección
           <div className='textIcons'>
             {ubication}
           </div>
