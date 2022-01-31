@@ -10,9 +10,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import imageLogin from '../../images/graphLogin.svg'
-import { URL_BASE } from '../../services/config'
-
-import LoginAccount from './LoginAccount'
+import { URL_FULL } from '../../services/config'
 
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres'),
@@ -39,43 +37,48 @@ const FormLogin = ({ rol }) => {
       },
       body: JSON.stringify(data)
     }
-    console.log(data)
+    // console.log(data)
     const response = await fetch(url, options)
-    console.log('response fetch', response)
+    // console.log('response fetch', response)
     return response.json()
   }
 
   const dataLogin = async (data) => {
     let direction = ''
-    if (rol === 'Contador') direction = 'http://localhost:8000/auth/account'
-    else direction = 'http://localhost:8000/auth/users'
+    if (rol === 'Contador') direction = `${URL_FULL}/auth/account`
+    else direction = `${URL_FULL}/auth/users`
 
     try {
-      if (sessionStorage.getItem('token')) {
-        sessionStorage.removeItem('token')
+      if (window.sessionStorage.getItem('token')) {
+        window.sessionStorage.removeItem('token')
+      }
+
+      if (window.sessionStorage.getItem('token')) {
+        window.sessionStorage.removeItem('token')
       }
 
       const res = await LoginAccount(direction, data)
 
       // console.log('recibiendo el fetch',response)
 
-      console.log('mostrando estatus', res.status)
-      console.log('mostrando completo', res)
+      // console.log('mostrando estatus', res.status)
+      // console.log('mostrando completo', res)
 
       if (res.status) {
-        console.log('se creo el token y se almaceno', res.token)
-        sessionStorage.setItem('token', res.token)
+        // console.log('se creo el token y se almaceno', res.token)
+        window.sessionStorage.setItem('token', res.token)
+        window.sessionStorage.setItem('role', rol)
 
         setLoading(false)
 
-        router.push(`${URL_BASE}/principal/Buscador`)
+        router.push('/')
       } else {
         setError(true)
-        console.log('error en login ')
+        // console.log('error en login ')
       }
     } catch (err) {
       setError(true)
-      console.log(err)
+      // console.log(err)
     }
   }
 
@@ -129,9 +132,18 @@ const FormLogin = ({ rol }) => {
           <span id='passwordHelp' className='mb-4 error text-danger'>{errors.password?.message}</span>
           <Button
             type='submit'
-            className='buttonStyle mb-2'
             variant='contained'
             fullWidth
+            sx={{
+              bgcolor: '#00244C',
+              py: 1,
+              mt: 1,
+              mb: 1,
+              '& hover': {
+                bgcolor: '#00244C'
+              }
+
+            }}
           >
             Iniciar sesión
           </Button>
@@ -141,7 +153,7 @@ const FormLogin = ({ rol }) => {
       <div className='remember'>
         <a className='forgetPass' href={url}>Olvidé mi contraseña</a>
         <Image src={imageLogin} width='300' height='150' />
-        <div className='register'>¿No tienes una cuenta?<Link href={`${URL_BASE}/Cuenta/RegisterPage`} underline='none'> ¡Registrate!</Link></div>
+        <div className='register'>¿No tienes una cuenta?<Link href="/Cuenta/RegisterPage" underline='none'> ¡Registrate!</Link></div>
       </div>
     </>
   )

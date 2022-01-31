@@ -16,7 +16,8 @@ const schema = yup.object({
   formacion: yup.string().max(50, '***Máximo 50 caracteres')
 }).required('El campo es requerido')
 
-function FormPerfil() {
+function FormPerfil () {
+  
   const { register, handleSubmit, control, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
@@ -75,7 +76,8 @@ function FormPerfil() {
           p: 1,
           m: 1
         }}
-        > <span className='orderRowFlex'>
+        >
+          <span className='orderRowFlex'>
             <TextField
               label='Estado'
               color='secondary'
@@ -99,7 +101,6 @@ function FormPerfil() {
               inputProps={{ maxLength: 5 }}
               onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') }}
               className='textFieldsPerfil textCP'
-              //{...register('cp')}
             />
           </span>
         </Box>
@@ -126,8 +127,6 @@ function FormPerfil() {
               onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') }}
               {...register('precio')}
             />
-
-
 
             <TextField
               label='Cédula'

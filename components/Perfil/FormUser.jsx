@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, TextField, Typography, Button, styled, Grid, CardMedia } from '@mui/material'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
 import styles from './FormUser.module.scss'
+// import { useSearchParams } from 'react-router-dom'
+import { URL_FULL } from '../../services/config'
 
 const schema = yup.object({
   nombre: yup.string().max(50, '***Máximo 50 caracteres'),
@@ -15,7 +18,28 @@ const schema = yup.object({
 }).required('El campo es requerido')
 
 function FormUser () {
-  // const [users, setUsers] = useState([])
+  const router = useRouter()
+  useEffect(() => {
+    if (router.isReady) {
+      console.log('router.query', router.query)
+      const token = sessionStorage.getItem('token')
+      console.log(token)
+      const url = `${URL_FULL}/google/callback`
+
+      const datos = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', token: token },
+        body: router.query.code
+      }
+
+      fetch(url, datos).then((res) => {
+        res.json().then((data) => {
+          console.log(data)
+        })
+      })
+    }
+  }, [router.query])
+
   let profileImage = 'https://media-exp1.licdn.com/dms/image/C4E03AQFLWyN2KG8eZw/profile-displayphoto-shrink_200_200/0/1642529783595?e=1648080000&v=beta&t=pJtCPe8HmFsi05fx4ad-rqHlg2ENSnhMkNUioRXFp_Y'
   const name = 'imagen'
 

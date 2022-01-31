@@ -3,6 +3,7 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import InstagramIcon from '@mui/icons-material/Instagram'
+import { Link } from '@mui/material'
 
 function FooterPage () {
   return (
@@ -10,11 +11,7 @@ function FooterPage () {
       <div className='container'>
         <div className='row'>
           <div className='col-md-3 col-xs-6 '>
-            <a
-              href='https://kodemia.mx/'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
+            <a href=''>
               <span>
                 <img src='/icons/Logo.svg' alt='Logo' width={200} height={100} />
               </span>
@@ -31,13 +28,13 @@ function FooterPage () {
             <h5>Navegacion </h5>
             <ul className='list-unstyled'>
               <li>
-                <a href='#home'>Inicio</a>
+                <Link href='' underline='none'>Inicio</Link>
               </li>
               <li>
-                <a href='#Asi funciona'>Asi funciona</a>
+                <Link href='#Asi funciona' underline='none'>Asi funciona</Link>
               </li>
               <li>
-                <a href='#Profesionales'>Profesionales</a>
+                <Link href='/principal/Buscador' underline='none'>Profesionales</Link>
               </li>
             </ul>
           </div>

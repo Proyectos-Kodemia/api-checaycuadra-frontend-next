@@ -15,8 +15,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import imageLogin from '../../images/graphLogin.svg'
 
-import { URL_BASE } from '../../services/config'
-
+import { URL_FULL } from '../../services/config'
 // esquema de validaciones de input
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(100, '***Máximo 100 caracteres'),
@@ -56,8 +55,8 @@ function FormRegister ({ rol }) {
     let direction = ''
 
     console.log(data)
-    if (rol === 'Contador') direction = 'http://localhost:8000/account'
-    else direction = 'http://localhost:8000/users'
+    if (rol === 'Contador') direction = `${URL_FULL}/auth/account`
+    else direction = `${URL_FULL}/auth/users`
 
     if (sessionStorage.getItem('token')) {
       sessionStorage.removeItem('token')
@@ -65,7 +64,7 @@ function FormRegister ({ rol }) {
     // aqui pondriamos aviso al usuario que se creo correctamente
     const response = sendFetchNoToken(direction, data)
 
-    router.push(`${URL_BASE}/Cuenta/LoginPage`)
+    router.push('/')
   }
 
   const handleClickShowPassword = () => setShowPassword(!showPassword)
@@ -173,7 +172,7 @@ function FormRegister ({ rol }) {
       <div className='remember'>
         <div><a className='forgetPass' href='#'>Olvidé mi contraseña</a></div>
         <Image src={imageLogin} width='300' height='150' />
-        <div className='register'>¿Ya tienes una cuenta?<Link href={`${URL_BASE}/Cuenta/LoginPage`} underline='none'> ¡Inicia sesión!</Link></div>
+        <div className='register'>¿Ya tienes una cuenta?<Link href="/Cuenta/LoginPage" underline='none'> ¡Inicia sesión!</Link></div>
       </div>
 
     </>

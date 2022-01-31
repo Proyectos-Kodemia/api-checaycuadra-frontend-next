@@ -3,14 +3,15 @@ import { Button, TextField } from '@mui/material'
 import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOutlined'
 import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined'
 import React, { useEffect } from 'react'
+import { URL_FULL } from '../../services/config'
 
-const endpoint = 'http://localhost:8000/account'
+const endpoint = `${URL_FULL}/account`
 function Head ({ setResults, users, setUsers, buscar, setBuscar }) {
   useEffect(() => {
     fetch(`${endpoint}`).then((res) => {
       res.json().then((data) => {
         setUsers(data.payload)
-        console.log(data.payload)
+        // console.log(data.payload)
       })
     })
   }, [])

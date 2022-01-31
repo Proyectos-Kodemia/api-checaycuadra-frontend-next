@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, CardMedia, CardContent } from '@mui/material'
+import React from 'react'
+import Image from 'next/image'
+import imageLogin from '../../images/img1.jpg'
+import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Avatar, CardContent, Chip } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-
-const endpoint = 'http://localhost:8000/mercadopago/checkout'
+import { URL_FULL } from '../../services/config'
+const endpoint = `${URL_FULL}/mercadopago/checkout`
 
 async function LoginAccount (url, credentials) {
-  console.log('entrando a la funcion')
+  // console.log('entrando a la funcion')
   const options = {
     method: 'POST',
     headers: {
@@ -28,7 +30,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
   }
 
   const handlerPago = (e) => {
-    console.log('entrando al handler')
+    // console.log('entrando al handler')
     e.preventDefault()
     LoginAccount(endpoint, servicio)
       .then(data => {
@@ -39,20 +41,18 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
       })
   }
 
-  console.log('campo especialista inicial', specialities)
-  const listEspecialities = specialities[0]
-  // .map((item, index) =>( <span key={index}>{item}</span>))
-  console.log('campo especialista despues del map', listEspecialities)
+  // console.log('campo especialista inicial', specialities)
 
-  console.log(name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule)
+  // console.log(name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule)
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
-        <Box sx={{ display: 'flex', margin: 3, h: 300, boxShadow: 2, borderRadius: 3 }}>
-          <CardMedia
-            component='img'
-            sx={{ width: 250, margin: 3, borderRadius: 4 }}
-            image={profileImage}
+      <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', margin: 2, height: 300, boxShadow: 2, borderRadius: 3 }}>
+          <Image
+            src={imageLogin}
+            layout='fixed'
+            width={200}
+            quality={100}
           />
 
           <CardContent sx={{ width: 220, margin: 3, marginTop: 6 }}>
@@ -86,18 +86,24 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
                   <img src='/icons/iconsCard2/especialidad.svg' alt='especialidad' ml={0} />
                 </ListItemIcon>
                 <ListItemText primary='Especialista en: ' />
-                {specialities}
+              </ListItem>
+              <ListItem sx={{ justifyContent: 'space-evenly' }}>
+                {specialities && specialities?.map((index) => (
+                  <Chip key={index} align='center' label={index} variant='outlined' />
+                ))}
               </ListItem>
               {Schedule?.costHour &&
                 <ListItem disableGutters>
                   <ListItemIcon>
                     <img src='/icons/iconsCard2/price.svg' alt='price' ml={0} />
                   </ListItemIcon>
+                  <ListItemText primary='Precio: ' />
                   {Schedule?.costHour || 'NA'}
-                  <ListItemText primary='MXN' />
+                  <ListItemText primary='  MXN' />
                 </ListItem>}
               <ListItem disableGutters>
                 <ListItemIcon>
+
                   <img src='/icons/iconsCard2/local.svg' alt='local' ml={0} />
                 </ListItemIcon>
                 <ListItemText primary='Ubicacion:' />
@@ -109,7 +115,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
               Acerca de mi:
             </Typography>
             <br />
-            <Typography variant='body1'>
+            <Typography variant='body1' sx={{ textAlign: 'justify' }}>
               {description}
             </Typography>
           </CardContent>
@@ -140,7 +146,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
           variant='contained'
           disableElevation
           size='large'
-          marginRigth='0'
+          sx={{ mr: 0 }}
           endIcon={<ArrowForwardIcon />}
         >Confirmar Cita
         </Button>

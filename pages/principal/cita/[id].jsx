@@ -5,8 +5,9 @@ import NavPage from '../../../components/NavPage'
 import Appointment from '../../../components/appointment/appointment'
 import { useRouter } from "next/router";
 import Snackbar from '../../../components/Notifications/Snackbar'
-import { URL_BASE } from '../../../services/config';
-import { RouterTwoTone } from '@material-ui/icons';
+import { URL_FULL } from '../../../services/config'
+
+// import { RouterTwoTone } from '@material-ui/icons';
 // Import material component (toast)
 // Opcion crear componente de toast para reausarlo
 
@@ -14,7 +15,12 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
   
   const router = useRouter()
   const {id} = router.query
+<<<<<<< HEAD
 
+=======
+  const code = router.query.code
+  // console.log("code google", code)
+>>>>>>> main
   
   const [accountUser, setAccountUser]=useState({
     name:"",
@@ -38,43 +44,38 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
  
   useEffect(() => {
     
-    console.log("llega el id <use effect>",router)
+    // console.log("llega el id <use effect>",router)
     if(router.isReady){
-      const endpoint=`http://localhost:8000/account/${id}`
+      const endpoint=`${URL_FULL}/account/${id}`
     
-      console.log(endpoint)
+      // console.log(endpoint)
       const optionsAccount = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         },
       }
-      console.log(endpoint)
+      // console.log(endpoint)
       fetch(`${endpoint}`,optionsAccount).then((res) => {
         res.json().then((value) => {
-          console.log('resultado value', value)
+          // console.log('resultado value', value)
           setAccountUser(value)
           // setUsers(data.payload)
         })
       })
     }
-    
   }, [id])
 
   const {name, lastname, degree,degreeId,profileImage, description, role, evaluation, specialities, address, Schedule} = accountUser
-
-  
+  // console.log('especialidades',specialities)
 
   // proceso de pago
   const statusPayment = router.query.collection_status
 
-  console.log(statusPayment)
-
-    // const token = localStorage.getItem('datauser')
-    
+  // console.log(statusPayment)
     
     async function LoginAccount (url) {
-      console.log("entrando a la funcion")
+      // console.log("entrando a la funcion")
       const options = {
         method: 'POST',
         headers: {
@@ -94,9 +95,9 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
     const handlerAuthGoogle = async (e)=>{
       e.preventDefault()
       const token = sessionStorage.getItem('token')
-      console.log("tokenn en el handler",token)
-      const endpointMeeting = 'http://localhost:8000/metting'
-      const endpointAuthGoogle = 'http://localhost:8000/google/auth'
+      // console.log("tokenn en el handler",token)
+      const endpointMeeting = `${URL_FULL}/metting`
+      const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
       if(statusPayment === "approved"){
           const data = {
@@ -106,7 +107,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
             title:`consultoria ${name} ${lastname}`,
             unit_price:Schedule.costHour,
             quantity:"1",
-            statusPayment: statusPayment  
+            statusPayment: statusPayment
           }
           // post
           const optionsMeeting = {
@@ -116,6 +117,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
               'token': token  // Enviar en el post el token de JWT
             },
             body: JSON.stringify(data)
+            
           }
           const response = await fetch(endpointMeeting, optionsMeeting).then((res) => {
             res.json().then((value) => {

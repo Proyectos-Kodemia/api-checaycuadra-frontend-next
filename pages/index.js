@@ -1,16 +1,42 @@
-import { Link } from '@mui/material'
 import Layout from '../components/Layout'
-import { URL_BASE } from '../services/config'
+import { Box, Button } from '@mui/material'
+
+import { URL_FULL } from '../services/config'
 
 export default function Home () {
   return (
 
     <Layout>
-      <div className='container'>
-        <img src='/icons/inicio.svg' alt='inicio' width={1500} height={1200} />
-      </div>
-      <Link href={`${URL_BASE}/Perfil/Perfil`}><a>perfil contador</a></Link>
-      <Link href={`${URL_BASE}/principal/Buscador`} underline='none'><button>Buscar mas especialistas</button></Link>
+
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center'
+      }}
+      >
+        <img src='/icons/principal.svg' alt='inicio' width={1300} />
+      </Box>
+
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        pb: 15,
+        m: 1
+      }}
+      >
+        <Button
+          className='buttonPrincipal'
+          variant='contained'
+          type='submit'
+          fullWidth
+
+          href={`${URL_FULL}/principal/Buscador`}
+
+        >Buscar especialistas
+        </Button>
+      </Box>
+
     </Layout>
 
   )
