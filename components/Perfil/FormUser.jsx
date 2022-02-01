@@ -21,22 +21,28 @@ function FormUser () {
   const router = useRouter()
   useEffect(() => {
     if (router.isReady) {
-      console.log('router.query', router.query)
-      const token = sessionStorage.getItem('token')
-      console.log(token)
+const token = sessionStorage.getItem('token')
       const url = `${URL_FULL}/google/callback`
+
+      const bodyCode = JSON.stringify({ code: router.query.code })
 
       const datos = {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json', token: token },
-        body: router.query.code
+        body: bodyCode
       }
 
-      fetch(url, datos).then((res) => {
-        res.json().then((data) => {
-          console.log(data)
+
+      fetch(url, datos)
+        .then((res) => {
+          res.json()
+            .then((data) => {
+              console.log('data desde el fetch', data)
+            })
         })
-      })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }, [router.query])
 
