@@ -12,7 +12,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 
 const endpoint = `${URL_FULL}/mercadopago/checkout`
 
-async function LoginAccount (url, credentials) {
+async function LoginAccount(url, credentials) {
   // console.log('entrando a la funcion')
   const options = {
     method: 'POST',
@@ -26,7 +26,7 @@ async function LoginAccount (url, credentials) {
   return response.json()
 }
 
-function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
+function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
   const servicio = {
     title: 'consultoria',
     unit_price: Schedule.costHour,
@@ -134,44 +134,45 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         <Typography variant='h4'>
           Elije tu horario y agenda tu cita con tu contador
         </Typography>
-        <Box/>
+        <Box />
         <Box sx={{}}>
-        <br /><br />
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DesktopDateTimePicker
-            value={value}
-            onChange={(newValue) => {
-              setValue(newValue)
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider>
+          <br /><br />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DesktopDateTimePicker
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue)
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
 
-      </Box>
+        </Box>
 
-      <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
+        <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
 
-        <Button
-          // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerPago}
-          variant='contained'
-          disableElevation
-          size='large'
-          endIcon={<ArrowForwardIcon />}
-        >Realizar Pago
-        </Button>
-        <Button
-          // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerAuthGoogle}
-          variant='contained'
-          disableElevation
-          size='large'
-          sx={{ mr: 0 }}
-          endIcon={<ArrowForwardIcon />}
-        >Confirmar Cita
-        </Button>
-      </Box>
-    </>
-  )
+          <Button
+            // href='../../pages/Cuenta/RegisterPage.js'
+            onClick={handlerPago}
+            variant='contained'
+            disableElevation
+            size='large'
+            endIcon={<ArrowForwardIcon />}
+          >Realizar Pago
+          </Button>
+          <Button
+            // href='../../pages/Cuenta/RegisterPage.js'
+            onClick={handlerAuthGoogle}
+            variant='contained'
+            disableElevation
+            size='large'
+            sx={{ mr: 0 }}
+            endIcon={<ArrowForwardIcon />}
+          >Confirmar Cita
+          </Button>
+        </Box>
+      </>
+      )
 }
-export default Appointment
+
+      export default Appointment
