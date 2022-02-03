@@ -64,10 +64,15 @@ function FormRegister ({ rol }) {
       sessionStorage.removeItem('token')
     }
     // aqui pondriamos aviso al usuario que se creo correctamente
-    const response = sendFetchNoToken(direction, data)
-    console.log(response)
+    const response = await sendFetchNoToken(direction, data)
+    console.log('desde el response', response)
 
-    router.push('/')
+    if (response.status) {
+      router.push('/Cuenta/LoginPage')
+    }
+    else {
+      console.log('error en login')
+    }
   }
 
   const handleClickShowPassword = () => setShowPassword(!showPassword)
