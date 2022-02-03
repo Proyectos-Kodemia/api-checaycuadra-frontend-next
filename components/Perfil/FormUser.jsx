@@ -32,7 +32,6 @@ function FormUser () {
         body: bodyCode
       }
 
-
       fetch(url, datos)
         .then((res) => {
           res.json()
