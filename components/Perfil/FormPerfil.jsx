@@ -6,7 +6,9 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import styles from './FormPerfil.module.scss'
+import { URL_FULL } from '../../services/config'
 
+// const {id} = router.query
 const schema = yup.object({
   nombre: yup.string().max(80, '***Máximo 80 caracteres'),
   apellidos: yup.string().max(80, '***Máximo 80 caracteres'),
@@ -27,7 +29,59 @@ function FormPerfil () {
   })
 
   const dataFormPerfil = async (data) => {
+    const token = sessionStorage.getItem('token')
     console.log(data)
+    // Sending patch Account info
+    async function patchAccount (url, data) {
+      const options = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token
+        },
+        body: JSON.stringify(data)
+      }
+      // console.log(data)
+      // Hay que modificar
+      const endpoint=`${URL_FULL}/account/${id}`
+      const response = await fetch(endpoint, options)
+      // console.log('response fetch', response)
+      return response.json()
+    }
+
+    // Enviando a autenticacion de google
+    const endpointAuthGoogle = `${URL_FULL}/google/auth`
+
+    async function loginAccountGoogle (url) {
+      // console.log("entrando a la funcion")
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      const response = await fetch(url, options)
+      return response.json()
+    }
+
+    const optionsAuthGoogle = {
+      method: 'POST',
+      redirect:'follow',
+      headers: {
+        'Content-Type': 'application/json',
+        'token': token  // Enviar en el post el token de JWT
+      },
+    }
+
+      await loginAccountGoogle(endpointAuthGoogle)
+      .then(response =>{
+        location.href = response.payload.authUrl
+        })
+      .catch(error =>{
+        console.log(error)
+      })
+
+
   }
 
   return (
