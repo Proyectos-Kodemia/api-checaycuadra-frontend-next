@@ -17,11 +17,13 @@ const schema = yup.object({
   estado: yup.string().max(50, '***Máximo 50 caracteres'),
   municipio: yup.string().max(50, '***Máximo 50 caracteres'),
   cedula: yup.string().max(20, '***Máximo 20 caracteres'),
-  formacion: yup.string().max(50, '***Máximo 50 caracteres')
+  formacion: yup.string().max(50, '***Máximo 50 caracteres'),
+  email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres').matches(/[\w.\-]{0,25}@gmail\.com/gm,'***Solo correos gmail son aceptados')
 }).required('El campo es requerido')
 
 function FormPerfil () {
-  
+  const [checked, setChecked] = React.useState(true);
+
   const { register, handleSubmit, control, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
@@ -301,9 +303,23 @@ function FormPerfil () {
           m: 1
         }}
         >
-          <ControlledSwitches name="Google" label="Autenticación Google"/>
+          <ControlledSwitches checked={checked} name="Google" label="Autenticación Google"
+          />
         </Box>
-
+        {checked && <TextField
+            label='Correo electrónico'
+            placeholder='midirección@mail.com'
+            color='secondary'
+            required
+            fullWidth
+            sx={{ fontSize: '12' }}
+            {...register('email')}
+          />
+        }  
+         <span 
+          id='emailerror'
+          className={styles.errors}
+        >{errors.email?.message}</span> 
         {/* Boton guardar         */}
         <Box sx={{
           display: 'flex',
