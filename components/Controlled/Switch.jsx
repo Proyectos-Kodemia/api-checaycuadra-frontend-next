@@ -1,8 +1,10 @@
 import * as React from 'react';
 import Switch from '@mui/material/Switch';
 import FormHelperText from '@mui/material/FormHelperText';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
-export default function ControlledSwitches(label) {
+
+export default function ControlledSwitches({name,label}) {
   const [checked, setChecked] = React.useState(true);
 
   const handleChange = (event) => {
@@ -10,10 +12,15 @@ export default function ControlledSwitches(label) {
   };
 
   return (
-    <Switch
-      checked={checked}
-      onChange={handleChange}
-      label= {label}
-    />
+    <FormControlLabel
+          control={
+            <Switch 
+            checked={checked} 
+            onChange={handleChange} 
+            name={name} 
+            />
+          }
+          label={label}
+    />   
   )
 }

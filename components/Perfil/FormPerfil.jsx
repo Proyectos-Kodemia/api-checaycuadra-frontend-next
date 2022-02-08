@@ -301,8 +301,7 @@ function FormPerfil () {
           m: 1
         }}
         >
-          <ControlledSwitches label="Autenticación Google">Autenticacion Google
-          </ControlledSwitches>
+          <ControlledSwitches name="Google" label="Autenticación Google"/>
         </Box>
 
         {/* Boton guardar         */}
