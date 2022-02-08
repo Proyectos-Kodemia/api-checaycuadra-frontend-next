@@ -8,21 +8,34 @@ import { useForm } from 'react-hook-form'
 import styles from './FormPerfil.module.scss'
 import { URL_FULL } from '../../services/config'
 import ControlledSwitches from '../Controlled/Switch'
-
+import Modal from '../Controlled/Modal'
 
 // const {id} = router.query
 const schema = yup.object({
-  nombre: yup.string().max(80, '***Máximo 80 caracteres'),
-  apellidos: yup.string().max(80, '***Máximo 80 caracteres'),
-  estado: yup.string().max(50, '***Máximo 50 caracteres'),
-  municipio: yup.string().max(50, '***Máximo 50 caracteres'),
+  nombre: yup.string().max(80, '***Máximo 80 caracteres').required('El campo es requerido'),
+  apellidos: yup.string().max(80, '***Máximo 80 caracteres').required('El campo es requerido'),
+  estado: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
+  municipio: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
   cedula: yup.string().max(20, '***Máximo 20 caracteres'),
-  formacion: yup.string().max(50, '***Máximo 50 caracteres'),
-  email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres').matches(/[\w.\-]{0,25}@gmail\.com/gm,'***Solo correos gmail son aceptados')
-}).required('El campo es requerido')
+  formacion: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
+  email: yup.string().email('***El email no es valido').max(50, '***Máximo 50 caracteres').matches(/[\w.\-]{0,25}@gmail\.com/gm,'***Solo correos gmail son aceptados')
+})
 
 function FormPerfil () {
+  // Hook del switch
   const [checked, setChecked] = React.useState(true);
+  // Hook del modal
+  const [open, setOpen] = React.useState(false);
+
+ // Handle del modal
+  const handleClickOpen = () => {
+    setOpen(checked);
+  };
+
+   // Handle del modal
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const { register, handleSubmit, control, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
@@ -32,19 +45,21 @@ function FormPerfil () {
     display: 'none'
   })
 
-  const dataFormPerfil = async (data) => {
-    const token = sessionStorage.getItem('token')
-    console.log(data)
-    // Sending patch Account info
-    async function patchAccount (url, data) {
-      const options = {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'token': token
-        },
-        body: JSON.stringify(data)
-      }
+  const dataFormPerfil = async (data, checked) => {
+
+    if(checked){
+      const token = sessionStorage.getItem('token')
+      console.log(data)
+      // Sending patch Account info
+      async function patchAccount (url, data) {
+        const options = {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'token': token
+          },
+          body: JSON.stringify(data)
+        }
       // console.log(data)
       // Hay que modificar
       const endpoint=`${URL_FULL}/account/${id}`
@@ -54,28 +69,28 @@ function FormPerfil () {
     }
 
     // Enviando a autenticacion de google
-    const endpointAuthGoogle = `${URL_FULL}/google/auth`
+      const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
-    async function loginAccountGoogle (url) {
-      // console.log("entrando a la funcion")
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
+      async function loginAccountGoogle (url) {
+        // console.log("entrando a la funcion")
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
-      }
       const response = await fetch(url, options)
       return response.json()
     }
 
-    const optionsAuthGoogle = {
-      method: 'POST',
-      redirect:'follow',
-      headers: {
-        'Content-Type': 'application/json',
-        'token': token  // Enviar en el post el token de JWT
-      },
-    }
+      const optionsAuthGoogle = {
+        method: 'POST',
+        redirect:'follow',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token  // Enviar en el post el token de JWT
+        },
+      }
 
       await loginAccountGoogle(endpointAuthGoogle)
       .then(response =>{
@@ -85,6 +100,10 @@ function FormPerfil () {
         console.log(error)
       })
 
+
+    }else{
+
+    }
 
   }
 
@@ -303,7 +322,7 @@ function FormPerfil () {
           m: 1
         }}
         >
-          <ControlledSwitches checked={checked} name="Google" label="Autenticación Google"
+          <ControlledSwitches checked={checked} setChecked={setChecked} name="Google" label="Autenticación Google"
           />
         </Box>
         {checked && <TextField
@@ -316,10 +335,11 @@ function FormPerfil () {
             {...register('email')}
           />
         }  
-         <span 
-          id='emailerror'
+        {checked && <span id='emailerror'
           className={styles.errors}
-        >{errors.email?.message}</span> 
+          >{errors.email?.message}</span> 
+        }  
+         
         {/* Boton guardar         */}
         <Box sx={{
           display: 'flex',
@@ -334,8 +354,10 @@ function FormPerfil () {
             variant='contained'
             type='submit'
             fullWidth
+            onclick={handleClickOpen}
           >Guardar
           </Button>
+          {!checked &&<Modal handleClose={handleClose}/>}
         </Box>
       </form>
     </Box>

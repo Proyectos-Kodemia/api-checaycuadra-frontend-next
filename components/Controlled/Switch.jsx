@@ -4,8 +4,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-export default function ControlledSwitches({name,label}) {
-  const [checked, setChecked] = React.useState(true);
+export default function ControlledSwitches({name,label,checked,setChecked}) {
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
