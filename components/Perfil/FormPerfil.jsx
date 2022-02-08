@@ -18,24 +18,24 @@ const schema = yup.object({
   municipio: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
   cedula: yup.string().max(20, '***Máximo 20 caracteres'),
   formacion: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
-  email: yup.string().email('***El email no es valido').max(50, '***Máximo 50 caracteres').matches(/[\w.\-]{0,25}@gmail\.com/gm,'***Solo correos gmail son aceptados')
+  email: yup.string().email('***El email no es valido').max(50, '***Máximo 50 caracteres').matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados')
 })
 
 function FormPerfil () {
   // Hook del switch
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(true)
   // Hook del modal
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
 
- // Handle del modal
+  // Handle del modal
   const handleClickOpen = () => {
-    setOpen(checked);
-  };
+    setOpen(true)
+  }
 
-   // Handle del modal
+  // Handle del modal
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const { register, handleSubmit, control, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
@@ -46,8 +46,7 @@ function FormPerfil () {
   })
 
   const dataFormPerfil = async (data, checked) => {
-
-    if(checked){
+    if (checked) {
       const token = sessionStorage.getItem('token')
       console.log(data)
       // Sending patch Account info
@@ -56,19 +55,19 @@ function FormPerfil () {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
-            'token': token
+            token: token
           },
           body: JSON.stringify(data)
         }
-      // console.log(data)
-      // Hay que modificar
-      const endpoint=`${URL_FULL}/account/${id}`
-      const response = await fetch(endpoint, options)
-      // console.log('response fetch', response)
-      return response.json()
-    }
+        // console.log(data)
+        // Hay que modificar
+        const endpoint = `${URL_FULL}/account/${id}`
+        const response = await fetch(endpoint, options)
+        // console.log('response fetch', response)
+        return response.json()
+      }
 
-    // Enviando a autenticacion de google
+      // Enviando a autenticacion de google
       const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
       async function loginAccountGoogle (url) {
@@ -79,32 +78,29 @@ function FormPerfil () {
             'Content-Type': 'application/json'
           }
         }
-      const response = await fetch(url, options)
-      return response.json()
-    }
+        const response = await fetch(url, options)
+        return response.json()
+      }
 
       const optionsAuthGoogle = {
         method: 'POST',
-        redirect:'follow',
+        redirect: 'follow',
         headers: {
           'Content-Type': 'application/json',
-          'token': token  // Enviar en el post el token de JWT
-        },
+          token: token // Enviar en el post el token de JWT
+        }
       }
 
       await loginAccountGoogle(endpointAuthGoogle)
-      .then(response =>{
-        location.href = response.payload.authUrl
+        .then(response => {
+          location.href = response.payload.authUrl
         })
-      .catch(error =>{
-        console.log(error)
-      })
-
-
-    }else{
+        .catch(error => {
+          console.log(error)
+        })
+    } else {
 
     }
-
   }
 
   return (
@@ -199,7 +195,6 @@ function FormPerfil () {
               variant='filled'
               className='textFieldsPerfil textPrecio'
               InputProps={{ startAdornment: <InputAdornment position='start'>$</InputAdornment> }}
-
               inputProps={{ maxLength: 5 }}
               onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') }}
               {...register('precio')}
@@ -210,7 +205,6 @@ function FormPerfil () {
               placeholder='Cédula Profesional'
               color='secondary'
               variant='filled'
-
               className='textFieldsPerfil'
               {...register('cedula')}
             />
@@ -322,24 +316,26 @@ function FormPerfil () {
           m: 1
         }}
         >
-          <ControlledSwitches checked={checked} setChecked={setChecked} name="Google" label="Autenticación Google"
+          <ControlledSwitches
+            checked={checked} setChecked={setChecked} name='Google' label='Autenticación Google'
           />
         </Box>
         {checked && <TextField
-            label='Correo electrónico'
-            placeholder='midirección@mail.com'
-            color='secondary'
-            required
-            fullWidth
-            sx={{ fontSize: '12' }}
-            {...register('email')}
-          />
-        }  
-        {checked && <span id='emailerror'
-          className={styles.errors}
-          >{errors.email?.message}</span> 
-        }  
-         
+          label='Correo electrónico'
+          placeholder='midirección@mail.com'
+          color='secondary'
+          required
+          fullWidth
+          sx={{ fontSize: '12' }}
+          {...register('email')}
+                    />}
+        {checked &&
+          <span
+            id='emailerror'
+            className={styles.errors}
+          >{errors.email?.message}
+          </span>}
+
         {/* Boton guardar         */}
         <Box sx={{
           display: 'flex',
@@ -354,10 +350,10 @@ function FormPerfil () {
             variant='contained'
             type='submit'
             fullWidth
-            onclick={handleClickOpen}
+            onClick={handleClickOpen}
           >Guardar
           </Button>
-          {!checked &&<Modal handleClose={handleClose}/>}
+          <Modal handleClose={handleClose} open={open} handleClickOpen={handleClickOpen} />
         </Box>
       </form>
     </Box>
