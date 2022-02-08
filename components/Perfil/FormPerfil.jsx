@@ -7,6 +7,8 @@ import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import styles from './FormPerfil.module.scss'
 import { URL_FULL } from '../../services/config'
+import ControlledSwitches from '../Controlled/Switch'
+
 
 // const {id} = router.query
 const schema = yup.object({
@@ -219,7 +221,7 @@ function FormPerfil () {
             {...register('formacion')}
           />
         </Box>
-
+        {/* Especialidades */}
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -252,6 +254,7 @@ function FormPerfil () {
             )}
           />
         </Box>
+
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -260,15 +263,16 @@ function FormPerfil () {
           m: 1
         }}
         >
-          <TextField
+          {/* <TextField
             label='Servicios Profesionales'
             color='secondary'
             variant='filled'
             fullWidth
             className='textFieldsPerfil textGrande'
             {...register('servicios')}
-          />
+          /> */}
         </Box>
+        {/* Acerca de mi */}
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -278,7 +282,7 @@ function FormPerfil () {
         }}
         >
           <TextField
-            label='Acerca de Mí'
+            label='Acerca de mi'
             color='secondary'
             inputProps={{ maxLength: 450 }}
             multiline
@@ -289,6 +293,19 @@ function FormPerfil () {
             {...register('acercade')}
           />
         </Box>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          p: 1,
+          m: 1
+        }}
+        >
+          <ControlledSwitches label="Autenticación Google">Autenticacion Google
+          </ControlledSwitches>
+        </Box>
+
+        {/* Boton guardar         */}
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
