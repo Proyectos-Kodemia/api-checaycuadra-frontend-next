@@ -62,22 +62,24 @@ function FormPerfil () {
     setOpen(false)
   }
 
-  const { register, handleSubmit, control, formState: { errors } } = useForm({
-    resolver: yupResolver(schema),
-    defaultValues
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
   })
 
   const Input = styled('input')({
     display: 'none'
   })
 
-  const dataFormPerfil = async (data, checked) => {
+  const dataFormPerfil = async (data) => {
     console.log("entra a dataFOrm")
     if (checked === true) {
       const token = sessionStorage.getItem('token')
-      console.log(data)
+      console.log("esto es la data del form",data)
+      console.log("esto es la data token",token)
+      console.log("info", JSON.stringify(data))
+
       // Sending patch Account info
-      async function patchAccount (url, data) {
+      async function patchAccount (data) {
         const options = {
           method: 'PATCH',
           headers: {
@@ -86,12 +88,12 @@ function FormPerfil () {
           },
           body: JSON.stringify(data)
         }
-        // console.log(data)
-        // Hay que modificar
-        const endpoint = `${URL_FULL}/account/${id}`
+        const endpoint = `${URL_FULL}/account/perfil`
+        console.log("endpoint del patch", endpoint)
         const response = await fetch(endpoint, options)
         // console.log('response fetch', response)
         return response.json()
+        console.log("response",response)
       }
 
       // Enviando a autenticacion de google
@@ -120,7 +122,17 @@ function FormPerfil () {
 
       await loginAccountGoogle(endpointAuthGoogle)
         .then(response => {
-          location.href = response.payload.authUrl
+          // location.href = response.payload.authUrl
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+      // Sending request to account patch
+      await patchAccount(data)
+        .then(response => {
+          console.log(data)
+          console.log(response)
         })
         .catch(error => {
           console.log(error)
@@ -201,6 +213,7 @@ function FormPerfil () {
               inputProps={{ maxLength: 5 }}
               onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') }}
               className='textFieldsPerfil textCP'
+              {...register('cp')}
             />
           </span>
         </Box>
@@ -305,14 +318,6 @@ function FormPerfil () {
           m: 1
         }}
         >
-          {/* <TextField
-            label='Servicios Profesionales'
-            color='secondary'
-            variant='filled'
-            fullWidth
-            className='textFieldsPerfil textGrande'
-            {...register('servicios')}
-          /> */}
         </Box>
         {/* Acerca de mi */}
         <Box sx={{
