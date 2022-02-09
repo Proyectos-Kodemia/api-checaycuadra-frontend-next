@@ -20,13 +20,13 @@ const schema = yup.object({
   cedula: yup.string().max(20, '***Máximo 20 caracteres'),
   formacion: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
   hasEmail: yup.boolean(),
-  email: yup.string().when('hasEmail',{
-        is:true,
-        then: (schema)=> schema.string()
-        .email('***El email no es valido')
-        .max(50, '***Máximo 50 caracteres')
-        .matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados'),
-        otherwise:(schema)=>schema.string()
+  email: yup.string().when('hasEmail', {
+    is: true,
+    then: (schema) => schema.string()
+      .email('***El email no es valido')
+      .max(50, '***Máximo 50 caracteres')
+      .matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados'),
+    otherwise: (schema) => schema.string()
   })
 })
 
@@ -36,25 +36,23 @@ function FormPerfil () {
   // Hook del modal
   const [open, setOpen] = React.useState(true)
 
-  const defaultValues ={
-    nombre:"",
-    apellidos:"",
-    estado:"",
-    municipio:"",
-    cedula:"",
-    formacion:"",
-    hasEmail:checked,
-    email:""
+  const defaultValues = {
+    nombre: '',
+    apellidos: '',
+    estado: '',
+    municipio: '',
+    cedula: '',
+    formacion: '',
+    hasEmail: checked,
+    email: ''
   }
 
-  //Handle switch
-  const handleSwitch =(val)=>{
-    
-    if(!val){
+  // Handle switch
+  const handleSwitch = (val) => {
+    if (!val) {
       setOpen(true)
-      console.log(" en el handle",val)
+      console.log(' en el handle', val)
     }
-
   }
 
   // Handle del modal
@@ -72,7 +70,7 @@ function FormPerfil () {
   })
 
   const dataFormPerfil = async (data, checked) => {
-    console.log("entra a dataFOrm")
+    console.log('entra a dataFOrm')
     if (checked === true) {
       const token = sessionStorage.getItem('token')
       console.log(data)
@@ -125,8 +123,6 @@ function FormPerfil () {
         .catch(error => {
           console.log(error)
         })
-    } else {
-
     }
   }
 
@@ -344,9 +340,9 @@ function FormPerfil () {
         }}
         >
           <ControlledSwitches
-            checked={checked} 
-            setChecked={setChecked} 
-            name='Google' 
+            checked={checked}
+            setChecked={setChecked}
+            name='Google'
             label='Autenticación Google'
             onChange={handleSwitch}
           />
@@ -359,13 +355,13 @@ function FormPerfil () {
           sx={{ fontSize: '12' }}
           {...register('email')}
                     />}
-        
+
         <span
           id='emailerror'
           className={styles.errors}
         >{errors.email?.message}
         </span>
-        
+
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -382,10 +378,10 @@ function FormPerfil () {
           >Guardar
           </Button>
 
-          <Modal 
-          open={open} 
-          handleClose={handleClose}
-     
+          <Modal
+            open={open}
+            handleClose={handleClose}
+
           />
         </Box>
       </form>
