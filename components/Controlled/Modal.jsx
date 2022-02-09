@@ -12,6 +12,7 @@ export default function ResponsiveDialog ({ open, handleClose, handleClickOpen }
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
+  
   return (
     <div>
 

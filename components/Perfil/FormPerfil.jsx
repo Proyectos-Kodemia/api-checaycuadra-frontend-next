@@ -11,6 +11,7 @@ import ControlledSwitches from '../Controlled/Switch'
 import Modal from '../Controlled/Modal'
 
 // const {id} = router.query
+
 const schema = yup.object({
   nombre: yup.string().max(80, '***Máximo 80 caracteres').required('El campo es requerido'),
   apellidos: yup.string().max(80, '***Máximo 80 caracteres').required('El campo es requerido'),
@@ -18,18 +19,42 @@ const schema = yup.object({
   municipio: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
   cedula: yup.string().max(20, '***Máximo 20 caracteres'),
   formacion: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
-  email: yup.string().email('***El email no es valido').max(50, '***Máximo 50 caracteres').matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados')
+  hasEmail: yup.boolean(),
+  email: yup.string().when('hasEmail',{
+        is:true,
+        then: (schema)=> schema.string()
+        .email('***El email no es valido')
+        .max(50, '***Máximo 50 caracteres')
+        .matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados'),
+        otherwise:(schema)=>schema.string()
+  })
 })
 
 function FormPerfil () {
   // Hook del switch
   const [checked, setChecked] = React.useState(true)
   // Hook del modal
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
 
-  // Handle del modal
-  const handleClickOpen = () => {
-    setOpen(true)
+  const defaultValues ={
+    nombre:"",
+    apellidos:"",
+    estado:"",
+    municipio:"",
+    cedula:"",
+    formacion:"",
+    hasEmail:checked,
+    email:""
+  }
+
+  //Handle switch
+  const handleSwitch =(val)=>{
+    
+    if(!val){
+      setOpen(true)
+      console.log(" en el handle",val)
+    }
+
   }
 
   // Handle del modal
@@ -38,7 +63,8 @@ function FormPerfil () {
   }
 
   const { register, handleSubmit, control, formState: { errors } } = useForm({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    defaultValues
   })
 
   const Input = styled('input')({
@@ -46,7 +72,8 @@ function FormPerfil () {
   })
 
   const dataFormPerfil = async (data, checked) => {
-    if (checked) {
+    console.log("entra a dataFOrm")
+    if (checked === true) {
       const token = sessionStorage.getItem('token')
       console.log(data)
       // Sending patch Account info
@@ -317,26 +344,28 @@ function FormPerfil () {
         }}
         >
           <ControlledSwitches
-            checked={checked} setChecked={setChecked} name='Google' label='Autenticación Google'
+            checked={checked} 
+            setChecked={setChecked} 
+            name='Google' 
+            label='Autenticación Google'
+            onChange={handleSwitch}
           />
         </Box>
         {checked && <TextField
           label='Correo electrónico'
-          placeholder='midirección@mail.com'
+          placeholder='midirección@gmail.com'
           color='secondary'
-          required
           fullWidth
           sx={{ fontSize: '12' }}
           {...register('email')}
                     />}
-        {checked &&
-          <span
-            id='emailerror'
-            className={styles.errors}
-          >{errors.email?.message}
-          </span>}
-
-        {/* Boton guardar         */}
+        
+        <span
+          id='emailerror'
+          className={styles.errors}
+        >{errors.email?.message}
+        </span>
+        
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -350,10 +379,14 @@ function FormPerfil () {
             variant='contained'
             type='submit'
             fullWidth
-            onClick={handleClickOpen}
           >Guardar
           </Button>
-          <Modal handleClose={handleClose} open={open} handleClickOpen={handleClickOpen} />
+
+          <Modal 
+          open={open} 
+          handleClose={handleClose}
+     
+          />
         </Box>
       </form>
     </Box>

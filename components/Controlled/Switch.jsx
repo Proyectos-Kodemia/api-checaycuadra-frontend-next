@@ -3,9 +3,10 @@ import Switch from '@mui/material/Switch'
 import FormHelperText from '@mui/material/FormHelperText'
 import FormControlLabel from '@mui/material/FormControlLabel'
 
-export default function ControlledSwitches ({ name, label, checked, setChecked }) {
+export default function ControlledSwitches ({ name, label, checked, setChecked,onChange }) {
   const handleChange = (event) => {
     setChecked(event.target.checked)
+    onChange(event.target.checked)
   }
 
   return (
