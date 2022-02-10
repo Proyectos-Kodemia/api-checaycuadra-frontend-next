@@ -1,0 +1,19 @@
+@import '../../styles/abstract/variables';
+
+.principalBox{
+    margin: auto;
+}
+
+.textEspecialist{
+    margin-left: 200px;
+    margin-top: 50px;
+    margin-bottom: 53px;
+}
+
+.cards{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    
+}
