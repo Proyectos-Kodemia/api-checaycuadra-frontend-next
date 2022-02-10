@@ -18,8 +18,10 @@ import imageLogin from '../../images/graphLogin.svg'
 import { URL_FULL } from '../../services/config'
 // esquema de validaciones de input
 const schema = yup.object({
+  name: yup.string().required('El campo es requerido'),
+  lastname: yup.string().required('El campo es requerido'),
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(100, '***Máximo 100 caracteres'),
-  phone: yup.string().min(8, 'El número debe incluir al menos 8 caracteres').required('El campo es requerido'),
+  telephone: yup.string().min(8, 'El número debe incluir al menos 8 caracteres').required('El campo es requerido'),
   password: yup.string().required('El campo es requerido').matches(
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
     'Debe contener 8 caracteres, 1 Mayuscula, 1 minuscula, 1 número y 1 caracter especial'
@@ -55,16 +57,22 @@ function FormRegister ({ rol }) {
     let direction = ''
 
     console.log(data)
-    if (rol === 'Contador') direction = `${URL_FULL}/auth/account`
-    else direction = `${URL_FULL}/auth/users`
+    if (rol === 'Contador') direction = `${URL_FULL}/account`
+    else direction = `${URL_FULL}/users`
 
     if (sessionStorage.getItem('token')) {
       sessionStorage.removeItem('token')
     }
     // aqui pondriamos aviso al usuario que se creo correctamente
-    const response = sendFetchNoToken(direction, data)
+    const response = await sendFetchNoToken(direction, data)
+    console.log('desde el response', response)
 
-    router.push('/')
+    if (response.status) {
+      router.push('/Cuenta/LoginPage')
+    }
+    else {
+      console.log('error en login')
+    }
   }
 
   const handleClickShowPassword = () => setShowPassword(!showPassword)
@@ -80,20 +88,40 @@ function FormRegister ({ rol }) {
     <>
       <form className='rounded mt-3 justify-content-center' onSubmit={handleSubmit(dataLogin)}>
         <TextField
+          name='name'
+          label='Nombre'
+          placeholder='Nombre'
+          color='secondary'
+          required
+          fullWidth
+          sx={{ fontSize: ' 12px', mb: 2 }}
+          {...register('name')}
+        />
+        <TextField
+          name='lastname'
+          label='Apellidos'
+          placeholder='Apellidos'
+          color='secondary'
+          required
+          fullWidth
+          sx={{ fontSize: ' 12px', mb: 2 }}
+          {...register('lastname')}
+        />
+        <TextField
           name='email'
           label='Correo electrónico'
           placeholder='midirección@mail.com'
           color='secondary'
           required
           fullWidth
-          sx={{ fontSize: ' 12px' }}
+          sx={{ fontSize: ' 12px', mb: 1 }}
           {...register('email')}
         />
-        <div id='emailHelp' className='mb-4 error text-danger'>{errors.email?.message}</div>
+        <span id='emailHelp' className='mb-4 error text-danger'>{errors.email?.message}</span>
 
         {/* https://codesandbox.io/s/64024619-how-to-validate-material-ui-phone-number-with-yup-forked-8329m */}
         <Controller
-          name='phone'
+          name='telephone'
           control={control}
           defaultValue=''
           render={({ field: { name, onBlur, onChange, value } }) => (
@@ -172,7 +200,7 @@ function FormRegister ({ rol }) {
       <div className='remember'>
         <div><a className='forgetPass' href='#'>Olvidé mi contraseña</a></div>
         <Image src={imageLogin} width='300' height='150' />
-        <div className='register'>¿Ya tienes una cuenta?<Link href="/Cuenta/LoginPage" underline='none'> ¡Inicia sesión!</Link></div>
+        <div className='register'>¿Ya tienes una cuenta?<Link href='/Cuenta/LoginPage' underline='none'> ¡Inicia sesión!</Link></div>
       </div>
 
     </>

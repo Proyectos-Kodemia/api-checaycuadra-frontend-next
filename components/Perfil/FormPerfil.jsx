@@ -6,28 +6,171 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import styles from './FormPerfil.module.scss'
+import { URL_FULL } from '../../services/config'
+import ControlledSwitches from '../Controlled/Switch'
+import Modal from '../Controlled/Modal'
 
-const schema = yup.object({
-  nombre: yup.string().max(80, '***Máximo 80 caracteres'),
-  apellidos: yup.string().max(80, '***Máximo 80 caracteres'),
-  estado: yup.string().max(50, '***Máximo 50 caracteres'),
-  municipio: yup.string().max(50, '***Máximo 50 caracteres'),
+// const {id} = router.query
+
+const schema = yup.object().shape({
+  nombre: yup.string().max(80, '***Máximo 80 caracteres').required('El nombre es requerido'),
+  apellidos: yup.string().max(80, '***Máximo 80 caracteres').required('Los apellidos son requeridos'),
+  estado: yup.string().max(50, '***Máximo 50 caracteres').required('El estado es requerido'),
+  municipio: yup.string().max(50, '***Máximo 50 caracteres').required('El municipio es requerido'),
+  precio: yup.string().max(50, '***Máximo 50 caracteres').required('El precio de honorarios es requerido'),
   cedula: yup.string().max(20, '***Máximo 20 caracteres'),
-  formacion: yup.string().max(50, '***Máximo 50 caracteres')
-}).required('El campo es requerido')
+  formacion: yup.string().max(50, '***Máximo 50 caracteres').required('La formación es requerida'),
+  google: yup.boolean(),
+  email: yup.string().when('google', {
+    is: true,
+    then: (schema) => schema.required('El correo es requerido').email('***El email no es valido')
+    .max(50, '***Máximo 50 caracteres')
+    .matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados'),
+    otherwise: (schema) => schema.optional(),
+  }),
+}).required()
 
 function FormPerfil () {
-  
-  const { register, handleSubmit, control, formState: { errors } } = useForm({
-    resolver: yupResolver(schema)
+  // Hook del switch
+  const [checked, setChecked] = React.useState(true)
+  // Hook del modal
+  const [open, setOpen] = React.useState(false)
+
+  const defaultValues ={
+    nombre:"",
+    apellidos:"",
+    estado:"",
+    municipio:"",
+    cedula:"",
+    precio:"",
+    formacion:"",
+    google:true,
+    email:""
+  }
+
+  const { register, handleSubmit,control, formState: { errors },setValue } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues
   })
+
+  //Handle switch
+  const handleSwitch =(val)=>{
+    setValue('google', val)
+    if(!val){
+      setOpen(true)
+      console.log(" en el handle",val)
+    }
+
+  }
+
+  // Handle del modal
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  
 
   const Input = styled('input')({
     display: 'none'
   })
 
   const dataFormPerfil = async (data) => {
-    console.log(data)
+    console.log("entra a dataFOrm")
+    console.log('data', data)
+    if (checked === true) {
+      const token = sessionStorage.getItem('token')
+      console.log("esto es la data del form",data)
+      console.log("esto es la data token",token)
+      console.log("info", JSON.stringify(data))
+
+      // Sending patch Account info
+      async function patchAccount (data) {
+        const options = {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            token: token
+          },
+          body: JSON.stringify(data)
+        }
+        const endpoint = `${URL_FULL}/account/perfil`
+        console.log("endpoint del patch", endpoint)
+        const response = await fetch(endpoint, options)
+        // console.log('response fetch', response)
+        return response.json()
+        console.log("response",response)
+      }
+
+      // Enviando a autenticacion de google
+      const endpointAuthGoogle = `${URL_FULL}/google/auth`
+
+      async function loginAccountGoogle (url) {
+        // console.log("entrando a la funcion")
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        const response = await fetch(url, options)
+        return response.json()
+      }
+
+      const optionsAuthGoogle = {
+        method: 'POST',
+        redirect: 'follow',
+        headers: {
+          'Content-Type': 'application/json',
+          token: token // Enviar en el post el token de JWT
+        }
+      }
+
+      await loginAccountGoogle(endpointAuthGoogle)
+        .then(response => {
+          // location.href = response.payload.authUrl
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+      // Sending request to account patch
+      await patchAccount(data)
+        .then(response => {
+          console.log(data)
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    } else {
+      const token2 = sessionStorage.getItem('token')
+      // Sending patch Account info
+      async function patchAccount2 (data) {
+        const options = {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            token: token2
+          },
+          body: JSON.stringify(data)
+        }
+        const endpoint = `${URL_FULL}/account/perfil`
+        const response = await fetch(endpoint, options)
+        return response.json()
+        console.log("response",response)
+      }
+
+
+      // Sending request to account patch
+      await patchAccount2(data)
+        .then(response => {
+          console.log(data)
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 
   return (
@@ -41,7 +184,6 @@ function FormPerfil () {
     }}
     >
       <form className='containerFormPerfil' onSubmit={handleSubmit(dataFormPerfil)}>
-        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.nombre?.message}</span>
         <Typography className='typografyPerfil' align='center' variant='h4' component='div'>Perfil</Typography>
 
         <Box sx={{
@@ -59,7 +201,7 @@ function FormPerfil () {
             className='textFieldsPerfil textNomAp'
             {...register('nombre')}
           />
-
+        
           <TextField
             label='Apellidos'
             color='secondary'
@@ -67,6 +209,17 @@ function FormPerfil () {
             className='textFieldsPerfil textNomAp'
             {...register('apellidos')}
           />
+          
+        </Box>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          p: 0,
+          m: 0
+        }}>
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.nombre?.message}</span> 
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.apellidos?.message}</span>
         </Box>
 
         <Box sx={{
@@ -101,10 +254,21 @@ function FormPerfil () {
               inputProps={{ maxLength: 5 }}
               onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') }}
               className='textFieldsPerfil textCP'
+              {...register('cp')}
             />
           </span>
         </Box>
-
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          p: 0,
+          m: 0
+        }}>
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.estado?.message}</span> 
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.municipio?.message}</span>
+        
+        </Box>  
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -122,7 +286,6 @@ function FormPerfil () {
               variant='filled'
               className='textFieldsPerfil textPrecio'
               InputProps={{ startAdornment: <InputAdornment position='start'>$</InputAdornment> }}
-
               inputProps={{ maxLength: 5 }}
               onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') }}
               {...register('precio')}
@@ -133,7 +296,6 @@ function FormPerfil () {
               placeholder='Cédula Profesional'
               color='secondary'
               variant='filled'
-
               className='textFieldsPerfil'
               {...register('cedula')}
             />
@@ -151,6 +313,17 @@ function FormPerfil () {
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
+          justifyContent: 'space-around',
+          p: 0,
+          m: 0
+        }}>
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.precio?.message}</span> 
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.cedula?.message}</span>
+        </Box> 
+
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
           justifyContent: 'space-between',
           p: 1,
           m: 1
@@ -165,7 +338,17 @@ function FormPerfil () {
             {...register('formacion')}
           />
         </Box>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          p: 0,
+          m: 0
+        }}>
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.formacion?.message}</span> 
+        </Box> 
 
+        {/* Especialidades */}
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -198,6 +381,7 @@ function FormPerfil () {
             )}
           />
         </Box>
+
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -206,15 +390,8 @@ function FormPerfil () {
           m: 1
         }}
         >
-          <TextField
-            label='Servicios Profesionales'
-            color='secondary'
-            variant='filled'
-            fullWidth
-            className='textFieldsPerfil textGrande'
-            {...register('servicios')}
-          />
         </Box>
+        {/* Acerca de mi */}
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -224,7 +401,7 @@ function FormPerfil () {
         }}
         >
           <TextField
-            label='Acerca de Mí'
+            label='Acerca de mi'
             color='secondary'
             inputProps={{ maxLength: 450 }}
             multiline
@@ -235,6 +412,38 @@ function FormPerfil () {
             {...register('acercade')}
           />
         </Box>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          p: 1,
+          m: 1
+        }}
+        >
+          <ControlledSwitches
+            checked={checked} 
+            setChecked={setChecked} 
+            name='google' 
+            label='Autenticación Google'
+            onChange={handleSwitch}
+          />
+        </Box>
+        {checked && <>
+          <TextField
+            label='Correo electrónico'
+            placeholder='midirección@gmail.com'
+            color='secondary'
+            fullWidth
+            sx={{ fontSize: '12' }}
+            {...register('email')}
+          />
+          <span
+            id='emailerror'
+            className='mb-2 error text-danger'
+          >{errors.email?.message}
+          </span>
+          </>
+        }
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -250,6 +459,12 @@ function FormPerfil () {
             fullWidth
           >Guardar
           </Button>
+
+          <Modal 
+          open={open} 
+          handleClose={handleClose}
+     
+          />
         </Box>
       </form>
     </Box>
@@ -270,3 +485,9 @@ const especialidades = [
   { title: 'Costos' },
   { title: 'Obligaciones de seguridad social (IMSS)' }
 ]
+
+
+{/* 
+<span id='passwordHelp' className='mb-2 error text-danger'>{errors.cedula?.message}</span>
+<span id='passwordHelp' className='mb-2 error text-danger'>{errors.formacion?.message}</span>
+<span id='passwordHelp' className='mb-2 error text-danger'>{errors.email?.message}</span> */}
