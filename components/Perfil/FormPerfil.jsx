@@ -12,29 +12,28 @@ import Modal from '../Controlled/Modal'
 
 // const {id} = router.query
 
-const schema = yup.object({
+const schema = yup.object().shape({
   nombre: yup.string().max(80, '***Máximo 80 caracteres').required('El campo es requerido'),
   apellidos: yup.string().max(80, '***Máximo 80 caracteres').required('El campo es requerido'),
   estado: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
   municipio: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
   cedula: yup.string().max(20, '***Máximo 20 caracteres'),
   formacion: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
-  hasEmail: yup.boolean(),
-  email: yup.string().when('hasEmail',{
-        is:true,
-        then: (schema)=> schema.string()
-        .email('***El email no es valido')
-        .max(50, '***Máximo 50 caracteres')
-        .matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados'),
-        otherwise:(schema)=>schema.string()
-  })
-})
+  google: yup.boolean(),
+  email: yup.string().when('google', {
+    is: true,
+    then: (schema) => schema.required("El campo es requerido").email('***El email no es valido')
+    .max(50, '***Máximo 50 caracteres')
+    .matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados'),
+    otherwise: (schema) => schema.optional(),
+  }),
+}).required()
 
 function FormPerfil () {
   // Hook del switch
   const [checked, setChecked] = React.useState(true)
   // Hook del modal
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
 
   const defaultValues ={
     nombre:"",
@@ -43,13 +42,18 @@ function FormPerfil () {
     municipio:"",
     cedula:"",
     formacion:"",
-    hasEmail:checked,
+    google:true,
     email:""
   }
 
+  const { register, handleSubmit,control, formState: { errors },setValue } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues
+  })
+
   //Handle switch
   const handleSwitch =(val)=>{
-    
+    setValue('google', val)
     if(!val){
       setOpen(true)
       console.log(" en el handle",val)
@@ -62,9 +66,7 @@ function FormPerfil () {
     setOpen(false)
   }
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema)
-  })
+  
 
   const Input = styled('input')({
     display: 'none'
@@ -72,6 +74,7 @@ function FormPerfil () {
 
   const dataFormPerfil = async (data) => {
     console.log("entra a dataFOrm")
+    console.log('data', data)
     if (checked === true) {
       const token = sessionStorage.getItem('token')
       console.log("esto es la data del form",data)
@@ -351,26 +354,28 @@ function FormPerfil () {
           <ControlledSwitches
             checked={checked} 
             setChecked={setChecked} 
-            name='Google' 
+            name='google' 
             label='Autenticación Google'
             onChange={handleSwitch}
           />
         </Box>
-        {checked && <TextField
-          label='Correo electrónico'
-          placeholder='midirección@gmail.com'
-          color='secondary'
-          fullWidth
-          sx={{ fontSize: '12' }}
-          {...register('email')}
-                    />}
-        
-        <span
-          id='emailerror'
-          className={styles.errors}
-        >{errors.email?.message}
-        </span>
-        
+        {checked && <>
+          <TextField
+            label='Correo electrónico'
+            placeholder='midirección@gmail.com'
+            color='secondary'
+            fullWidth
+            sx={{ fontSize: '12' }}
+            {...register('email')}
+          />}
+          
+          <span
+            id='emailerror'
+            className={styles.errors}
+          >{errors.email?.message}
+          </span>
+          </>
+        }
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
