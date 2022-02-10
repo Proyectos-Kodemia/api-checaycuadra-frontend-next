@@ -24,10 +24,10 @@ const schema = yup.object().shape({
   email: yup.string().when('google', {
     is: true,
     then: (schema) => schema.required('El correo es requerido').email('***El email no es valido')
-    .max(50, '***Máximo 50 caracteres')
-    .matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados'),
-    otherwise: (schema) => schema.optional(),
-  }),
+      .max(50, '***Máximo 50 caracteres')
+      .matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados'),
+    otherwise: (schema) => schema.optional()
+  })
 }).required()
 
 function FormPerfil () {
@@ -36,31 +36,31 @@ function FormPerfil () {
   // Hook del modal
   const [open, setOpen] = React.useState(false)
 
-  const defaultValues ={
-    nombre:"",
-    apellidos:"",
-    estado:"",
-    municipio:"",
-    cedula:"",
-    precio:"",
-    formacion:"",
-    google:true,
-    email:""
+  const defaultValues = {
+    nombre: '',
+    apellidos: '',
+    estado: '',
+    municipio: '',
+    cedula: '',
+    precio: '',
+    formacion: '',
+    google: true,
+    email: ''
   }
 
-  const { register, handleSubmit,control, formState: { errors },setValue } = useForm({
+  const { register, handleSubmit, control, formState: { errors }, setValue } = useForm({
     resolver: yupResolver(schema),
     defaultValues
+
   })
 
-  //Handle switch
-  const handleSwitch =(val)=>{
+  // Handle switch
+  const handleSwitch = (val) => {
     setValue('google', val)
-    if(!val){
+    if (!val) {
       setOpen(true)
-      console.log(" en el handle",val)
+      console.log(' en el handle', val)
     }
-
   }
 
   // Handle del modal
@@ -68,20 +68,18 @@ function FormPerfil () {
     setOpen(false)
   }
 
-  
-
   const Input = styled('input')({
     display: 'none'
   })
 
   const dataFormPerfil = async (data) => {
-    console.log("entra a dataFOrm")
+    console.log('entra a dataFOrm')
     console.log('data', data)
     if (checked === true) {
       const token = sessionStorage.getItem('token')
-      console.log("esto es la data del form",data)
-      console.log("esto es la data token",token)
-      console.log("info", JSON.stringify(data))
+      console.log('esto es la data del form', data)
+      console.log('esto es la data token', token)
+      console.log('info', JSON.stringify(data))
 
       // Sending patch Account info
       async function patchAccount (data) {
@@ -94,11 +92,11 @@ function FormPerfil () {
           body: JSON.stringify(data)
         }
         const endpoint = `${URL_FULL}/account/perfil`
-        console.log("endpoint del patch", endpoint)
+        console.log('endpoint del patch', endpoint)
         const response = await fetch(endpoint, options)
         // console.log('response fetch', response)
         return response.json()
-        console.log("response",response)
+        console.log('response', response)
       }
 
       // Enviando a autenticacion de google
@@ -157,9 +155,8 @@ function FormPerfil () {
         const endpoint = `${URL_FULL}/account/perfil`
         const response = await fetch(endpoint, options)
         return response.json()
-        console.log("response",response)
+        console.log('response', response)
       }
-
 
       // Sending request to account patch
       await patchAccount2(data)
@@ -201,7 +198,7 @@ function FormPerfil () {
             className='textFieldsPerfil textNomAp'
             {...register('nombre')}
           />
-        
+
           <TextField
             label='Apellidos'
             color='secondary'
@@ -209,7 +206,7 @@ function FormPerfil () {
             className='textFieldsPerfil textNomAp'
             {...register('apellidos')}
           />
-          
+
         </Box>
         <Box sx={{
           display: 'flex',
@@ -217,9 +214,10 @@ function FormPerfil () {
           justifyContent: 'space-around',
           p: 0,
           m: 0
-        }}>
-        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.nombre?.message}</span> 
-        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.apellidos?.message}</span>
+        }}
+        >
+          <span id='passwordHelp' className='mb-2 error text-danger'>{errors.nombre?.message}</span>
+          <span id='passwordHelp' className='mb-2 error text-danger'>{errors.apellidos?.message}</span>
         </Box>
 
         <Box sx={{
@@ -264,11 +262,12 @@ function FormPerfil () {
           justifyContent: 'space-around',
           p: 0,
           m: 0
-        }}>
-        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.estado?.message}</span> 
-        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.municipio?.message}</span>
-        
-        </Box>  
+        }}
+        >
+          <span id='passwordHelp' className='mb-2 error text-danger'>{errors.estado?.message}</span>
+          <span id='passwordHelp' className='mb-2 error text-danger'>{errors.municipio?.message}</span>
+
+        </Box>
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -316,10 +315,11 @@ function FormPerfil () {
           justifyContent: 'space-around',
           p: 0,
           m: 0
-        }}>
-        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.precio?.message}</span> 
-        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.cedula?.message}</span>
-        </Box> 
+        }}
+        >
+          <span id='passwordHelp' className='mb-2 error text-danger'>{errors.precio?.message}</span>
+          <span id='passwordHelp' className='mb-2 error text-danger'>{errors.cedula?.message}</span>
+        </Box>
 
         <Box sx={{
           display: 'flex',
@@ -344,9 +344,10 @@ function FormPerfil () {
           justifyContent: 'space-around',
           p: 0,
           m: 0
-        }}>
-        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.formacion?.message}</span> 
-        </Box> 
+        }}
+        >
+          <span id='passwordHelp' className='mb-2 error text-danger'>{errors.formacion?.message}</span>
+        </Box>
 
         {/* Especialidades */}
         <Box sx={{
@@ -389,8 +390,7 @@ function FormPerfil () {
           p: 1,
           m: 1
         }}
-        >
-        </Box>
+         />
         {/* Acerca de mi */}
         <Box sx={{
           display: 'flex',
@@ -421,9 +421,9 @@ function FormPerfil () {
         }}
         >
           <ControlledSwitches
-            checked={checked} 
-            setChecked={setChecked} 
-            name='google' 
+            checked={checked}
+            setChecked={setChecked}
+            name='google'
             label='Autenticación Google'
             onChange={handleSwitch}
           />
@@ -442,8 +442,7 @@ function FormPerfil () {
             className='mb-2 error text-danger'
           >{errors.email?.message}
           </span>
-          </>
-        }
+                    </>}
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -460,10 +459,10 @@ function FormPerfil () {
           >Guardar
           </Button>
 
-          <Modal 
-          open={open} 
-          handleClose={handleClose}
-     
+          <Modal
+            open={open}
+            handleClose={handleClose}
+
           />
         </Box>
       </form>
@@ -486,8 +485,7 @@ const especialidades = [
   { title: 'Obligaciones de seguridad social (IMSS)' }
 ]
 
-
-{/* 
+{ /*
 <span id='passwordHelp' className='mb-2 error text-danger'>{errors.cedula?.message}</span>
 <span id='passwordHelp' className='mb-2 error text-danger'>{errors.formacion?.message}</span>
-<span id='passwordHelp' className='mb-2 error text-danger'>{errors.email?.message}</span> */}
+<span id='passwordHelp' className='mb-2 error text-danger'>{errors.email?.message}</span> */ }
