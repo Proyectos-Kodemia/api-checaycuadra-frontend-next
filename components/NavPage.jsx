@@ -57,7 +57,7 @@ function NavPage () {
         <div>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Nav className='me-auto'>
-            <Nav.Link href=''>Inicio</Nav.Link>
+            <Nav.Link href='/'>Inicio</Nav.Link>
             <Nav.Link href='#Asi funciona'>Asi funciona</Nav.Link>
             <Nav.Link href='/principal/Buscador'>Profesionales</Nav.Link>
           </Nav>

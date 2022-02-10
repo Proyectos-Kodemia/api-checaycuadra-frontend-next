@@ -53,10 +53,6 @@ const FormLogin = ({ rol }) => {
         window.sessionStorage.removeItem('token')
       }
 
-      if (window.sessionStorage.getItem('token')) {
-        window.sessionStorage.removeItem('token')
-      }
-
       const res = await LoginAccount(direction, data)
 
       // console.log('recibiendo el fetch',response)
@@ -153,7 +149,7 @@ const FormLogin = ({ rol }) => {
       <div className='remember'>
         <a className='forgetPass' href={url}>Olvidé mi contraseña</a>
         <Image src={imageLogin} width='300' height='150' />
-        <div className='register'>¿No tienes una cuenta?<Link href="/Cuenta/RegisterPage" underline='none'> ¡Registrate!</Link></div>
+        <div className='register'>¿No tienes una cuenta?<Link href='/Cuenta/RegisterPage' underline='none'> ¡Registrate!</Link></div>
       </div>
     </>
   )
