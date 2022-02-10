@@ -17,7 +17,6 @@ const schema = yup.object({
 }).required('El campo es requerido')
 
 function FormPerfil () {
-  
   const { register, handleSubmit, control, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
