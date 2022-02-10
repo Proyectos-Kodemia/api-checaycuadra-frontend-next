@@ -1,13 +1,18 @@
 import React from 'react'
 import Image from 'next/image'
 import imageLogin from '../../images/img1.jpg'
-import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Avatar, CardContent, Chip } from '@mui/material'
+import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Avatar, CardContent, Chip, TextField } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { URL_FULL } from '../../services/config'
+import DesktopDateTimePicker from '@mui/lab/DesktopDateTimePicker'
+
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+
 const endpoint = `${URL_FULL}/mercadopago/checkout`
 
-async function LoginAccount (url, credentials) {
+async function LoginAccount(url, credentials) {
   // console.log('entrando a la funcion')
   const options = {
     method: 'POST',
@@ -21,7 +26,7 @@ async function LoginAccount (url, credentials) {
   return response.json()
 }
 
-function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
+function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
   const servicio = {
     title: 'consultoria',
     unit_price: Schedule.costHour,
@@ -41,11 +46,13 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
       })
   }
 
+  const [value, setValue] = React.useState(new Date('2018-01-01T00:00:00.000Z'))
+
   // console.log('campo especialista inicial', specialities)
 
   // console.log(name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule)
   return (
-    <>
+    <div>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', margin: 2, height: 300, boxShadow: 2, borderRadius: 3 }}>
           <Image
@@ -125,33 +132,47 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
         <CalendarTodayRoundedIcon sx={{ fontSize: 36, mr: 5 }} />
         <Typography variant='h4'>
-          Elije tu horario y agenda tu cita
+          Elije tu horario y agenda tu cita con tu contador
         </Typography>
-      </Box>
+        <Box />
+        <Box sx={{}}>
+          <br /><br />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DesktopDateTimePicker
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue)
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
 
-      <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
+        </Box>
 
-        <Button
-          // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerPago}
-          variant='contained'
-          disableElevation
-          size='large'
-          endIcon={<ArrowForwardIcon />}
-        >Realizar Pago
-        </Button>
-        <Button
-          // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerAuthGoogle}
-          variant='contained'
-          disableElevation
-          size='large'
-          sx={{ mr: 0 }}
-          endIcon={<ArrowForwardIcon />}
-        >Confirmar Cita
-        </Button>
-      </Box>
-    </>
-  )
+        <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
+
+          <Button
+            // href='../../pages/Cuenta/RegisterPage.js'
+            onClick={handlerPago}
+            variant='contained'
+            disableElevation
+            size='large'
+            endIcon={<ArrowForwardIcon />}
+          >Realizar Pago
+          </Button>
+          <Button
+            // href='../../pages/Cuenta/RegisterPage.js'
+            onClick={handlerAuthGoogle}
+            variant='contained'
+            disableElevation
+            size='large'
+            sx={{ mr: 0 }}
+            endIcon={<ArrowForwardIcon />}
+          >Confirmar Cita
+          </Button>
+        </Box>
+    </div>
+ )
 }
-export default Appointment
+
+      export default Appointment
