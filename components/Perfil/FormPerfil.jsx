@@ -13,16 +13,17 @@ import Modal from '../Controlled/Modal'
 // const {id} = router.query
 
 const schema = yup.object().shape({
-  nombre: yup.string().max(80, '***Máximo 80 caracteres').required('El campo es requerido'),
-  apellidos: yup.string().max(80, '***Máximo 80 caracteres').required('El campo es requerido'),
-  estado: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
-  municipio: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
+  nombre: yup.string().max(80, '***Máximo 80 caracteres').required('El nombre es requerido'),
+  apellidos: yup.string().max(80, '***Máximo 80 caracteres').required('Los apellidos son requeridos'),
+  estado: yup.string().max(50, '***Máximo 50 caracteres').required('El estado es requerido'),
+  municipio: yup.string().max(50, '***Máximo 50 caracteres').required('El municipio es requerido'),
+  precio: yup.string().max(50, '***Máximo 50 caracteres').required('El precio de honorarios es requerido'),
   cedula: yup.string().max(20, '***Máximo 20 caracteres'),
-  formacion: yup.string().max(50, '***Máximo 50 caracteres').required('El campo es requerido'),
+  formacion: yup.string().max(50, '***Máximo 50 caracteres').required('La formación es requerida'),
   google: yup.boolean(),
   email: yup.string().when('google', {
     is: true,
-    then: (schema) => schema.required("El campo es requerido").email('***El email no es valido')
+    then: (schema) => schema.required('El correo es requerido').email('***El email no es valido')
     .max(50, '***Máximo 50 caracteres')
     .matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados'),
     otherwise: (schema) => schema.optional(),
@@ -41,6 +42,7 @@ function FormPerfil () {
     estado:"",
     municipio:"",
     cedula:"",
+    precio:"",
     formacion:"",
     google:true,
     email:""
@@ -141,7 +143,33 @@ function FormPerfil () {
           console.log(error)
         })
     } else {
+      const token2 = sessionStorage.getItem('token')
+      // Sending patch Account info
+      async function patchAccount2 (data) {
+        const options = {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            token: token2
+          },
+          body: JSON.stringify(data)
+        }
+        const endpoint = `${URL_FULL}/account/perfil`
+        const response = await fetch(endpoint, options)
+        return response.json()
+        console.log("response",response)
+      }
 
+
+      // Sending request to account patch
+      await patchAccount2(data)
+        .then(response => {
+          console.log(data)
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 
@@ -156,7 +184,6 @@ function FormPerfil () {
     }}
     >
       <form className='containerFormPerfil' onSubmit={handleSubmit(dataFormPerfil)}>
-        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.nombre?.message}</span>
         <Typography className='typografyPerfil' align='center' variant='h4' component='div'>Perfil</Typography>
 
         <Box sx={{
@@ -174,7 +201,7 @@ function FormPerfil () {
             className='textFieldsPerfil textNomAp'
             {...register('nombre')}
           />
-
+        
           <TextField
             label='Apellidos'
             color='secondary'
@@ -182,6 +209,17 @@ function FormPerfil () {
             className='textFieldsPerfil textNomAp'
             {...register('apellidos')}
           />
+          
+        </Box>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          p: 0,
+          m: 0
+        }}>
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.nombre?.message}</span> 
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.apellidos?.message}</span>
         </Box>
 
         <Box sx={{
@@ -220,7 +258,17 @@ function FormPerfil () {
             />
           </span>
         </Box>
-
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          p: 0,
+          m: 0
+        }}>
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.estado?.message}</span> 
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.municipio?.message}</span>
+        
+        </Box>  
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -265,6 +313,17 @@ function FormPerfil () {
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
+          justifyContent: 'space-around',
+          p: 0,
+          m: 0
+        }}>
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.precio?.message}</span> 
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.cedula?.message}</span>
+        </Box> 
+
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
           justifyContent: 'space-between',
           p: 1,
           m: 1
@@ -279,6 +338,16 @@ function FormPerfil () {
             {...register('formacion')}
           />
         </Box>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          p: 0,
+          m: 0
+        }}>
+        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.formacion?.message}</span> 
+        </Box> 
+
         {/* Especialidades */}
         <Box sx={{
           display: 'flex',
@@ -367,11 +436,10 @@ function FormPerfil () {
             fullWidth
             sx={{ fontSize: '12' }}
             {...register('email')}
-          />}
-          
+          />
           <span
             id='emailerror'
-            className={styles.errors}
+            className='mb-2 error text-danger'
           >{errors.email?.message}
           </span>
           </>
@@ -417,3 +485,9 @@ const especialidades = [
   { title: 'Costos' },
   { title: 'Obligaciones de seguridad social (IMSS)' }
 ]
+
+
+{/* 
+<span id='passwordHelp' className='mb-2 error text-danger'>{errors.cedula?.message}</span>
+<span id='passwordHelp' className='mb-2 error text-danger'>{errors.formacion?.message}</span>
+<span id='passwordHelp' className='mb-2 error text-danger'>{errors.email?.message}</span> */}
