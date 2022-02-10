@@ -52,7 +52,7 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
 
   // console.log(name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule)
   return (
-    <>
+    <div>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', margin: 2, height: 300, boxShadow: 2, borderRadius: 3 }}>
           <Image
@@ -171,8 +171,8 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
           >Confirmar Cita
           </Button>
         </Box>
-      </>
-      )
+    </div>
+ )
 }
 
       export default Appointment

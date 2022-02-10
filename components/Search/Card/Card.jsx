@@ -6,8 +6,9 @@ import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import Link from 'next/link'
+import styles from './Card.module.scss'
 
 function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) {
   let val, ubication, hourCost, valDegree
@@ -32,58 +33,58 @@ function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, des
   // console.log(idAccount, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule)
 
   return (
-    <Card className='containerCard'>
-      <div className='headCard'>
+    <Card className={styles.containerCard}>
+      <div className={styles.headCard}>
         <div>
-          <Image className='imgCard' src={profileImage} alt={name} />
+          <Image className={styles.imgCard} src={profileImage} alt={name} />
         </div>
 
-        <div className='textHeadCard'>
+        <div className={styles.textHeadCard}>
           <div><strong>{name} {lastname}</strong></div>
           <div>{degree}</div>
           <Rating name='read-only' value={val} readOnly />
         </div>
       </div>
 
-      <div className='icons'>
-        <div className='divVideo'>
-          <VideoCameraFrontIcon color='primary' className='iconSpace' /> Consultoria Online
+      <div className={styles.icons}>
+        <div className={styles.divVideo}>
+          <VideoCameraFrontIcon color='primary' className={styles.iconSpace} /> Consultoria Online
 
         </div>
         <div>
-          <EmojiEventsIcon color='primary' className='iconSpace' /> Especialista en:
-          <div className='textIcons'>
+          <EmojiEventsIcon color='primary' className={styles.iconSpace} /> Especialista en:
+          <div className={styles.textIcons}>
             {valDegree}
           </div>
         </div>
         <div>
-          <LocalOfferIcon color='primary' className='iconSpace' /> Precio de consultoría:
-          <div className='textIcons'>
+          <LocalOfferIcon color='primary' className={styles.iconSpace} /> Precio de consultoría:
+          <div className={styles.textIcons}>
             {hourCost}
           </div>
         </div>
         <div>
-          <LocationOnIcon color='primary' className='iconSpace' /> Dirección
-          <div className='textIcons'>
+          <LocationOnIcon color='primary' className={styles.iconSpace} /> Dirección
+          <div className={styles.textIcons}>
             {ubication}
           </div>
         </div>
       </div>
 
-      <CardContent className='textAboutMe'>
+      <CardContent className={styles.textAboutMe}>
         <Typography variant='body1'><strong>Acerca de mí</strong></Typography>
         <Typography variant='body2'>
           {description}
         </Typography>
       </CardContent>
-      <div className='divButton'>
+      <div className={styles.divButton}>
         <Link href={{
           pathname: '/principal/cita/[id]',
           query: { id: idAccount }
         }}
         >
           <Button
-            className='buttonCard '
+            className={styles.buttonCard}
           >AGENDAR CITA
           </Button>
         </Link>
