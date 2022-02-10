@@ -17,15 +17,12 @@ const Confirmar = (
   <Button
     sx={{ backgroundColor: '#2388C6;', color: 'white' }}
     variant='contained'
-    onClick={handleClick} // accion
     type='submit'
     fullWidth
   >
     Confirmar Horario
   </Button>
-
 )
-console.log(Confirmar)
 
 function Schedule () {
   const [selectedStar, changeStar] = useState(moment())
@@ -72,7 +69,7 @@ function Schedule () {
         <Box sx={{ textAling: 'center', mx: 'auto', mb: 5 }}>
           <List
             dense
-            sx={{ width: '100%', maxWidth: 250, bgcolor: 'background.paper' }}
+            sx={{ width: '100%', maxWidth: 250 }}
           >
             {[
               'LUNES',
@@ -89,7 +86,7 @@ function Schedule () {
                   key={value}
                   secondaryAction={
                     <Checkbox
-                      edge='top'
+                      edge='end'
                       onChange={handleToggle(value)}
                       checked={checked.indexOf(value) !== -1}
                       inputProps={{ 'aria-labelledby': labelId }}
@@ -117,7 +114,7 @@ function Schedule () {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <StaticTimePicker
               ampm
-              toolbarTitle=''
+              toolbarTitle='Hora Inicial'
               views='hours'
               orientation='landscape'
               value='selectedStar'
@@ -129,12 +126,12 @@ function Schedule () {
 
           </LocalizationProvider>
         </Box>
-
+        <br />
         <Box sx={{ textAling: 'center', mx: 'auto', mb: 5 }}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <StaticTimePicker
               ampm
-              toolbarTitle=''
+              toolbarTitle='Hora Final'
               views='hours'
               orientation='landscape'
               value='selectedEnd'
