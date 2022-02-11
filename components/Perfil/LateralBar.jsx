@@ -87,7 +87,9 @@ function LateralBar () {
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={0}>
           {rol === 'Contador' ? <FormPerfil /> : <FormUser />}
         </TabPanel>
-        <TabPanel sx={{ flexGrow: 1 }} value={value} index={1} />
+        <TabPanel sx={{ flexGrow: 1 }} value={value} index={1}>
+        {rol === 'Contador' ? <Schedule /> : <FormUser />}
+        </TabPanel>
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={2} />
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={3} />
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={4}>

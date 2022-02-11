@@ -4,12 +4,25 @@ import { Box, TextField, Typography, InputAdornment, Button, styled, Autocomplet
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import styles from './FormPerfil.module.scss'
 import { URL_FULL } from '../../services/config'
 import ControlledSwitches from '../Controlled/Switch'
 import Modal from '../Controlled/Modal'
 
+
+
+const especialidades = [
+  { id: 1, title: 'Contabilidad General' },
+  { id: 2, title: 'Finanzas' },
+  { id: 3, title: 'Administración' },
+  { id: 4, title: 'Auditoría' },
+  { id: 5, title: 'Contraloría' },
+  { id: 6, title: 'Fiscal' },
+  { id: 7, title: 'Impuestos (SAT)' },
+  { id: 8, title: 'Costos' },
+  { id: 9, title: 'Obligaciones de seguridad social (IMSS)' }
+]
 // const {id} = router.query
 
 const schema = yup.object().shape({
@@ -30,7 +43,7 @@ const schema = yup.object().shape({
   })
 }).required()
 
-function FormPerfil () {
+function FormPerfil() {
   // Hook del switch
   const [checked, setChecked] = React.useState(true)
   // Hook del modal
@@ -45,15 +58,16 @@ function FormPerfil () {
     precio: '',
     formacion: '',
     google: true,
-    email: ''
+    email: '',
+    especialidades:[especialidades[0]]
   }
 
-  const { register, handleSubmit, control, formState: { errors }, setValue } = useForm({
+  const { register, handleSubmit, control, formState: { errors }, setValue, getValues } = useForm({
     resolver: yupResolver(schema),
     defaultValues
 
   })
-
+  console.log("info del form", getValues())
   // Handle switch
   const handleSwitch = (val) => {
     setValue('google', val)
@@ -82,7 +96,7 @@ function FormPerfil () {
       console.log('info', JSON.stringify(data))
 
       // Sending patch Account info
-      async function patchAccount (data) {
+      async function patchAccount(data) {
         const options = {
           method: 'PATCH',
           headers: {
@@ -102,7 +116,7 @@ function FormPerfil () {
       // Enviando a autenticacion de google
       const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
-      async function loginAccountGoogle (url) {
+      async function loginAccountGoogle(url) {
         // console.log("entrando a la funcion")
         const options = {
           method: 'POST',
@@ -143,7 +157,7 @@ function FormPerfil () {
     } else {
       const token2 = sessionStorage.getItem('token')
       // Sending patch Account info
-      async function patchAccount2 (data) {
+      async function patchAccount2(data) {
         const options = {
           method: 'PATCH',
           headers: {
@@ -358,29 +372,78 @@ function FormPerfil () {
           m: 1
         }}
         >
-          <Autocomplete
-            multiple
-            id='tags-filled'
-            sx={{ width: '700px' }}
-            options={especialidades.map((option) => option.title)}
-            defaultValue={[especialidades[1].title]}
-            freeSolo
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => (
-                <Chip key={index} variant='outlined' label={option} {...getTagProps({ index })} />
-              ))}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                fullWidth
-                label='Especialidades'
-                color='secondary'
-                variant='filled'
-                className='textFieldsPerfil textAutocomplete'
-                {...register('especialidades')}
+          <Controller
+            control={control}
+            name="especialidades"
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                onChange={(event, item) => {
+                  onChange(item);
+                }}
+                multiple
+                value={value}
+                options={especialidades}
+                getOptionLabel={(item) => (item.title ? item.title : "")}
+                getOptionSelected={(option, value) =>
+                  value === undefined || value === "" || option.id === value.id
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="items"
+                    margin="normal"
+                    variant="outlined"
+                    error={!!errors.item}
+                    helperText={errors.item && "item required"}
+                    required
+                  />
+                )}
               />
             )}
           />
+
+
+
+          {/* <Controller
+            control={control}
+            name='especialidades'
+            render={({ onChange, ...props} ) => (
+              <Autocomplete
+                multiple
+                id='tags-filled'
+                sx={{ width: '700px' }}
+                options={especialidades.map((option) => option.title)}
+                // defaultValue={[especialidades[1].title]}
+                freeSolo
+                onChange={(e,item)=> onChange(item)}
+                {... props}
+                // onBlur={onBlur}
+                // value={value}
+                // getOptionLabel={(item) => (item.title ? item.title : "")}
+                // getOptionSelected={(option, value) =>
+                //   value === undefined || value === "" || option.title === value.title
+                // }
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip key={index} variant='outlined' label={option} {...getTagProps({ index })} />
+                  ))}
+                // {...register('especialidades')}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    fullWidth
+                    label='Especialidades'
+                    color='secondary'
+                    variant='filled'
+                    className='textFieldsPerfil textAutocomplete'
+
+                  />
+                )}
+              />
+
+            )}
+          /> */}
         </Box>
 
         <Box sx={{
@@ -390,7 +453,7 @@ function FormPerfil () {
           p: 1,
           m: 1
         }}
-         />
+        />
         {/* Acerca de mi */}
         <Box sx={{
           display: 'flex',
@@ -442,7 +505,7 @@ function FormPerfil () {
             className='mb-2 error text-danger'
           >{errors.email?.message}
           </span>
-                    </>}
+        </>}
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -473,17 +536,9 @@ function FormPerfil () {
 
 export default FormPerfil
 
-const especialidades = [
-  { title: 'Contabilidad General' },
-  { title: 'Finanzas' },
-  { title: 'Administración' },
-  { title: 'Auditoría' },
-  { title: 'Contraloría' },
-  { title: 'Fiscal' },
-  { title: 'Impuestos (SAT)' },
-  { title: 'Costos' },
-  { title: 'Obligaciones de seguridad social (IMSS)' }
-]
+
+
+
 
 { /*
 <span id='passwordHelp' className='mb-2 error text-danger'>{errors.cedula?.message}</span>
