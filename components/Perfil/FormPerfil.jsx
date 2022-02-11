@@ -9,6 +9,7 @@ import styles from './FormPerfil.module.scss'
 import { URL_FULL } from '../../services/config'
 import ControlledSwitches from '../Controlled/Switch'
 import Modal from '../Controlled/Modal'
+import Router from 'next/router'
 
 
 
@@ -43,7 +44,7 @@ const schema = yup.object().shape({
   })
 }).required()
 
-function FormPerfil() {
+function FormPerfil({sendToCalendar}) {
   // Hook del switch
   const [checked, setChecked] = React.useState(true)
   // Hook del modal
@@ -59,7 +60,7 @@ function FormPerfil() {
     formacion: '',
     google: true,
     email: '',
-    especialidades:[especialidades[0]]
+    // especialidades:[especialidades[0]]
   }
 
   const { register, handleSubmit, control, formState: { errors }, setValue, getValues } = useForm({
@@ -168,8 +169,8 @@ function FormPerfil() {
         }
         const endpoint = `${URL_FULL}/account/perfil`
         const response = await fetch(endpoint, options)
-        return response.json()
-        console.log('response', response)
+        
+        return response.json()        
       }
 
       // Sending request to account patch
@@ -181,6 +182,8 @@ function FormPerfil() {
         .catch(error => {
           console.log(error)
         })
+
+       sendToCalendar()
     }
   }
 
@@ -375,9 +378,10 @@ function FormPerfil() {
           <Controller
             control={control}
             name="especialidades"
-            rules={{ required: true }}
+            // rules={{ required: true }}
             render={({ field: { onChange, value } }) => (
               <Autocomplete
+                sx={{ width: '700px' }}
                 onChange={(event, item) => {
                   onChange(item);
                 }}
@@ -391,12 +395,14 @@ function FormPerfil() {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="items"
+                    fullWidth
+                    label="Especialidades"
+                    color='secondary'
+                    variant='filled'
+                    className='textFieldsPerfil textAutocomplete'
                     margin="normal"
-                    variant="outlined"
                     error={!!errors.item}
                     helperText={errors.item && "item required"}
-                    required
                   />
                 )}
               />

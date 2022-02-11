@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useCallback,useState, useEffect } from 'react'
 import { Tabs, Tab, List, Box } from '@mui/material'
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import EventIcon from '@mui/icons-material/Event'
@@ -13,7 +13,7 @@ import ScheduleCita from '../AccountPages/ScheduleCita'
 // import CalendarioPicker from '../AccountPages/CalendarioPicker'
 import styles from './LateralBar.module.scss'
 
-function TabPanel (props) {
+function TabPanel(props) {
   const { children, value, index, ...other } = props
 
   return (
@@ -31,14 +31,14 @@ function TabPanel (props) {
   )
 }
 
-function a11yProps (index) {
+function a11yProps(index) {
   return {
     id: `vertical-tab-${index}`,
     'aria-controls': `vertical-tabpanel-${index}`
   }
 }
 
-function LateralBar () {
+function LateralBar() {
   const [value, setValue] = useState(0)
   const [rol, setRol] = useState('')
 
@@ -57,6 +57,9 @@ function LateralBar () {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+  const sendToCalendar = useCallback(()=>{
+    setValue(1)
+  })
 
   return (
     <div className={`${styles.containerPrincipal}`}>
@@ -82,13 +85,13 @@ function LateralBar () {
           <Tab sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }} icon={<RestoreIcon />} iconPosition='start' color='primary' label='Historial' {...a11yProps(4)} />
         </Tabs>
       </List>
-
+      
       <List sx={{ flex: 1 }}>
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={0}>
-          {rol === 'Contador' ? <FormPerfil /> : <FormUser />}
+          {rol === 'Contador' ? <FormPerfil sendToCalendar={sendToCalendar} /> : <FormUser />}
         </TabPanel>
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={1}>
-        {rol === 'Contador' ? <Schedule /> : <FormUser />}
+          {rol === 'Contador' ? <Schedule /> : <FormUser />}
         </TabPanel>
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={2} />
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={3} />
