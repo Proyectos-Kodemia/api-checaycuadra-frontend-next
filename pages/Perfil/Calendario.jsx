@@ -6,8 +6,8 @@ function calendar () {
   return (
     <div>
       <Layout>
+        <LateralBar />
         <Schedule />
-
       </Layout>
     </div>
   )
