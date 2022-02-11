@@ -59,7 +59,7 @@ function FormPerfil() {
     formacion: '',
     google: true,
     email: '',
-    especialidades:[especialidades[0]]
+    // especialidades:[especialidades[0]]
   }
 
   const { register, handleSubmit, control, formState: { errors }, setValue, getValues } = useForm({
@@ -375,9 +375,10 @@ function FormPerfil() {
           <Controller
             control={control}
             name="especialidades"
-            rules={{ required: true }}
+            // rules={{ required: true }}
             render={({ field: { onChange, value } }) => (
               <Autocomplete
+                sx={{ width: '700px' }}
                 onChange={(event, item) => {
                   onChange(item);
                 }}
@@ -391,12 +392,14 @@ function FormPerfil() {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="items"
+                    fullWidth
+                    label="Especialidades"
+                    color='secondary'
+                    variant='filled'
+                    className='textFieldsPerfil textAutocomplete'
                     margin="normal"
-                    variant="outlined"
                     error={!!errors.item}
                     helperText={errors.item && "item required"}
-                    required
                   />
                 )}
               />
