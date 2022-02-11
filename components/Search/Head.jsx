@@ -6,7 +6,8 @@ import React, { useEffect } from 'react'
 import { URL_FULL } from '../../services/config'
 import styles from './Head.module.scss'
 
-const endpoint = `${URL_FULL}/account`
+// const endpoint = `${URL_FULL}/account`
+const endpoint = 'http://localhost:8000/account'
 function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad, especialidad }) {
   useEffect(() => {
     fetch(`${endpoint}`).then((res) => {
@@ -23,22 +24,31 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
   }
 
   const searchCounter = (event) => {
-    const direction = `${endpoint}?name=${buscar}`
+    const directionBuscar = `${endpoint}?name=${buscar}`
     event.preventDefault()
-    if (especialidad) {
-      console.log('entro a especialidad', especialidad)
-      setEspecialidad('Especialidad')
+    if (especialidad !== 'Especialidad') {
+      const directionEspecialidad = `${endpoint}?specialities=${especialidad.title}`
+      console.log('entro a especialidad', especialidad.title)
+      console.log('nos esta enviando a ', directionEspecialidad)
+      fetch(directionEspecialidad).then((res) => {
+        res.json().then((data) => {
+          const val = parseInt(Object.keys(data.payload).length)
+          setUsers(data.payload)
+          setEspecialidad('Especialidad')
+          setResults(val)
+        })
+      })
     } else if (setBuscar) {
       console.log('entro a buscar', buscar)
 
-      // fetch(direction).then((res) => {
-      //   res.json().then((data) => {
-      //     const val = parseInt(Object.keys(data.payload).length)
-      //     setUsers(data.payload)
-      //     setResults(val)
-      setBuscar('')
-    //   })
-    // })
+      fetch(directionBuscar).then((res) => {
+        res.json().then((data) => {
+          const val = parseInt(Object.keys(data.payload).length)
+          setUsers(data.payload)
+          setResults(val)
+          setBuscar('')
+        })
+      })
     }
   }
 
@@ -75,27 +85,8 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
                         {...params}
                         label='Especialidades'
                         sx={{ fontSize: '12px' }}
-                        // className={`${styles.textFieldsPerfil} ${styles.textAutocomplete}`}
                       />)}
                   />
-                  {/* <Autocomplete
-                    multiple
-                    id='tags-filled'
-                    sx={{ width: '400px', bgcolor: 'none' }}
-                    options={especialidades}
-                    freeSolo
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        label='Especialidades'
-                        sx={{ bgcolor: 'none' }}
-                        color='secondary'
-                        variant='filled'
-                        className={`${styles.textFieldsPerfil} ${styles.textAutocomplete}`}
-                      />
-                    )}
-                  /> */}
                 </Box>
               </div>
             </div>
