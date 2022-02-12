@@ -22,7 +22,7 @@ export default function ResponsiveDialog ({ open, handleClose, handleClickOpen }
         aria-labelledby='responsive-dialog-title'
       >
         <DialogTitle id='responsive-dialog-title'>
-          Use Google's location service?
+          ¿Por qué la autenticacion de Google? 
         </DialogTitle>
         <DialogContent>
           <DialogContentText>

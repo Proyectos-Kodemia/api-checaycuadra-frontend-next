@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Box, TextField, Typography, InputAdornment, Button, styled, Autocomplete, Chip } from '@mui/material'
 
 import AttachFileIcon from '@mui/icons-material/AttachFile'
@@ -9,7 +9,7 @@ import styles from './FormPerfil.module.scss'
 import { URL_FULL } from '../../services/config'
 import ControlledSwitches from '../Controlled/Switch'
 import Modal from '../Controlled/Modal'
-import Router from 'next/router'
+import {Router, useRouter} from 'next/router'
 
 
 
@@ -37,14 +37,14 @@ const schema = yup.object().shape({
   google: yup.boolean(),
   email: yup.string().when('google', {
     is: true,
-    then: (schema) => schema.required('El correo es requerido').email('***El email no es valido')
+    then: (schema) => schema.required('El correo gmail es requerido').email('***El email no es valido')
       .max(50, '***Máximo 50 caracteres')
       .matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados'),
     otherwise: (schema) => schema.optional()
   })
 }).required()
 
-function FormPerfil({sendToCalendar}) {
+function FormPerfil({ sendToCalendar }) {
   // Hook del switch
   const [checked, setChecked] = React.useState(true)
   // Hook del modal
@@ -86,15 +86,12 @@ function FormPerfil({sendToCalendar}) {
   const Input = styled('input')({
     display: 'none'
   })
-
+  // Enviendo informacion al back con autentiacion google / sin autenticacion Google
   const dataFormPerfil = async (data) => {
     console.log('entra a dataFOrm')
     console.log('data', data)
     if (checked === true) {
       const token = sessionStorage.getItem('token')
-      console.log('esto es la data del form', data)
-      console.log('esto es la data token', token)
-      console.log('info', JSON.stringify(data))
 
       // Sending patch Account info
       async function patchAccount(data) {
@@ -140,7 +137,7 @@ function FormPerfil({sendToCalendar}) {
 
       await loginAccountGoogle(endpointAuthGoogle)
         .then(response => {
-          // location.href = response.payload.authUrl
+          location.href = response.payload.authUrl
         })
         .catch(error => {
           console.log(error)
@@ -169,8 +166,8 @@ function FormPerfil({sendToCalendar}) {
         }
         const endpoint = `${URL_FULL}/account/perfil`
         const response = await fetch(endpoint, options)
-        
-        return response.json()        
+
+        return response.json()
       }
 
       // Sending request to account patch
@@ -183,9 +180,38 @@ function FormPerfil({sendToCalendar}) {
           console.log(error)
         })
 
-       sendToCalendar()
+      sendToCalendar()
     }
   }
+
+  // Recibiendo code autenticación de google
+  const router = useRouter()
+  useEffect(() => {
+    if (router.isReady) {
+      const token = sessionStorage.getItem('token')
+      const url = `${URL_FULL}/google/callback`
+      const code = router.query.code
+
+      const bodyCode = JSON.stringify({ code: router.query.code })
+
+      const datos = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', token: token },
+        body: bodyCode
+      }
+
+      fetch(url, datos)
+        .then((res) => {
+          res.json()
+            .then((data) => {
+              console.log('data desde el fetch', data)
+            })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+  }, [router.query])
 
   return (
     <Box sx={{
@@ -541,12 +567,3 @@ function FormPerfil({sendToCalendar}) {
 }
 
 export default FormPerfil
-
-
-
-
-
-{ /*
-<span id='passwordHelp' className='mb-2 error text-danger'>{errors.cedula?.message}</span>
-<span id='passwordHelp' className='mb-2 error text-danger'>{errors.formacion?.message}</span>
-<span id='passwordHelp' className='mb-2 error text-danger'>{errors.email?.message}</span> */ }
