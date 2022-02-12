@@ -13,18 +13,7 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
 import Checkbox from '@mui/material/Checkbox'
 
-const Confirmar = (
-  <Button
-    sx={{ backgroundColor: '#2388C6;', color: 'white' }}
-    variant='contained'
-    type='submit'
-    fullWidth
-  >
-    Confirmar Horario
-  </Button>
-)
-
-function Schedule () {
+function Schedule() {
   const [selectedStar, changeStar] = useState(moment())
   const startHour = (moment(selectedStar).format('LT'))
   console.log('startHour', startHour)
@@ -49,6 +38,43 @@ function Schedule () {
   }
 
   console.log('Dias de la semana', checked)
+  const dateHoursAvailable = {
+    daysAvailable: checked,
+    startHour: startHour,
+    endHour: endHour
+  }
+
+  const handleConfirmation = () => {
+    // Sending informatio to back
+    const endpointSchedule = `${URL_FULL}/schedule`
+    const token = sessionStorage.getItem('token')
+
+
+    async function sendSchedule(url, data) {
+      // console.log("entrando a la funcion")
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
+        body:JSON.stringify(data)
+      }
+      const response = await fetch(url, options)
+      return response.json()
+    }
+
+    await sendSchedule(endpointSchedule,dateHoursAvailable)
+        .then(response => {
+          console.log(data)
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+    console.log(dateHoursAvailable)
+  }
 
   return (
     <>
@@ -91,7 +117,7 @@ function Schedule () {
                       checked={checked.indexOf(value) !== -1}
                       inputProps={{ 'aria-labelledby': labelId }}
                     />
-            }
+                  }
                   disablePadding
                 >
                   <ListItemButton>
@@ -150,7 +176,15 @@ function Schedule () {
       </Box>
 
       <Box sx={{ mx: 'auto', width: 150, mt: 5 }}>
-        {Confirmar}
+        <Button
+          sx={{ backgroundColor: '#2388C6;', color: 'white' }}
+          variant='contained'
+          type='submit'
+          fullWidth
+          onClick={handleConfirmation}
+        >
+          Confirmar Horario
+        </Button>
 
       </Box>
       <Box sx={{ mx: 'auto', width: 150, mt: 5 }} />
