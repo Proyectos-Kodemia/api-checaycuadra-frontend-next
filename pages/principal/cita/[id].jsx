@@ -55,7 +55,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       fetch(`${endpoint}`,optionsAccount).then((res) => {
         res.json().then((value) => {
           // console.log('resultado value', value)
-          setAccountUser(value)
+         // setAccountUser(value)
           // setUsers(data.payload)
         })
       })

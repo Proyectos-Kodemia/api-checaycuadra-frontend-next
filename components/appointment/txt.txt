@@ -8,10 +8,6 @@ import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Ca
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { URL_FULL } from '../../services/config'
-import { useTheme } from '@mui/material/styles'
-import MobileStepper from '@mui/material/MobileStepper'
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 
 const endpoint = `${URL_FULL}/mercadopago/checkout`
 
@@ -28,31 +24,6 @@ async function LoginAccount (url, credentials) {
   const response = await fetch(url, options)
   return response.json()
 }
-
-// semanas
-const now = moment.now()
-const week0 = {
-  start: moment(now).isoWeekday(1).format('LL'),
-  end: moment(now).isoWeekday(7).format('LL'),
-  number: moment(now).format('W')
-}
-const next1 = {
-  start: moment(week0.start).add(7, 'd').format('LL'),
-  end: moment(week0.edd).add(7, 'd').format('LL'),
-  number: moment(week0.start).add(7, 'd').format('W')
-}
-const next2 = {
-  start: moment(week0.start).add(14, 'd').format('LL'),
-  end: moment(week0.edd).add(14, 'd').format('LL'),
-  number: moment(week0.start).add(14, 'd').format('W')
-}
-const next3 = {
-  start: moment(week0.start).add(21, 'd').format('LL'),
-  end: moment(week0.edd).add(21, 'd').format('LL'),
-  number: moment(week0.start).add(21, 'd').format('W')
-}
-
-// tabla
 const columns = [
   { field: 'monday', headerName: 'Lunes', width: 100, alignItems: 'center', sortable: false },
   { field: 'tuesday', headerName: 'Martes', width: 100, alignItems: 'center', sortable: false },
@@ -62,6 +33,11 @@ const columns = [
   { field: 'saturday', headerName: 'Sabado', width: 100, alignItems: 'center', sortable: false },
   { field: 'sunday', headerName: 'Domingo', width: 100, alignItems: 'center', sortable: false }
 ]
+
+/**
+ * Todos los dias entre 10:00 - 15:00
+ */
+
 const schedules = [
   '10:00 - 11:00',
   '11:00 - 12:00',
@@ -69,6 +45,7 @@ const schedules = [
   '13:00 - 14:00',
   '14:00 - 15:00'
 ]
+
 const rows = []
 schedules.forEach((element) => {
   rows.push({
@@ -82,53 +59,33 @@ schedules.forEach((element) => {
     sunday: element
   })
 })
-// get day
-const selectSchedule = (element) => {
-  const day = element.field
-  switch (day) {
-    case day = 'monday':
-      return console.log(moment(week0.start).add(0, 'd').format('LL'), element.value)
-    case day = 'tuesday':
-      return console.log(moment(week0.start).add(1, 'd').format('LL'), element.value)
-    case day = 'wednesday':
-      return console.log(moment(week0.start).add(2, 'd').format('LL'), element.value)
-    case day = 'thursday':
-      return console.log(moment(week0.start).add(3, 'd').format('LL'), element.value)
-    case day = 'friday':
-      return console.log(moment(week0.start).add(4, 'd').format('LL'), element.value)
-    case day = 'saturday':
-      return console.log(moment(week0.start).add(5, 'd').format('LL'), element.value)
-    case day = 'tuesdsundayay':
-      return console.log(moment(week0.start).add(6, 'd').format('LL'), element.value)
-  }
 
-  // console.log('Datos utiles:', element.field, element.value, week0.number, week0.start)
-  // console.log(day)
-  // console.log(fecha)
+const selectSchedule = (element) => {
+  console.log('Datos utiles:', element.field, element.value, week0.number, week0.start)
+  // console.log(element)
 }
-// botones de steps
-const steps = [
-  {
-    label: week0.number,
-    labelStart: week0.start,
-    labelEnd: week0.end
-  },
-  {
-    label: next1.number,
-    labelStart: next1.start,
-    labelEnd: next1.end
-  },
-  {
-    label: next2.number,
-    labelStart: next2.start,
-    labelEnd: next2.end
-  },
-  {
-    label: next3.number,
-    labelStart: next3.start,
-    labelEnd: next3.end
-  }
-]
+
+const now = moment.now()
+const week0 = {
+  start: moment(now).isoWeekday(1).format('LL'),
+  end: moment(now).isoWeekday(7).format('LL'),
+  number: moment(now).format('W')
+}
+const next1 = {
+  addS: moment(week0.start).add(7, 'd').format('LL'),
+  addE: moment(week0.edd).add(7, 'd').format('LL'),
+  number: moment(week0.start).add(7, 'd').format('W')
+}
+const next2 = {
+  addS: moment(week0.start).add(14, 'd').format('LL'),
+  addE: moment(week0.edd).add(14, 'd').format('LL'),
+  number: moment(week0.start).add(14, 'd').format('W')
+}
+const next3 = {
+  addS: moment(week0.start).add(21, 'd').format('LL'),
+  addE: moment(week0.edd).add(21, 'd').format('LL'),
+  number: moment(week0.start).add(21, 'd').format('W')
+}
 
 function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
   const servicio = {
@@ -150,18 +107,6 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
   }
   // console.log('campo especialista inicial', specialities)
   // console.log(name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule)
-  const theme = useTheme()
-  const [activeStep, setActiveStep] = React.useState(0)
-  const maxSteps = steps.length
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
-  }
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  }
-
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
@@ -188,7 +133,6 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
           </CardContent>
         </Box>
 
-        {/* card */}
         <Box sx={{ display: 'flex', w: 400, h: 300 }}>
           <CardContent
             sx={{ width: 500 }}
@@ -248,51 +192,8 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         </Typography>
       </Box>
       <br />
-      {/* botones */}
-      <MobileStepper
-        variant='dots'
-        position='static'
-        activeStep={activeStep}
-        nextButton={
-          <Button
-            size='small'
-            onClick={handleNext}
-            disabled={activeStep === maxSteps - 1}
-          >
-            adelante
-            {theme.direction === 'rtl'
-              ? (
-                <KeyboardArrowLeft />
-                )
-              : (
-                <KeyboardArrowRight />
-                )}
-          </Button>
-        }
-        backButton={
-          <Button size='small' onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl'
-              ? (
-                <KeyboardArrowRight />
-                )
-              : (
-                <KeyboardArrowLeft />
-                )}
-            Atras
-          </Button>
-        }
-        sx={{ mx: 60 }}
-      />
-      {/* encabezado */}
-      <Box sx={{ display: 'flex', textAlign: 'center', justifyContent: 'space-evenly' }}>
-        <Typography>
-          Semana {steps[activeStep].label}
-          <br />
-          {steps[activeStep].labelStart} - {steps[activeStep].labelEnd}
-        </Typography>
-      </Box>
-      {/* tabla */}
-      <Box sx={{ p: 1, mx: 74.2, mt: 5 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-evenly', p: 1, m: 5 }} />
+      <Box sx={{ p: 1, mx: 44.65 }}>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -305,8 +206,9 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
           AutoSizeColumnsMode='fill'
         />
       </Box>
-      {/* ultimos botones */}
+
       <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
+
         <Button
           // href='../../pages/Cuenta/RegisterPage.js'
           onClick={handlerPago}
@@ -332,8 +234,3 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
 }
 
 export default Appointment
-
-/* <Box sx={{ height: 255, width: '100%', p: 2 }}>
-        {steps[activeStep].description}
-        </Box>
-*/

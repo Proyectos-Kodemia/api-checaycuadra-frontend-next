@@ -1,0 +1,92 @@
+.containerFormPerfil {
+  margin: 10px auto 80px auto;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.gridContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.typografyPerfil {
+  font-weight: bold;
+  color: #00244C;
+}
+
+.textGrande input {
+  width: 720px;
+  height: 36px;
+  padding: 15px 12px 0px 12px;
+}
+
+.textCP .textNomAp .textGrande label {
+  height: 36px;
+}
+
+.textCP .textNomAp .textGrande label[data-shrink="true"] {
+  top: 0;
+}
+
+.orderRowFlex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin: 0;
+}
+
+.textPrecio .MuiInputAdornment-root {
+  padding: 20px 0 0 0;
+}
+
+.uploadFile {
+  margin: 25px 0;
+}
+
+.textAutocomplete .MuiAutocomplete-inputRoot {
+  height: 60px;
+  margin: 10px;
+  padding: 12px 12px 0px 12px;
+}
+
+.textAutocomplete label {
+  padding: 5px 0 0 10px;
+  height: 60px;
+  margin: 0 auto;
+}
+
+.textAutocomplete label[data-shrink="true"] {
+  top: 0;
+}
+
+.errors {
+  color: red;
+  font-size: 12px;
+}
+/*# sourceMappingURL=FormPerfil.module.css.map */
