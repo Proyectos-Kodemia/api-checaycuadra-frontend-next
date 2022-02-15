@@ -38,17 +38,17 @@ const week0 = {
 }
 const next1 = {
   start: moment(week0.start).add(7, 'd').format('LL'),
-  end: moment(week0.edd).add(7, 'd').format('LL'),
+  end: moment(week0.end).add(7, 'd').format('LL'),
   number: moment(week0.start).add(7, 'd').format('W')
 }
 const next2 = {
   start: moment(week0.start).add(14, 'd').format('LL'),
-  end: moment(week0.edd).add(14, 'd').format('LL'),
+  end: moment(week0.end).add(14, 'd').format('LL'),
   number: moment(week0.start).add(14, 'd').format('W')
 }
 const next3 = {
   start: moment(week0.start).add(21, 'd').format('LL'),
-  end: moment(week0.edd).add(21, 'd').format('LL'),
+  end: moment(week0.end).add(21, 'd').format('LL'),
   number: moment(week0.start).add(21, 'd').format('W')
 }
 
