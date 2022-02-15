@@ -67,7 +67,8 @@ const FormLogin = ({ rol }) => {
 
         setLoading(false)
 
-        router.push('/')
+        rol==='Contador'?router.push('/Perfil/Perfil'):router.push('/')
+
       } else {
         setError(true)
         // console.log('error en login ')

@@ -1,15 +1,29 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Box, TextField, Typography, InputAdornment, Button, styled, Autocomplete, Chip } from '@mui/material'
 
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import styles from './FormPerfil.module.scss'
 import { URL_FULL } from '../../services/config'
 import ControlledSwitches from '../Controlled/Switch'
 import Modal from '../Controlled/Modal'
+import {Router, useRouter} from 'next/router'
 
+
+
+const especialidades = [
+  { id: 1, title: 'Contabilidad General' },
+  { id: 2, title: 'Finanzas' },
+  { id: 3, title: 'Administración' },
+  { id: 4, title: 'Auditoría' },
+  { id: 5, title: 'Contraloría' },
+  { id: 6, title: 'Fiscal' },
+  { id: 7, title: 'Impuestos (SAT)' },
+  { id: 8, title: 'Costos' },
+  { id: 9, title: 'Obligaciones de seguridad social (IMSS)' }
+]
 // const {id} = router.query
 
 const schema = yup.object().shape({
@@ -23,14 +37,14 @@ const schema = yup.object().shape({
   google: yup.boolean(),
   email: yup.string().when('google', {
     is: true,
-    then: (schema) => schema.required('El correo es requerido').email('***El email no es valido')
+    then: (schema) => schema.required('El correo gmail es requerido').email('***El email no es valido')
       .max(50, '***Máximo 50 caracteres')
       .matches(/[\w.\-]{0,25}@gmail\.com/gm, '***Solo correos gmail son aceptados'),
     otherwise: (schema) => schema.optional()
   })
 }).required()
 
-function FormPerfil () {
+function FormPerfil({ sendToCalendar }) {
   // Hook del switch
   const [checked, setChecked] = React.useState(true)
   // Hook del modal
@@ -45,15 +59,16 @@ function FormPerfil () {
     precio: '',
     formacion: '',
     google: true,
-    email: ''
+    email: '',
+    // especialidades:[especialidades[0]]
   }
 
-  const { register, handleSubmit, control, formState: { errors }, setValue } = useForm({
+  const { register, handleSubmit, control, formState: { errors }, setValue, getValues } = useForm({
     resolver: yupResolver(schema),
     defaultValues
 
   })
-
+  console.log("info del form", getValues())
   // Handle switch
   const handleSwitch = (val) => {
     setValue('google', val)
@@ -71,18 +86,15 @@ function FormPerfil () {
   const Input = styled('input')({
     display: 'none'
   })
-
+  // Enviendo informacion al back con autentiacion google / sin autenticacion Google
   const dataFormPerfil = async (data) => {
     console.log('entra a dataFOrm')
     console.log('data', data)
     if (checked === true) {
       const token = sessionStorage.getItem('token')
-      console.log('esto es la data del form', data)
-      console.log('esto es la data token', token)
-      console.log('info', JSON.stringify(data))
 
       // Sending patch Account info
-      async function patchAccount (data) {
+      async function patchAccount(data) {
         const options = {
           method: 'PATCH',
           headers: {
@@ -102,7 +114,7 @@ function FormPerfil () {
       // Enviando a autenticacion de google
       const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
-      async function loginAccountGoogle (url) {
+      async function loginAccountGoogle(url) {
         // console.log("entrando a la funcion")
         const options = {
           method: 'POST',
@@ -125,7 +137,7 @@ function FormPerfil () {
 
       await loginAccountGoogle(endpointAuthGoogle)
         .then(response => {
-          // location.href = response.payload.authUrl
+          location.href = response.payload.authUrl
         })
         .catch(error => {
           console.log(error)
@@ -143,7 +155,7 @@ function FormPerfil () {
     } else {
       const token2 = sessionStorage.getItem('token')
       // Sending patch Account info
-      async function patchAccount2 (data) {
+      async function patchAccount2(data) {
         const options = {
           method: 'PATCH',
           headers: {
@@ -154,8 +166,8 @@ function FormPerfil () {
         }
         const endpoint = `${URL_FULL}/account/perfil`
         const response = await fetch(endpoint, options)
+
         return response.json()
-        console.log('response', response)
       }
 
       // Sending request to account patch
@@ -167,8 +179,39 @@ function FormPerfil () {
         .catch(error => {
           console.log(error)
         })
+
+      sendToCalendar()
     }
   }
+
+  // Recibiendo code autenticación de google
+  const router = useRouter()
+  useEffect(() => {
+    if (router.isReady) {
+      const token = sessionStorage.getItem('token')
+      const url = `${URL_FULL}/google/callback`
+      const code = router.query.code
+
+      const bodyCode = JSON.stringify({ code: router.query.code })
+
+      const datos = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', token: token },
+        body: bodyCode
+      }
+
+      fetch(url, datos)
+        .then((res) => {
+          res.json()
+            .then((data) => {
+              console.log('data desde el fetch', data)
+            })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+  }, [router.query])
 
   return (
     <Box sx={{
@@ -358,29 +401,81 @@ function FormPerfil () {
           m: 1
         }}
         >
-          <Autocomplete
-            multiple
-            id='tags-filled'
-            sx={{ width: '700px' }}
-            options={especialidades.map((option) => option.title)}
-            defaultValue={[especialidades[1].title]}
-            freeSolo
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => (
-                <Chip key={index} variant='outlined' label={option} {...getTagProps({ index })} />
-              ))}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                fullWidth
-                label='Especialidades'
-                color='secondary'
-                variant='filled'
-                className='textFieldsPerfil textAutocomplete'
-                {...register('especialidades')}
+          <Controller
+            control={control}
+            name="especialidades"
+            // rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                sx={{ width: '700px' }}
+                onChange={(event, item) => {
+                  onChange(item);
+                }}
+                multiple
+                value={value}
+                options={especialidades}
+                getOptionLabel={(item) => (item.title ? item.title : "")}
+                getOptionSelected={(option, value) =>
+                  value === undefined || value === "" || option.id === value.id
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    fullWidth
+                    label="Especialidades"
+                    color='secondary'
+                    variant='filled'
+                    className='textFieldsPerfil textAutocomplete'
+                    margin="normal"
+                    error={!!errors.item}
+                    helperText={errors.item && "item required"}
+                  />
+                )}
               />
             )}
           />
+
+
+
+          {/* <Controller
+            control={control}
+            name='especialidades'
+            render={({ onChange, ...props} ) => (
+              <Autocomplete
+                multiple
+                id='tags-filled'
+                sx={{ width: '700px' }}
+                options={especialidades.map((option) => option.title)}
+                // defaultValue={[especialidades[1].title]}
+                freeSolo
+                onChange={(e,item)=> onChange(item)}
+                {... props}
+                // onBlur={onBlur}
+                // value={value}
+                // getOptionLabel={(item) => (item.title ? item.title : "")}
+                // getOptionSelected={(option, value) =>
+                //   value === undefined || value === "" || option.title === value.title
+                // }
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip key={index} variant='outlined' label={option} {...getTagProps({ index })} />
+                  ))}
+                // {...register('especialidades')}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    fullWidth
+                    label='Especialidades'
+                    color='secondary'
+                    variant='filled'
+                    className='textFieldsPerfil textAutocomplete'
+
+                  />
+                )}
+              />
+
+            )}
+          /> */}
         </Box>
 
         <Box sx={{
@@ -390,7 +485,7 @@ function FormPerfil () {
           p: 1,
           m: 1
         }}
-         />
+        />
         {/* Acerca de mi */}
         <Box sx={{
           display: 'flex',
@@ -442,7 +537,7 @@ function FormPerfil () {
             className='mb-2 error text-danger'
           >{errors.email?.message}
           </span>
-                    </>}
+        </>}
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
@@ -472,20 +567,3 @@ function FormPerfil () {
 }
 
 export default FormPerfil
-
-const especialidades = [
-  { title: 'Contabilidad General' },
-  { title: 'Finanzas' },
-  { title: 'Administración' },
-  { title: 'Auditoría' },
-  { title: 'Contraloría' },
-  { title: 'Fiscal' },
-  { title: 'Impuestos (SAT)' },
-  { title: 'Costos' },
-  { title: 'Obligaciones de seguridad social (IMSS)' }
-]
-
-{ /*
-<span id='passwordHelp' className='mb-2 error text-danger'>{errors.cedula?.message}</span>
-<span id='passwordHelp' className='mb-2 error text-danger'>{errors.formacion?.message}</span>
-<span id='passwordHelp' className='mb-2 error text-danger'>{errors.email?.message}</span> */ }

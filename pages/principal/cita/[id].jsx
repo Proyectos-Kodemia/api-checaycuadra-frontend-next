@@ -68,8 +68,6 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
   // proceso de pago
   const statusPayment = router.query.collection_status
 
-  // console.log(statusPayment)
-    
     async function LoginAccount (url) {
       // console.log("entrando a la funcion")
       const options = {
@@ -93,7 +91,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       const token = sessionStorage.getItem('token')
       // console.log("tokenn en el handler",token)
       const endpointMeeting = `${URL_FULL}/metting`
-      const endpointAuthGoogle = `${URL_FULL}/google/auth`
+      // const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
       if(statusPayment === "approved"){
           const data = {
@@ -134,22 +132,22 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
           // Obtener el id de la cita 
       
 
-          const optionsAuthGoogle = {
-            method: 'POST',
-            redirect:'follow',
-            headers: {
-              'Content-Type': 'application/json',
-              'token': token  // Enviar en el post el token de JWT
-            },
-          }
+          // const optionsAuthGoogle = {
+          //   method: 'POST',
+          //   redirect:'follow',
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //     'token': token  // Enviar en el post el token de JWT
+          //   },
+          // }
 
-          await LoginAccount(endpointAuthGoogle)
-          .then(response =>{
-            // location.href = response.payload.authUrl
-            })
-          .catch(error =>{
-            console.log(error)
-          })
+          // await LoginAccount(endpointAuthGoogle)
+          // .then(response =>{
+          //   // location.href = response.payload.authUrl
+          //   })
+          // .catch(error =>{
+          //   console.log(error)
+          // })
       }
     }
 

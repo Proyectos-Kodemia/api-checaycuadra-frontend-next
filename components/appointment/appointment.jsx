@@ -29,6 +29,7 @@ async function LoginAccount (url, credentials) {
   return response.json()
 }
 
+<<<<<<< HEAD
 // semanas
 const now = moment.now()
 const week0 = {
@@ -130,6 +131,8 @@ const steps = [
   }
 ]
 
+=======
+>>>>>>> main
 function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
   const servicio = {
     title: 'consultoria',
@@ -163,7 +166,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
   }
 
   return (
-    <>
+    <div>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', margin: 2, height: 300, boxShadow: 2, borderRadius: 3 }}>
           <Image
@@ -222,12 +225,11 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
                 </ListItem>}
               <ListItem disableGutters>
                 <ListItemIcon>
-
                   <img src='/icons/iconsCard2/local.svg' alt='local' ml={0} />
                 </ListItemIcon>
+
                 <ListItemText primary='Ubicacion:' />
                 {address?.town}, {address?.state}
-
               </ListItem>
             </List>
             <Typography variant='h5'>
@@ -247,6 +249,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
           Elije tu horario y agenda tu cita con tu contador
         </Typography>
       </Box>
+<<<<<<< HEAD
       <br />
       {/* botones */}
       <MobileStepper
@@ -309,6 +312,26 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
       <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
         <Button
           // href='../../pages/Cuenta/RegisterPage.js'
+=======
+      <Box sx={{}}>
+        <br /><br />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DesktopDateTimePicker
+            value={value}
+            onChange={(newValue) => {
+              setValue(newValue)
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
+
+      </Box>
+
+      <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
+
+        <Button
+            // href='../../pages/Cuenta/RegisterPage.js'
+>>>>>>> main
           onClick={handlerPago}
           variant='contained'
           disableElevation
@@ -317,7 +340,11 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         >Realizar Pago
         </Button>
         <Button
+<<<<<<< HEAD
           // href='../../pages/Cuenta/RegisterPage.js'
+=======
+            // href='../../pages/Cuenta/RegisterPage.js'
+>>>>>>> main
           onClick={handlerAuthGoogle}
           variant='contained'
           disableElevation
@@ -327,13 +354,20 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         >Confirmar Cita
         </Button>
       </Box>
+<<<<<<< HEAD
     </>
+=======
+    </div>
+>>>>>>> main
   )
 }
 
 export default Appointment
+<<<<<<< HEAD
 
 /* <Box sx={{ height: 255, width: '100%', p: 2 }}>
         {steps[activeStep].description}
         </Box>
 */
+=======
+>>>>>>> main
