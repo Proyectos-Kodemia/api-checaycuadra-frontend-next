@@ -175,7 +175,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       description = {description}
       role={role}
       evaluation= {evaluation}
-      specialities = {specialities.title}
+      specialities = {specialities}
       address ={address}
       Schedule = {Schedule}
       />
