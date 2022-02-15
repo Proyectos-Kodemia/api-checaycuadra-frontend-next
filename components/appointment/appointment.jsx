@@ -326,7 +326,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         >Confirmar Cita
         </Button>
       </Box>
-    </>
+    </div>
   )
 }
 
