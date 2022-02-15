@@ -45,7 +45,7 @@ function Schedule() {
   }
 
   const handleConfirmation = () => {
-    // Sending informatio to back
+    // Sending information to back
     const endpointSchedule = `${URL_FULL}/schedule`
     const token = sessionStorage.getItem('token')
 
