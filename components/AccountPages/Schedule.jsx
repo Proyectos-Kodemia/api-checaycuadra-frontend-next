@@ -46,32 +46,32 @@ function Schedule() {
 
   const handleConfirmation = () => {
     // Sending informatio to back
-    const endpointSchedule = `${URL_FULL}/schedule`
-    const token = sessionStorage.getItem('token')
+    // const endpointSchedule = `${URL_FULL}/schedule`
+    // const token = sessionStorage.getItem('token')
 
 
-    async function sendSchedule(url, data) {
-      // console.log("entrando a la funcion")
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          token: token
-        },
-        body:JSON.stringify(data)
-      }
-      const response = await fetch(url, options)
-      return response.json()
-    }
+    // async function sendSchedule(url, data) {
+    //   // console.log("entrando a la funcion")
+    //   const options = {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       token: token
+    //     },
+    //     body:JSON.stringify(data)
+    //   }
+    //   const response = await fetch(url, options)
+    //   return response.json()
+    // }
 
-    await sendSchedule(endpointSchedule,dateHoursAvailable)
-        .then(response => {
-          console.log(data)
-          console.log(response)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    // await sendSchedule(endpointSchedule,dateHoursAvailable)
+    //     .then(response => {
+    //       console.log(data)
+    //       console.log(response)
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
 
     console.log(dateHoursAvailable)
   }
