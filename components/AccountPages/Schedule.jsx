@@ -13,7 +13,7 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
 import Checkbox from '@mui/material/Checkbox'
 
-function Schedule() {
+function Schedule () {
   const [selectedStar, changeStar] = useState(moment())
   const startHour = (moment(selectedStar).format('LT'))
   console.log('startHour', startHour)
@@ -48,7 +48,6 @@ function Schedule() {
     // Sending informatio to back
     // const endpointSchedule = `${URL_FULL}/schedule`
     // const token = sessionStorage.getItem('token')
-
 
     // async function sendSchedule(url, data) {
     //   // console.log("entrando a la funcion")

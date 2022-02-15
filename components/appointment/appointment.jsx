@@ -15,7 +15,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 
 const endpoint = `${URL_FULL}/mercadopago/checkout`
 
-async function LoginAccount(url, credentials) {
+async function LoginAccount (url, credentials) {
   // console.log('entrando a la funcion')
   const options = {
     method: 'POST',
@@ -63,8 +63,6 @@ const columns = [
   { field: 'sunday', headerName: 'Domingo', width: 100, alignItems: 'center', sortable: false }
 ]
 
-
-
 // get day
 
 // console.log('Datos utiles:', element, element.field, element.value, week0.number, week0.start)
@@ -95,7 +93,7 @@ const steps = [
   }
 ]
 
-function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
+function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
   const [schedules, setSchedules] = useState(
     [
       '10:00 - 11:00',
@@ -112,12 +110,12 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
   // StarDateTime-endDateTime
   const meetings = [{
     date: '14-02-2022',
-    day: "monday",
+    day: 'monday',
     hour: '14:00 - 15:00'
   },
   {
     date: '23-02-2022',
-    day: "wednesday",
+    day: 'wednesday',
     hour: '10:00 - 11:00'
   }
   ]
@@ -162,22 +160,17 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
   ]
   const hasMeeting = (dayEl, hourEl, dateEl) => {
     return meetings.find(({ day, hour, date }) => {
-      console.log("day ", day, dayEl)
-      console.log("hour ", hour, hourEl)
-      console.log("date ", date, dateEl)
+      console.log('day ', day, dayEl)
+      console.log('hour ', hour, hourEl)
+      console.log('date ', date, dateEl)
 
-      if (day === dayEl && hour === hourEl && date === dateEl)
-        return true
-      else
-        return false
+      if (day === dayEl && hour === hourEl && date === dateEl) { return true } else { return false }
     })
-
   }
   const selectSchedule = (element) => {
-
     const day = element.field
     if (!daysAvailable.includes(day)) {
-      console.log("Dia no disponible")
+      console.log('Dia no disponible')
       return
     }
 
@@ -185,8 +178,7 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
     let dayWeek = null
     let starDate = null
 
-    console.log("aqui el element", element)
-
+    console.log('aqui el element', element)
 
     switch (day) {
       case day = 'monday':
@@ -219,12 +211,12 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
         break
     }
     if (hasMeeting(day, hourEl, dayWeek)) {
-      console.log("Cita reservada")
+      console.log('Cita reservada')
     } else {
-      console.log("Cita disponible, hacer fetch")
+      console.log('Cita disponible, hacer fetch')
       const startHour = hourEl.slice(0, 5)
       const endHour = hourEl.slice(8)
-      //StarDateTime:2022-01-24T18:00
+      // StarDateTime:2022-01-24T18:00
       const startDateTime = `${starDate}T${startHour}`
       const endDateTime = `${starDate}T${endHour}`
 
@@ -349,10 +341,10 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowLeft />
-              )
+                )
               : (
                 <KeyboardArrowRight />
-              )}
+                )}
           </Button>
         }
         backButton={
@@ -360,10 +352,10 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowRight />
-              )
+                )
               : (
                 <KeyboardArrowLeft />
-              )}
+                )}
             Atras
           </Button>
         }
