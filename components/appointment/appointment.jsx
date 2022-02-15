@@ -207,8 +207,8 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
                 <ListItemText primary='Especialista en: ' />
               </ListItem>
               <ListItem sx={{ justifyContent: 'space-evenly' }}>
-                {specialities && specialities?.map((index) => (
-                  <Chip key={index} align='center' label={index} variant='outlined' />
+                {specialities && specialities?.map((speciality) => (
+                  <Chip key={speciality.id} align='center' label={speciality.title} variant='outlined' />
                 ))}
               </ListItem>
               {Schedule?.costHour &&
