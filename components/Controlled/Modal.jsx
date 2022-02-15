@@ -12,7 +12,6 @@ export default function ResponsiveDialog ({ open, handleClose, handleClickOpen }
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
-  
   return (
     <div>
 
@@ -23,12 +22,11 @@ export default function ResponsiveDialog ({ open, handleClose, handleClickOpen }
         aria-labelledby='responsive-dialog-title'
       >
         <DialogTitle id='responsive-dialog-title'>
-          Use Google's location service?
+          ¿Por qué la autenticacion de Google? 
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
+            Recomendamos autenticarse con cuenta de Google ya que se puede hacer uso del calendario y otras utilidades, de lo contrario su servicio se vera limitado.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
