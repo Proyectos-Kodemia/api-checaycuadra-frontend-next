@@ -27,7 +27,10 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
     description:"",
     role:"",
     evaluation:"",
-    specialities:"",
+    specialities:[{
+      id:0,
+      title:""
+    }],
     address:{
       town:"",
       state:""
@@ -54,9 +57,9 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       // console.log(endpoint)
       fetch(`${endpoint}`,optionsAccount).then((res) => {
         res.json().then((value) => {
-          // console.log('resultado value', value)
+          console.log('resultado value', value)
           setAccountUser(value)
-          // setUsers(data.payload)
+          // setUsers(data.payload) // Revisar
         })
       })
     }
@@ -172,7 +175,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       description = {description}
       role={role}
       evaluation= {evaluation}
-      specialities = {specialities}
+      specialities = {specialities.title}
       address ={address}
       Schedule = {Schedule}
       />
