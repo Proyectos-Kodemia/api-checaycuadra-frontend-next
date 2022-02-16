@@ -26,9 +26,10 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
   const searchCounter = (event) => {
     const directionBuscar = `${endpoint}?name=${buscar}`
     event.preventDefault()
-    if (especialidad !== 'Especialidad') {
-      const directionEspecialidad = `${endpoint}?specialities=${especialidad.title}`
-      console.log('entro a especialidad', especialidad.title)
+    console.log('esta es la especialidad', especialidad)
+    if (especialidad.title !== 'Especialidad') {
+      const directionEspecialidad = `${endpoint}?specialities=${JSON.stringify(especialidad)}`
+      console.log('entro a especialidad', especialidad)
       console.log('nos esta enviando a ', directionEspecialidad)
       fetch(directionEspecialidad).then((res) => {
         res.json().then((data) => {
@@ -127,14 +128,14 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
 export default Head
 
 const especialidades = [
-  { title: 'Especialidad' },
-  { title: 'Contabilidad General' },
-  { title: 'Finanzas' },
-  { title: 'Administración' },
-  { title: 'Auditoría' },
-  { title: 'Contraloría' },
-  { title: 'Fiscal' },
-  { title: 'Impuestos (SAT)' },
-  { title: 'Costos' },
-  { title: 'Obligaciones de seguridad social (IMSS)' }
+  { id: 0, title: 'Especialidad' },
+  { id: 1, title: 'Contabilidad General' },
+  { id: 2, title: 'Finanzas' },
+  { id: 3, title: 'Administración' },
+  { id: 4, title: 'Auditoría' },
+  { id: 5, title: 'Contraloría' },
+  { id: 6, title: 'Fiscal' },
+  { id: 7, title: 'Impuestos (SAT)' },
+  { id: 8, title: 'Costos' },
+  { id: 9, title: 'Obligaciones de seguridad social (IMSS)' }
 ]
