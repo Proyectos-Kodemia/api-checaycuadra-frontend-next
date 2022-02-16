@@ -13,7 +13,7 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
 import Checkbox from '@mui/material/Checkbox'
 
-function Schedule() {
+function Schedule () {
   const [selectedStar, changeStar] = useState(moment())
   const startHour = (moment(selectedStar).format('LT'))
   console.log('startHour', startHour)
@@ -49,7 +49,6 @@ function Schedule() {
     // const endpointSchedule = `${URL_FULL}/schedule`
     // const token = sessionStorage.getItem('token')
 
-
     // async function sendSchedule(url, data) {
     //   // console.log("entrando a la funcion")
     //   const options = {
@@ -75,7 +74,15 @@ function Schedule() {
 
     console.log(dateHoursAvailable)
   }
-
+  const dias = {
+    0: 'LUNES',
+    1: 'MARTES',
+    2: 'MIERCOLES',
+    3: 'JUEVES',
+    4: 'VIERNES',
+    5: 'SABADO',
+    6: 'DOMINGO'
+  }
   return (
     <>
       <Box sx={{
@@ -98,13 +105,13 @@ function Schedule() {
             sx={{ width: '100%', maxWidth: 250 }}
           >
             {[
-              'LUNES',
-              'MARTES',
-              'MIERCOLES',
-              'JUEVES',
-              'VIERNES',
-              'SABADO',
-              'DOMINGO'
+              '0',
+              '1',
+              '2',
+              '3',
+              '4',
+              '5',
+              '6'
             ].map((value) => {
               const labelId = `checkbox-list-secondary-label-${value}`
               return (
@@ -121,7 +128,7 @@ function Schedule() {
                   disablePadding
                 >
                   <ListItemButton>
-                    <ListItemText id={labelId} primary={`${value}`} />
+                    <ListItemText id={labelId} primary={dias[value]} />
                   </ListItemButton>
                 </ListItem>
               )
