@@ -74,7 +74,15 @@ function Schedule () {
 
     console.log(dateHoursAvailable)
   }
-
+  const dias = {
+    0: 'LUNES',
+    1: 'MARTES',
+    2: 'MIERCOLES',
+    3: 'JUEVES',
+    4: 'VIERNES',
+    5: 'SABADO',
+    6: 'DOMINGO'
+  }
   return (
     <>
       <Box sx={{
@@ -97,13 +105,13 @@ function Schedule () {
             sx={{ width: '100%', maxWidth: 250 }}
           >
             {[
-              'LUNES',
-              'MARTES',
-              'MIERCOLES',
-              'JUEVES',
-              'VIERNES',
-              'SABADO',
-              'DOMINGO'
+              '0',
+              '1',
+              '2',
+              '3',
+              '4',
+              '5',
+              '6'
             ].map((value) => {
               const labelId = `checkbox-list-secondary-label-${value}`
               return (
@@ -120,7 +128,7 @@ function Schedule () {
                   disablePadding
                 >
                   <ListItemButton>
-                    <ListItemText id={labelId} primary={`${value}`} />
+                    <ListItemText id={labelId} primary={dias[value]} />
                   </ListItemButton>
                 </ListItem>
               )
