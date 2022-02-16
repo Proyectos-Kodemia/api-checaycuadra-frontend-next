@@ -1,21 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import moment from 'moment'
-import locale from 'date-fns/locale/es'
 import { DataGrid } from '@mui/x-data-grid'
 import imageLogin from '../../images/img1.jpg'
-import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, CardContent, Chip, TextField } from '@mui/material'
+import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, CardContent, Chip, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { URL_FULL } from '../../services/config'
 import { useTheme } from '@mui/material/styles'
 import MobileStepper from '@mui/material/MobileStepper'
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'
 
 const endpoint = `${URL_FULL}/mercadopago/checkout`
-
-async function LoginAccount (url, credentials) {
+async function LoginAccount(url, credentials) {
   // console.log('entrando a la funcion')
   const options = {
     method: 'POST',
@@ -29,6 +25,9 @@ async function LoginAccount (url, credentials) {
   return response.json()
 }
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
 // semanas
 const now = moment.now()
 const week0 = {
@@ -51,16 +50,15 @@ const next3 = {
   end: moment(week0.end).add(21, 'd').format('LL'),
   number: moment(week0.start).add(21, 'd').format('W')
 }
-
 // tabla
 const columns = [
-  { field: 'monday', headerName: 'Lunes', width: 100, alignItems: 'center', sortable: false },
-  { field: 'tuesday', headerName: 'Martes', width: 100, alignItems: 'center', sortable: false },
-  { field: 'wednesday', headerName: 'Miercoles', width: 100, alignItems: 'center', sortable: false },
-  { field: 'thursday', headerName: 'Jueves', width: 100, alignItems: 'center', sortable: false },
-  { field: 'friday', headerName: 'Viernes', width: 100, alignItems: 'center', sortable: false },
-  { field: 'saturday', headerName: 'Sabado', width: 100, alignItems: 'center', sortable: false },
-  { field: 'sunday', headerName: 'Domingo', width: 100, alignItems: 'center', sortable: false }
+  { field: 0, headerName: 'Lunes', alignItems: 'center' },
+  { field: 1, headerName: 'Martes', alignItems: 'center' },
+  { field: 2, headerName: 'Miercoles', alignItems: 'center' },
+  { field: 3, headerName: 'Jueves', alignItems: 'center' },
+  { field: 4, headerName: 'Viernes', alignItems: 'center' },
+  { field: 5, headerName: 'Sabado', alignItems: 'center' },
+  { field: 6, headerName: 'Domingo', alignItems: 'center' }
 ]
 
 // get day
@@ -93,21 +91,31 @@ const steps = [
   }
 ]
 
-function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
-  const [schedules, setSchedules] = useState(
-    [
-      '10:00 - 11:00',
-      '11:00 - 12:00',
-      '12:00 - 13:00',
-      '13:00 - 14:00',
-      '14:00 - 15:00'
-    ]
-  )
-  const daysAvailable = [
-    'monday',
-    'thursday'
-  ]
+function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
+  console.log("esto es traido delid", Schedule)
+  const [schedules, setSchedules] = useState([])
+  console.log("los scheudeles o times", times)
+  console.log("setting schedules", schedules)
+
+  // setSchedules(times)
+  useEffect(() => {
+    setSchedules(
+      times
+    )
+  
+  }, [times])
+
+ 
+  // const daysAvailable = [
+  //   'monday',
+  //   'thursday'
+  // ]
+
+  const daysAvailable = Schedule.daysAvailable
+  console.log("los dias disponibles", daysAvailable)
   // StarDateTime-endDateTime
+  // Envia de acuerdo a la semana solicitada
+  // Modificar create meeting
   const meetings = [{
     date: '14-02-2022',
     day: 'monday',
@@ -128,6 +136,8 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
     quantity: '1',
     id: id
   }
+  const [open, setOpen] = React.useState(false)
+  const handleClose = () => { setOpen(false) }
   const handlerPago = (e) => {
     // console.log('entrando al handler')
     e.preventDefault()
@@ -139,19 +149,13 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         console.log(error)
       })
   }
-  // console.log('campo especialista inicial', specialities)
-  // console.log(name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule)
+
+
   const theme = useTheme()
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = steps.length
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
-  }
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  }
+  const handleNext = () => { setActiveStep((prevActiveStep) => prevActiveStep + 1) }
+  const handleBack = () => { setActiveStep((prevActiveStep) => prevActiveStep - 1) }
   const weeks = [
     week0,
     next1,
@@ -169,11 +173,11 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
   }
   const selectSchedule = (element) => {
     const day = element.field
+    console.log("en selected", day)
     if (!daysAvailable.includes(day)) {
       console.log('Dia no disponible')
       return
     }
-
     const hourEl = element.value
     let dayWeek = null
     let starDate = null
@@ -181,33 +185,33 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
     console.log('aqui el element', element)
 
     switch (day) {
-      case day = 'monday':
+      case 0:
         dayWeek = moment(weeks[activeStep].start).add(0, 'd').format('DD-MM-YYYY')
         starDate = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
         break
-      case day = 'tuesday':
+      case 1:
         dayWeek = moment(weeks[activeStep].start).add(1, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
+        starDate = moment(weeks[activeStep].start).add(1, 'd').format('YYYY-MM-DD')
         break
-      case day = 'wednesday':
+      case 2:
         dayWeek = moment(weeks[activeStep].start).add(2, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
+        starDate = moment(weeks[activeStep].start).add(2, 'd').format('YYYY-MM-DD')
         break
-      case day = 'thursday':
+      case 3:
         dayWeek = moment(weeks[activeStep].start).add(3, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
+        starDate = moment(weeks[activeStep].start).add(3, 'd').format('YYYY-MM-DD')
         break
-      case day = 'friday':
-        dayWeek = moment(weeks[activeStep].start).add(4, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
+      case 4:
+        dayWeek = ((moment(weeks[activeStep].start).add(4, 'd').format('DD-MM-YYYY')))
+        starDate = moment(weeks[activeStep].start).add(4, 'd').format('YYYY-MM-DD')
         break
-      case day = 'saturday':
+      case 5:
         dayWeek = moment(weeks[activeStep].start).add(5, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
+        starDate = moment(weeks[activeStep].start).add(5, 'd').format('YYYY-MM-DD')
         break
-      case day = 'sunday':
+      case 6:
         dayWeek = moment(weeks[activeStep].start).add(6, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
+        starDate = moment(weeks[activeStep].start).add(6, 'd').format('YYYY-MM-DD')
         break
     }
     if (hasMeeting(day, hourEl, dayWeek)) {
@@ -219,28 +223,39 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
       // StarDateTime:2022-01-24T18:00
       const startDateTime = `${starDate}T${startHour}`
       const endDateTime = `${starDate}T${endHour}`
-
-      console.log(startDateTime)
-      console.log(endDateTime)
+      // console.log(startDateTime)
+      // console.log(endDateTime)
     }
-  }
+    console.log('este es dia ', dayWeek)
+    console.log('este es la hora', hourEl)
+    const cita = `el dia ${dayWeek} en un horario de ${hourEl}`
 
-  const createRows = (schedules) => {
+    return cita
+  }
+  // console.log('es el slect', selectSchedule())
+  const createRows = (schedules,daysAvailable, daysReserved) => {
     const rows = []
     schedules.forEach((element) => {
-      rows.push({
-        id: schedules.indexOf(element),
-        monday: element,
-        tuesday: element,
-        wednesday: element,
-        thursday: element,
-        friday: element,
-        saturday: element,
-        sunday: element
+
+      // Aquí se declara el número de fila
+      let row = {
+        id: schedules.indexOf(element)
+      }
+
+      // Por cada día disponible añadimos
+      // a la fila el elemnto de schedules
+      // daysAvailable = [monday, tuesday]
+      daysAvailable.forEach((day) => {
+        row[day] = element
       })
+         
+      // Añadimos la fila completa
+      rows.push(row)
     })
+    console.log("las rows",rows)
     return rows
   }
+
   return (
     <div>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
@@ -341,28 +356,30 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowLeft />
-                )
+              )
               : (
                 <KeyboardArrowRight />
-                )}
+              )}
           </Button>
         }
         backButton={
-          <Button size='small' onClick={handleBack} disabled={activeStep === 0}>
+          <Button
+            size='small' onClick={handleBack} disabled={activeStep === 0}
+          >
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowRight />
-                )
+              )
               : (
                 <KeyboardArrowLeft />
-                )}
+              )}
             Atras
           </Button>
         }
         sx={{ mx: 60 }}
       />
       {/* encabezado */}
-      <Box sx={{ display: 'flex', textAlign: 'center', justifyContent: 'space-evenly' }}>
+      <Box sx={{ display: 'flex', textAlign: 'center', justifyContent: 'space-evenly', m: 3 }}>
         <Typography>
           Semana {steps[activeStep].label}
           <br />
@@ -370,41 +387,42 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         </Typography>
       </Box>
       {/* tabla */}
-      <Box sx={{ p: 1, mt: 5 }}>
-        <DataGrid
-          rows={createRows(schedules)}
+      <Box>
+        {schedules && <DataGrid
+          rows={createRows(schedules,daysAvailable)}
           columns={columns}
-          autoHeight
           checkboxSelection={false}
           onCellClick={selectSchedule}
           hideFooter='true'
           disableColumnMenu='false'
-          disableExtendRowFullWidth='true'
           AutoSizeColumnsMode='fill'
-        />
+          autoHeight
+          density='comfortable'
+        />}
       </Box>
-      {/* ultimos botones */}
-      <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
-        <Button
-          // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerPago}
-          variant='contained'
-          disableElevation
-          size='large'
-          endIcon={<ArrowForwardIcon />}
-        >Realizar Pago
-        </Button>
-        <Button
-          // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerAuthGoogle}
-          variant='contained'
-          disableElevation
-          size='large'
-          sx={{ mr: 0 }}
-          endIcon={<ArrowForwardIcon />}
-        >Confirmar Cita
-        </Button>
-      </Box>
+      {/* confirmar */}
+
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={selectSchedule}
+        aria-describedby='alert-dialog-slide-description'
+        fullWidth='false'
+        maxWidth='sm'
+      >
+        <DialogTitle sx={{ mx: 'auto', my: 1 }}>Confirma tu horario</DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-slide-description' sx={{ mx: 'auto', my: 1 }}>
+            La cita con tu contador es{selectSchedule}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          <Button onClick={handleClose}>Regresar</Button>
+          <Button onClick={handlerPago}>Confirmar y realizar pago</Button>
+        </DialogActions>
+      </Dialog>
+
     </div>
   )
 }

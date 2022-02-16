@@ -23,7 +23,7 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
     getOptionLabel: (option) => option.title ? option.title : ''
   }
 
-  const searchCounter = (event) => {
+  function searchCounter (event) {
     const directionBuscar = `${endpoint}?name=${buscar}`
     event.preventDefault()
     console.log('esta es la especialidad', especialidad)

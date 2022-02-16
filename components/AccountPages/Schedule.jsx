@@ -12,6 +12,7 @@ import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
 import Checkbox from '@mui/material/Checkbox'
+import { URL_FULL } from '../../services/config'
 
 function Schedule () {
   const [selectedStar, changeStar] = useState(moment())
@@ -38,43 +39,52 @@ function Schedule () {
   }
 
   console.log('Dias de la semana', checked)
+  
   const dateHoursAvailable = {
     daysAvailable: checked,
     startHour: startHour,
     endHour: endHour
   }
 
-  const handleConfirmation = () => {
+  const handleConfirmation = async () => {
     // Sending informatio to back
-    // const endpointSchedule = `${URL_FULL}/schedule`
-    // const token = sessionStorage.getItem('token')
+    const endpointSchedule = `${URL_FULL}/schedule`
+    const token = sessionStorage.getItem('token')
 
-    // async function sendSchedule(url, data) {
-    //   // console.log("entrando a la funcion")
-    //   const options = {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       token: token
-    //     },
-    //     body:JSON.stringify(data)
-    //   }
-    //   const response = await fetch(url, options)
-    //   return response.json()
-    // }
+    async function sendSchedule(url, data) {
+      // console.log("entrando a la funcion")
+      const options = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          token: token
+        },
+        body: JSON.stringify(data)
+      }
+      const response = await fetch(url, options)
+      return response.json()
+    }
 
-    // await sendSchedule(endpointSchedule,dateHoursAvailable)
-    //     .then(response => {
-    //       console.log(data)
-    //       console.log(response)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
+    await sendSchedule(endpointSchedule,dateHoursAvailable)
+        .then(response => {
+          console.log(dateHoursAvailable)
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
 
     console.log(dateHoursAvailable)
   }
-
+  const dias = {
+    0: 'LUNES',
+    1: 'MARTES',
+    2: 'MIERCOLES',
+    3: 'JUEVES',
+    4: 'VIERNES',
+    5: 'SABADO',
+    6: 'DOMINGO'
+  }
   return (
     <>
       <Box sx={{
@@ -97,13 +107,13 @@ function Schedule () {
             sx={{ width: '100%', maxWidth: 250 }}
           >
             {[
-              'LUNES',
-              'MARTES',
-              'MIERCOLES',
-              'JUEVES',
-              'VIERNES',
-              'SABADO',
-              'DOMINGO'
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
             ].map((value) => {
               const labelId = `checkbox-list-secondary-label-${value}`
               return (
@@ -120,7 +130,7 @@ function Schedule () {
                   disablePadding
                 >
                   <ListItemButton>
-                    <ListItemText id={labelId} primary={`${value}`} />
+                    <ListItemText id={labelId} primary={dias[value]} />
                   </ListItemButton>
                 </ListItem>
               )
