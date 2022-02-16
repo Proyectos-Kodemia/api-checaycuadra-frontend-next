@@ -11,6 +11,10 @@ import MobileStepper from '@mui/material/MobileStepper'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'
 
 const endpoint = `${URL_FULL}/mercadopago/checkout`
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 async function LoginAccount (url, credentials) {
   // console.log('entrando a la funcion')
   const options = {
@@ -60,6 +64,16 @@ const columns = [
   { field: 'saturday', headerName: 'Sabado', alignItems: 'center' },
   { field: 'sunday', headerName: 'Domingo', alignItems: 'center' }
 ]
+<<<<<<< HEAD
+=======
+
+// get day
+
+// console.log('Datos utiles:', element, element.field, element.value, week0.number, week0.start)
+// console.log(day)
+// console.log(fecha)
+
+>>>>>>> main
 // botones de steps
 const steps = [
   {
@@ -83,7 +97,40 @@ const steps = [
     labelEnd: next3.end
   }
 ]
+<<<<<<< HEAD
 function Appointment ({ cita, handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
+=======
+
+function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
+  const [schedules, setSchedules] = useState(
+    [
+      '10:00 - 11:00',
+      '11:00 - 12:00',
+      '12:00 - 13:00',
+      '13:00 - 14:00',
+      '14:00 - 15:00'
+    ]
+  )
+  const daysAvailable = [
+    'monday',
+    'thursday'
+  ]
+  // StarDateTime-endDateTime
+  const meetings = [{
+    date: '14-02-2022',
+    day: 'monday',
+    hour: '14:00 - 15:00'
+  },
+  {
+    date: '23-02-2022',
+    day: 'wednesday',
+    hour: '10:00 - 11:00'
+  }
+  ]
+
+  // Falta el useEfect, cuando traes la data
+
+>>>>>>> main
   const servicio = {
     title: 'consultoria',
     unit_price: Schedule.costHour,
@@ -147,6 +194,7 @@ function Appointment ({ cita, handlerAuthGoogle, id, name, lastname, degree, deg
   ]
   const hasMeeting = (dayEl, hourEl, dateEl) => {
     return meetings.find(({ day, hour, date }) => {
+<<<<<<< HEAD
       // console.log('day ', day, dayEl)
       // console.log('hour ', hour, hourEl)
       // console.log('date ', date, dateEl)
@@ -154,6 +202,15 @@ function Appointment ({ cita, handlerAuthGoogle, id, name, lastname, degree, deg
     })
   }
 
+=======
+      console.log('day ', day, dayEl)
+      console.log('hour ', hour, hourEl)
+      console.log('date ', date, dateEl)
+
+      if (day === dayEl && hour === hourEl && date === dateEl) { return true } else { return false }
+    })
+  }
+>>>>>>> main
   const selectSchedule = (element) => {
     const day = element.field
     if (!daysAvailable.includes(day)) {
@@ -164,6 +221,11 @@ function Appointment ({ cita, handlerAuthGoogle, id, name, lastname, degree, deg
     let dayWeek = null
     let starDate = null
 
+<<<<<<< HEAD
+=======
+    console.log('aqui el element', element)
+
+>>>>>>> main
     switch (day) {
       case day = 'monday':
         dayWeek = moment(weeks[activeStep].start).add(0, 'd').format('DD-MM-YYYY')
@@ -197,7 +259,10 @@ function Appointment ({ cita, handlerAuthGoogle, id, name, lastname, degree, deg
     if (hasMeeting(day, hourEl, dayWeek)) {
       console.log('Cita reservada')
     } else {
+<<<<<<< HEAD
       setOpen(true)
+=======
+>>>>>>> main
       console.log('Cita disponible, hacer fetch')
       const startHour = hourEl.slice(0, 5)
       const endHour = hourEl.slice(8)
