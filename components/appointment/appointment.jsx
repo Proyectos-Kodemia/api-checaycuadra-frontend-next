@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import moment from 'moment'
 import { DataGrid } from '@mui/x-data-grid'
@@ -11,11 +11,7 @@ import MobileStepper from '@mui/material/MobileStepper'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'
 
 const endpoint = `${URL_FULL}/mercadopago/checkout`
-<<<<<<< HEAD
-=======
-
->>>>>>> main
-async function LoginAccount (url, credentials) {
+async function LoginAccount(url, credentials) {
   // console.log('entrando a la funcion')
   const options = {
     method: 'POST',
@@ -29,7 +25,7 @@ async function LoginAccount (url, credentials) {
   return response.json()
 }
 
-const Transition = React.forwardRef(function Transition (props, ref) {
+const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 // semanas
@@ -56,16 +52,14 @@ const next3 = {
 }
 // tabla
 const columns = [
-  { field: 'monday', headerName: 'Lunes', alignItems: 'center' },
-  { field: 'tuesday', headerName: 'Martes', alignItems: 'center' },
-  { field: 'wednesday', headerName: 'Miercoles', alignItems: 'center' },
-  { field: 'thursday', headerName: 'Jueves', alignItems: 'center' },
-  { field: 'friday', headerName: 'Viernes', alignItems: 'center' },
-  { field: 'saturday', headerName: 'Sabado', alignItems: 'center' },
-  { field: 'sunday', headerName: 'Domingo', alignItems: 'center' }
+  { field: 0, headerName: 'Lunes', alignItems: 'center' },
+  { field: 1, headerName: 'Martes', alignItems: 'center' },
+  { field: 2, headerName: 'Miercoles', alignItems: 'center' },
+  { field: 3, headerName: 'Jueves', alignItems: 'center' },
+  { field: 4, headerName: 'Viernes', alignItems: 'center' },
+  { field: 5, headerName: 'Sabado', alignItems: 'center' },
+  { field: 6, headerName: 'Domingo', alignItems: 'center' }
 ]
-<<<<<<< HEAD
-=======
 
 // get day
 
@@ -73,7 +67,6 @@ const columns = [
 // console.log(day)
 // console.log(fecha)
 
->>>>>>> main
 // botones de steps
 const steps = [
   {
@@ -97,25 +90,32 @@ const steps = [
     labelEnd: next3.end
   }
 ]
-<<<<<<< HEAD
-function Appointment ({ cita, handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
-=======
 
-function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule }) {
-  const [schedules, setSchedules] = useState(
-    [
-      '10:00 - 11:00',
-      '11:00 - 12:00',
-      '12:00 - 13:00',
-      '13:00 - 14:00',
-      '14:00 - 15:00'
-    ]
-  )
-  const daysAvailable = [
-    'monday',
-    'thursday'
-  ]
+function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
+  console.log("esto es traido delid", Schedule)
+  const [schedules, setSchedules] = useState([])
+  console.log("los scheudeles o times", times)
+  console.log("setting schedules", schedules)
+
+  // setSchedules(times)
+  useEffect(() => {
+    setSchedules(
+      times
+    )
+  
+  }, [times])
+
+ 
+  // const daysAvailable = [
+  //   'monday',
+  //   'thursday'
+  // ]
+
+  const daysAvailable = Schedule.daysAvailable
+  console.log("los dias disponibles", daysAvailable)
   // StarDateTime-endDateTime
+  // Envia de acuerdo a la semana solicitada
+  // Modificar create meeting
   const meetings = [{
     date: '14-02-2022',
     day: 'monday',
@@ -130,7 +130,6 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
 
   // Falta el useEfect, cuando traes la data
 
->>>>>>> main
   const servicio = {
     title: 'consultoria',
     unit_price: Schedule.costHour,
@@ -150,36 +149,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         console.log(error)
       })
   }
-  // console.log('campo especialista inicial', specialities)
-  // console.log(name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule)
 
-  const daysAvailable = [
-    'monday',
-    'thursday',
-    'friday'
-  ]
-  // StarDateTime-endDateTime
-  const meetings = [{
-    date: '14-02-2022',
-    day: 'monday',
-    hour: '14:00 - 15:00'
-  },
-  {
-    date: '23-02-2022',
-    day: 'wednesday',
-    hour: '10:00 - 11:00'
-  }
-  ]
-  // Falta el useEfect, cuando traes la data
-  const [schedules, setSchedules] = useState(
-    [
-      '10:00 - 11:00',
-      '11:00 - 12:00',
-      '12:00 - 13:00',
-      '13:00 - 14:00',
-      '14:00 - 15:00'
-    ]
-  )
 
   const theme = useTheme()
   const [activeStep, setActiveStep] = React.useState(0)
@@ -194,15 +164,6 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
   ]
   const hasMeeting = (dayEl, hourEl, dateEl) => {
     return meetings.find(({ day, hour, date }) => {
-<<<<<<< HEAD
-      // console.log('day ', day, dayEl)
-      // console.log('hour ', hour, hourEl)
-      // console.log('date ', date, dateEl)
-      if (day === dayEl && hour === hourEl && date === dateEl) { return true } else { return false }
-    })
-  }
-
-=======
       console.log('day ', day, dayEl)
       console.log('hour ', hour, hourEl)
       console.log('date ', date, dateEl)
@@ -210,9 +171,9 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
       if (day === dayEl && hour === hourEl && date === dateEl) { return true } else { return false }
     })
   }
->>>>>>> main
   const selectSchedule = (element) => {
     const day = element.field
+    console.log("en selected", day)
     if (!daysAvailable.includes(day)) {
       console.log('Dia no disponible')
       return
@@ -221,37 +182,34 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
     let dayWeek = null
     let starDate = null
 
-<<<<<<< HEAD
-=======
     console.log('aqui el element', element)
 
->>>>>>> main
     switch (day) {
-      case day = 'monday':
+      case 0:
         dayWeek = moment(weeks[activeStep].start).add(0, 'd').format('DD-MM-YYYY')
         starDate = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
         break
-      case day = 'tuesday':
+      case 1:
         dayWeek = moment(weeks[activeStep].start).add(1, 'd').format('DD-MM-YYYY')
         starDate = moment(weeks[activeStep].start).add(1, 'd').format('YYYY-MM-DD')
         break
-      case day = 'wednesday':
+      case 2:
         dayWeek = moment(weeks[activeStep].start).add(2, 'd').format('DD-MM-YYYY')
         starDate = moment(weeks[activeStep].start).add(2, 'd').format('YYYY-MM-DD')
         break
-      case day = 'thursday':
+      case 3:
         dayWeek = moment(weeks[activeStep].start).add(3, 'd').format('DD-MM-YYYY')
         starDate = moment(weeks[activeStep].start).add(3, 'd').format('YYYY-MM-DD')
         break
-      case day = 'friday':
+      case 4:
         dayWeek = ((moment(weeks[activeStep].start).add(4, 'd').format('DD-MM-YYYY')))
         starDate = moment(weeks[activeStep].start).add(4, 'd').format('YYYY-MM-DD')
         break
-      case day = 'saturday':
+      case 5:
         dayWeek = moment(weeks[activeStep].start).add(5, 'd').format('DD-MM-YYYY')
         starDate = moment(weeks[activeStep].start).add(5, 'd').format('YYYY-MM-DD')
         break
-      case day = 'sunday':
+      case 6:
         dayWeek = moment(weeks[activeStep].start).add(6, 'd').format('DD-MM-YYYY')
         starDate = moment(weeks[activeStep].start).add(6, 'd').format('YYYY-MM-DD')
         break
@@ -259,10 +217,6 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
     if (hasMeeting(day, hourEl, dayWeek)) {
       console.log('Cita reservada')
     } else {
-<<<<<<< HEAD
-      setOpen(true)
-=======
->>>>>>> main
       console.log('Cita disponible, hacer fetch')
       const startHour = hourEl.slice(0, 5)
       const endHour = hourEl.slice(8)
@@ -279,20 +233,26 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
     return cita
   }
   // console.log('es el slect', selectSchedule())
-  const createRows = (schedules) => {
+  const createRows = (schedules,daysAvailable, daysReserved) => {
     const rows = []
     schedules.forEach((element) => {
-      rows.push({
-        id: schedules.indexOf(element),
-        monday: element,
-        tuesday: element,
-        wednesday: element,
-        thursday: element,
-        friday: element,
-        saturday: element,
-        sunday: element
+
+      // Aquí se declara el número de fila
+      let row = {
+        id: schedules.indexOf(element)
+      }
+
+      // Por cada día disponible añadimos
+      // a la fila el elemnto de schedules
+      // daysAvailable = [monday, tuesday]
+      daysAvailable.forEach((day) => {
+        row[day] = element
       })
+         
+      // Añadimos la fila completa
+      rows.push(row)
     })
+    console.log("las rows",rows)
     return rows
   }
 
@@ -396,10 +356,10 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowLeft />
-                )
+              )
               : (
                 <KeyboardArrowRight />
-                )}
+              )}
           </Button>
         }
         backButton={
@@ -409,10 +369,10 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowRight />
-                )
+              )
               : (
                 <KeyboardArrowLeft />
-                )}
+              )}
             Atras
           </Button>
         }
@@ -428,8 +388,8 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
       </Box>
       {/* tabla */}
       <Box>
-        <DataGrid
-          rows={createRows(schedules)}
+        {schedules && <DataGrid
+          rows={createRows(schedules,daysAvailable)}
           columns={columns}
           checkboxSelection={false}
           onCellClick={selectSchedule}
@@ -438,7 +398,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
           AutoSizeColumnsMode='fill'
           autoHeight
           density='comfortable'
-        />
+        />}
       </Box>
       {/* confirmar */}
 

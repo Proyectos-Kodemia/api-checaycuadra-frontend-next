@@ -65,7 +65,10 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
     }
   }, [id])
 
-  const {name, lastname, degree,degreeId,profileImage, description, role, evaluation, specialities, address, Schedule} = accountUser
+  const {name, lastname, degree,degreeId,profileImage, description, role, evaluation, specialities, address, Schedule,schedules} = accountUser
+  console.log("todo el objeto en id", accountUser)
+  
+  console.log("en id", schedules)
   // console.log('especialidades',specialities)
 
   // proceso de pago
@@ -178,6 +181,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       specialities = {specialities}
       address ={address}
       Schedule = {Schedule}
+      times={schedules}
       />
         {statusPayment && (<Snackbar statusPayment={statusPayment} /> )}
       <FooterPage />
