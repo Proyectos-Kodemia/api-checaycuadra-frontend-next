@@ -21,7 +21,16 @@ function Search () {
       <div className={styles.cards}>
         {users
           .map(({ _id, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) => (
-            <Card key={_id} dataUser={users} idAccount={_id} name={name} lastname={lastname} degree={degree} profileImage={profileImage} description={description} role={role} evaluation={evaluation} address={address} Schedule={Schedule} />
+            <Card
+              key={_id}
+              dataUser={users}
+              idAccount={_id} name={name}
+              lastname={lastname} degree={degree}
+              profileImage={profileImage}
+              description={description} role={role}
+              evaluation={evaluation} address={address}
+              Schedule={Schedule}
+            />
           ))}
       </div>
     </div>

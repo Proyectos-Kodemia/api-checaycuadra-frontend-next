@@ -27,12 +27,13 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
     const directionBuscar = `${endpoint}?name=${buscar}`
     event.preventDefault()
     console.log('esta es la especialidad', especialidad)
-    if (especialidad.title !== 'Especialidad') {
+    if (especialidad !== 'Especialidad') {
       const directionEspecialidad = `${endpoint}?specialities=${JSON.stringify(especialidad)}`
       console.log('entro a especialidad', especialidad)
       console.log('nos esta enviando a ', directionEspecialidad)
       fetch(directionEspecialidad).then((res) => {
         res.json().then((data) => {
+          console.log(data)
           const val = parseInt(Object.keys(data.payload).length)
           setUsers(data.payload)
           setEspecialidad('Especialidad')
