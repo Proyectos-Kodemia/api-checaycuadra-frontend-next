@@ -2,6 +2,7 @@
 
 .principalBox{
     margin: auto;
+    
 }
 
 .textEspecialist{
@@ -12,8 +13,10 @@
 
 .cards{
     display: flex;
+    margin: 0px auto;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
+    max-width: 1000px;
     
 }
