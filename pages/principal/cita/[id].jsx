@@ -91,7 +91,9 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
     //   console.log(token)  
 
 
-    // Enviar el post de cita con el boton de confirmar cita
+    // Enviar el patch de cita con el boton de confirmar cita
+    // Aqui se crea el meeting de google
+
     const handlerAuthGoogle = async (e)=>{
       e.preventDefault()
       const token = sessionStorage.getItem('token')
@@ -157,6 +159,72 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       }
     }
 
+    // const createMeeting = async (e)=>{
+    //   console.log (" en id - createMeeting, finalClickinfo",finalClickInfo)
+      
+    //   const {starDateTime,endDateTime} = finalClickInfo
+    //   e.preventDefault()
+    //   const token = sessionStorage.getItem('token')
+    //   // console.log("tokenn en el handler",token)
+    //   const endpointMeeting = `${URL_FULL}/metting`
+
+    //       const data = {
+    //         userAccount: id,
+    //         starDate:starDateTime,
+    //         endDateTime:endDateTime,
+    //         title:`consultoria ${name} ${lastname}`,
+    //         unit_price:Schedule.costHour,
+    //         quantity:"1",
+    //         statusPayment: "pending"
+    //       }
+
+    //       console.log("la data en el handler",data)
+    //       // post
+    //       const optionsMeeting = {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //           'token': token  // Enviar en el post el token de JWT
+    //         },
+    //         body: JSON.stringify(data)
+            
+    //       }
+    //       const response = await fetch(endpointMeeting, optionsMeeting).then((res) => {
+    //         res.json().then((value) => {
+    //           console.log('Objeto Id cita', value)
+
+    //           const idMeeting = value.payload.meetCreated._id
+    //           window.localStorage.setItem('idMeeting',idMeeting)
+    //      //     console.log("id Meeting",idMeeting)
+
+    //           return idMeeting
+    //         })
+    //       })
+
+
+
+          
+    // //      console.log("response Prueba Id", responsePrueba)
+    //       // Obtener el id de la cita 
+      
+
+    //       // const optionsAuthGoogle = {
+    //       //   method: 'POST',
+    //       //   redirect:'follow',
+    //       //   headers: {
+    //       //     'Content-Type': 'application/json',
+    //       //     'token': token  // Enviar en el post el token de JWT
+    //       //   },
+    //       // }
+
+    //       // await LoginAccount(endpointAuthGoogle)
+    //       // .then(response =>{
+    //       //   // location.href = response.payload.authUrl
+    //       //   })
+    //       // .catch(error =>{
+    //       //   console.log(error)
+    //       // })
+    //   }
 
   return (
     <>
