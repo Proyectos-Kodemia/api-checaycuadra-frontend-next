@@ -141,12 +141,14 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
   const handleBack = () => { setActiveStep((prevActiveStep) => prevActiveStep - 1) }
   // console.log('active', activeStep)
   const weeks = [week0, next1, next2, next3]
+
+
   const hasMeeting = (dayEl, hourEl, dateEl) => {
     return meetings.find(({ day, hour, date }) => {
       // console.log('day ', day, dayEl)
-    //  console.log('hour ', hour, hourEl)
+      //  console.log('hour ', hour, hourEl)
       // console.log('date ', date, dateEl)
-      if (day === dayEl && hour === hourEl && date === dateEl) { return true } else { return false }
+   if (day === dayEl && hour === hourEl && date === dateEl) { return true } else { return false }
     })
   }
   const selectSchedule = (element) => {

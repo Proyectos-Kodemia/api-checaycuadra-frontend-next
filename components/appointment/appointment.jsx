@@ -7,7 +7,7 @@ import { MobileStepper, Button, Box, List, ListItem, ListItemIcon, ListItemText,
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import { URL_FULL } from '../../services/config'
 import { useTheme } from '@mui/material/styles'
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'
+import { KeyboardArrowLeft, KeyboardArrowRight, LegendToggleRounded } from '@mui/icons-material'
 import { date } from 'yup'
 
 const endpoint = `${URL_FULL}/mercadopago/checkout`
@@ -24,10 +24,24 @@ async function LoginAccount (url, credentials) {
   const response = await fetch(url, options)
   return response.json()
 }
+
+// const endpoint = `${URL_FULL}/mercadopago/checkout`
+// async function sendDate (url, credentials) {
+//  // console.log('entrando a la funcion')
+//  const options = {
+//    method: 'POST',
+//    headers: {
+//      'Content-Type': 'application/json'
+//    },
+//    body: JSON.stringify(credentials)
+//  }
+//  // return fetch(url, options)
+//  const response = await fetch(url, options)
+//  return response.json()
+// }
 const Transition = React.forwardRef(function Transition (props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
-
 // semanas
 const dayNow = moment.now()
 const weeks = [
@@ -68,27 +82,6 @@ const columns = [
   { field: 'saturday', headerName: 'Sabado', alignItems: 'center' },
   { field: 'sunday', headerName: 'Domingo', alignItems: 'center' }
 ]
-const meetings = [{
-  date: '14-02-2022',
-  day: 'monday',
-  hour: '14:00 - 15:00',
-  week: '7'
-},
-{
-  date: '23-02-2022',
-  day: 'wednesday',
-  hour: '10:00 - 11:00',
-  week: '8'
-}
-]
-
-const hasMeeting = (dayEl, hourSelected, dateEl) => {
-  return meetings.find(({ day, hour, date }) => {
-    if (day === dayEl && hour === hourSelected && date === dateEl) { return true } else { return false }
-  })
-}
-
-// tabla
 
 function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
   const [schedules, setSchedules] = useState([])
@@ -122,61 +115,90 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
   const maxSteps = steps.length
   const handleNext = () => { setActiveStep((prevActiveStep) => prevActiveStep + 1) }
   const handleBack = () => { setActiveStep((prevActiveStep) => prevActiveStep - 1) }
+  const weekActive = moment(weeks[activeStep].start).format('W')
+  const meetings = [{
+    week: '7',
+    date: '14-02-2022',
+    day: 'monday',
+    hour: '14:00 - 15:00'
+  },
+  {
+    week: '7',
+    date: '23-02-2022',
+    day: 'tuesday',
+    hour: '10:00 - 11:00'
 
-  const weekSelected = moment(weeks[activeStep].start).format('W')
-  // console.log(weekSelected,''weekSelected  OK)
+  }
+  ]
+  const hasMeeting = (daySelected, hourSelected, weekActive) => {
+    return meetings.find(({ day, hour, week }) => {
+      console.log(day, daySelected)
+      console.log(hour, hourSelected)
+      console.log(week, weekActive)
+      if (day === daySelected && hour === hourSelected && week === weekActive) { return true } else { return false }
+    })
+  }
+
+  // const meet =
 
   const [finalClickInfo, setFinalClickInfo] = useState(null)
   const handleOnCellClick = (element) => {
-    setFinalClickInfo(element)
-    const day = element.field
-    if (!daysAvailable.includes(day)) { return }
-    setOpen(true)
-    return element
+    // const day = element.field
+    if (!daysAvailable.includes(element.field)) { return }
+    let dateFormat = null
+    let dateMeet = null
+    switch (element.field) {
+      case 'monday':
+        dateFormat = moment(weeks[activeStep].start).add(0, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
+        break
+      case 'tuesday':
+        dateFormat = moment(weeks[activeStep].start).add(1, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(1, 'd').format('YYYY-MM-DD')
+        break
+      case 'wednesday':
+        dateFormat = moment(weeks[activeStep].start).add(2, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(2, 'd').format('YYYY-MM-DD')
+        break
+      case 'thursday':
+        dateFormat = moment(weeks[activeStep].start).add(3, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(3, 'd').format('YYYY-MM-DD')
+        break
+      case 'friday':
+        dateFormat = moment(weeks[activeStep].start).add(4, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(4, 'd').format('YYYY-MM-DD')
+        break
+      case 'saturday':
+        dateFormat = moment(weeks[activeStep].start).add(5, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(5, 'd').format('YYYY-MM-DD')
+        break
+      case 'sunday':
+        dateFormat = moment(weeks[activeStep].start).add(6, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(6, 'd').format('YYYY-MM-DD')
+        break
+    }
+    if (hasMeeting(element.field, element.value, weekActive)) {
+    } else {
+      setOpen(true)
+    }
+    // LLAMAR AL BACK PARA AGENDAR LA CITA
+    const startHour = ((element.value).slice(0, 5))
+    const endHour = ((element.value).slice(8))
+    const startDateTime = `${dateMeet}T${startHour}`
+    const endDateTime = `${dateMeet}T${endHour}`
+    const dataOfCita = {
+      date: dateFormat,
+      day: element.field,
+      hour: element.value,
+      week: weekActive,
+      startDateTime: startDateTime,
+      endDateTime: endDateTime
+    }
+    // console.log(dataOfCita, 'dataOfCita')
+    setFinalClickInfo(dataOfCita)
+    return dataOfCita
   }
-  const daySelected = finalClickInfo.field
-  const hourSelected = finalClickInfo.value
-  console.log(daySelected, hourSelected)
-
-  let dateFormat = null
-  let dateMeet = null
-  switch (daySelected) {
-    case 'monday':
-      dateFormat = moment(weeks[activeStep].start).add(0, 'd').format('DD-MM-YYYY')
-      dateMeet = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
-      break
-    case 'tuesday':
-      dateFormat = moment(weeks[activeStep].start).add(1, 'd').format('DD-MM-YYYY')
-      dateMeet = moment(weeks[activeStep].start).add(1, 'd').format('YYYY-MM-DD')
-      break
-    case 'wednesday':
-      dateFormat = moment(weeks[activeStep].start).add(2, 'd').format('DD-MM-YYYY')
-      dateMeet = moment(weeks[activeStep].start).add(2, 'd').format('YYYY-MM-DD')
-      break
-    case 'thursday':
-      dateFormat = moment(weeks[activeStep].start).add(3, 'd').format('DD-MM-YYYY')
-      dateMeet = moment(weeks[activeStep].start).add(3, 'd').format('YYYY-MM-DD')
-      break
-    case 'friday':
-      dateFormat = moment(weeks[activeStep].start).add(4, 'd').format('DD-MM-YYYY')
-      dateMeet = moment(weeks[activeStep].start).add(4, 'd').format('YYYY-MM-DD')
-      break
-    case 'saturday':
-      dateFormat = moment(weeks[activeStep].start).add(5, 'd').format('DD-MM-YYYY')
-      dateMeet = moment(weeks[activeStep].start).add(5, 'd').format('YYYY-MM-DD')
-      break
-    case 'sunday':
-      dateFormat = moment(weeks[activeStep].start).add(6, 'd').format('DD-MM-YYYY')
-      dateMeet = moment(weeks[activeStep].start).add(6, 'd').format('YYYY-MM-DD')
-      break
-  }
-
-  // LLAMAR AL BACK PARA AGENDAR LA CITA
-  const startHour = (hourSelected.slice(0, 5))
-  const endHour = (hourSelected.slice(8))
-  const startDateTime = `${dateMeet}T${startHour}`
-  const endDateTime = `${dateMeet}T${endHour}`
-
+  // console.log('daySelected', finalClickInfo)
   const createRows = (schedules, daysAvailable, daysReserved) => {
     const lasRows = []
     schedules.forEach((element) => {
@@ -193,15 +215,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
     return lasRows
   }
 
-  const dataOfCita = {
-    date: dateFormat,
-    day: daySelected,
-    hour: hourSelected,
-    week: weekSelected,
-    startDateTime: startDateTime,
-    endDateTime: endDateTime
-  }
-  console.log(dataOfCita)
+  // console.log('dataOfCita', dataOfCita)
   return (
     <div>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
@@ -322,7 +336,19 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         </Typography>
       </Box>
       {/* tabla */}
-      <Box>
+      <Box sx={{
+        height: 'auto',
+        width: 'auto',
+        '& .cold': {
+          backgroundColor: '#e3e3e3',
+          color: '#1a3e72'
+        },
+        '& .hot': {
+          backgroundColor: '#f14233',
+          color: '#1a3e72'
+        }
+      }}
+      >
         {schedules && <DataGrid
           rows={createRows(schedules, daysAvailable)}
           columns={columns}
@@ -333,6 +359,14 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
           AutoSizeColumnsMode='fill'
           autoHeight
           density='comfortable'
+          getCellClassName={(params) => {
+            if (hasMeeting(params.field, params.value, weekActive)) {
+              return 'hot'
+            }
+            if (!daysAvailable.includes(params.field)) {
+              return 'cold'
+            }
+          }}
                       />}
       </Box>
       {/* confirmar */}
@@ -349,7 +383,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         <DialogTitle sx={{ mx: 'auto', my: 1 }}>Confirma tu horario</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-slide-description' sx={{ mx: 'auto', my: 1, textAlign: 'center' }}>
-            La cita con tu contador es  el dia {dataOfCita.date} <br /> en un horario de {dataOfCita.hour}
+            La cita con tu contador es  el dia {finalClickInfo?.date} <br /> en un horario de {finalClickInfo?.hour}
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
@@ -364,7 +398,19 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
 
 export default Appointment
 
-/* <Box sx={{ height: 255, width: '100%', p: 2 }}>
-        {steps[activeStep].description}
-        </Box>
-*/
+/*
+
+const meetings = [{
+  week: '7',
+  date: '14-02-2022',
+  day: 'monday',
+  hour: '14:00 - 15:00'
+},
+
+ getCellClassName={(params) => {
+          if (params.field === 'city') {
+            return '';
+          }
+          return params.value >= 15 ? 'hot' : 'cold';
+        }}
+        */
