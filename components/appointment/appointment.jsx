@@ -3,15 +3,15 @@ import Image from 'next/image'
 import moment from 'moment'
 import { DataGrid } from '@mui/x-data-grid'
 import imageLogin from '../../images/img1.jpg'
-import { Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, CardContent, Chip, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material'
+import { MobileStepper, Button, Box, List, ListItem, ListItemIcon, ListItemText, Typography, CardContent, Chip, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material'
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded'
 import { URL_FULL } from '../../services/config'
 import { useTheme } from '@mui/material/styles'
-import MobileStepper from '@mui/material/MobileStepper'
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'
+import { KeyboardArrowLeft, KeyboardArrowRight, LegendToggleRounded } from '@mui/icons-material'
+import { date } from 'yup'
 
 const endpoint = `${URL_FULL}/mercadopago/checkout`
-async function LoginAccount(url, credentials) {
+async function LoginAccount (url, credentials) {
   // console.log('entrando a la funcion')
   const options = {
     method: 'POST',
@@ -25,111 +25,72 @@ async function LoginAccount(url, credentials) {
   return response.json()
 }
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+// const endpoint = `${URL_FULL}/mercadopago/checkout`
+// async function sendDate (url, credentials) {
+//  // console.log('entrando a la funcion')
+//  const options = {
+//    method: 'POST',
+//    headers: {
+//      'Content-Type': 'application/json'
+//    },
+//    body: JSON.stringify(credentials)
+//  }
+//  // return fetch(url, options)
+//  const response = await fetch(url, options)
+//  return response.json()
+// }
+const Transition = React.forwardRef(function Transition (props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 // semanas
-const now = moment.now()
-const week0 = {
-  start: moment(now).isoWeekday(1).format('LL'),
-  end: moment(now).isoWeekday(7).format('LL'),
-  number: moment(now).format('W')
-}
-const next1 = {
-  start: moment(week0.start).add(7, 'd').format('LL'),
-  end: moment(week0.end).add(7, 'd').format('LL'),
-  number: moment(week0.start).add(7, 'd').format('W')
-}
-const next2 = {
-  start: moment(week0.start).add(14, 'd').format('LL'),
-  end: moment(week0.end).add(14, 'd').format('LL'),
-  number: moment(week0.start).add(14, 'd').format('W')
-}
-const next3 = {
-  start: moment(week0.start).add(21, 'd').format('LL'),
-  end: moment(week0.end).add(21, 'd').format('LL'),
-  number: moment(week0.start).add(21, 'd').format('W')
-}
-// tabla
-const columns = [
-  { field: 0, headerName: 'Lunes', alignItems: 'center' },
-  { field: 1, headerName: 'Martes', alignItems: 'center' },
-  { field: 2, headerName: 'Miercoles', alignItems: 'center' },
-  { field: 3, headerName: 'Jueves', alignItems: 'center' },
-  { field: 4, headerName: 'Viernes', alignItems: 'center' },
-  { field: 5, headerName: 'Sabado', alignItems: 'center' },
-  { field: 6, headerName: 'Domingo', alignItems: 'center' }
-]
-
-// get day
-
-// console.log('Datos utiles:', element, element.field, element.value, week0.number, week0.start)
-// console.log(day)
-// console.log(fecha)
-
-// botones de steps
-const steps = [
+const dayNow = moment.now()
+const weeks = [
   {
-    label: week0.number,
-    labelStart: week0.start,
-    labelEnd: week0.end
+    start: moment(dayNow).isoWeekday(1).format('LL'),
+    end: moment(dayNow).isoWeekday(7).format('LL'),
+    number: moment(dayNow).format('W')
   },
   {
-    label: next1.number,
-    labelStart: next1.start,
-    labelEnd: next1.end
+    start: moment(dayNow).isoWeekday(8).format('LL'),
+    end: moment(dayNow).isoWeekday(14).format('LL'),
+    number: moment(dayNow.start).add(7, 'd').format('W')
   },
   {
-    label: next2.number,
-    labelStart: next2.start,
-    labelEnd: next2.end
+    start: moment(dayNow).isoWeekday(15).format('LL'),
+    end: moment(dayNow).isoWeekday(21).format('LL'),
+    number: moment(dayNow.start).add(14, 'd').format('W')
   },
   {
-    label: next3.number,
-    labelStart: next3.start,
-    labelEnd: next3.end
+    start: moment(dayNow).isoWeekday(22).format('LL'),
+    end: moment(dayNow).isoWeekday(28).format('LL'),
+    number: moment(dayNow.start).add(21, 'd').format('W')
   }
 ]
+const steps = [
+  { label: weeks[0].number, labelStart: weeks[0].start, labelEnd: weeks[0].end },
+  { label: weeks[1].number, labelStart: weeks[1].start, labelEnd: weeks[1].end },
+  { label: weeks[2].number, labelStart: weeks[2].start, labelEnd: weeks[2].end },
+  { label: weeks[3].number, labelStart: weeks[3].start, labelEnd: weeks[3].end }
+]
+// console.log(weeks)
+const columns = [
+  { field: 'monday', headerName: 'Lunes', alignItems: 'center' },
+  { field: 'tuesday', headerName: 'Martes', alignItems: 'center' },
+  { field: 'wednesday', headerName: 'Miercoles', alignItems: 'center' },
+  { field: 'thursday', headerName: 'Jueves', alignItems: 'center' },
+  { field: 'friday', headerName: 'Viernes', alignItems: 'center' },
+  { field: 'saturday', headerName: 'Sabado', alignItems: 'center' },
+  { field: 'sunday', headerName: 'Domingo', alignItems: 'center' }
+]
 
-function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
-  console.log("esto es traido delid", Schedule)
+function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
   const [schedules, setSchedules] = useState([])
-  console.log("los scheudeles o times", times)
-  console.log("setting schedules", schedules)
-
-  // setSchedules(times)
   useEffect(() => {
     setSchedules(
       times
     )
-  
   }, [times])
-
- 
-  // const daysAvailable = [
-  //   'monday',
-  //   'thursday'
-  // ]
-
   const daysAvailable = Schedule.daysAvailable
-  console.log("los dias disponibles", daysAvailable)
-  // StarDateTime-endDateTime
-  // Envia de acuerdo a la semana solicitada
-  // Modificar create meeting
-  const meetings = [{
-    date: '14-02-2022',
-    day: 'monday',
-    hour: '14:00 - 15:00'
-  },
-  {
-    date: '23-02-2022',
-    day: 'wednesday',
-    hour: '10:00 - 11:00'
-  }
-  ]
-
-  // Falta el useEfect, cuando traes la data
-
   const servicio = {
     title: 'consultoria',
     unit_price: Schedule.costHour,
@@ -149,124 +110,117 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
         console.log(error)
       })
   }
-
-
   const theme = useTheme()
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = steps.length
   const handleNext = () => { setActiveStep((prevActiveStep) => prevActiveStep + 1) }
   const handleBack = () => { setActiveStep((prevActiveStep) => prevActiveStep - 1) }
-  const weeks = [
-    week0,
-    next1,
-    next2,
-    next3
-  ]
-  const hasMeeting = (dayEl, hourEl, dateEl) => {
-    return meetings.find(({ day, hour, date }) => {
-      console.log('day ', day, dayEl)
-      console.log('hour ', hour, hourEl)
-      console.log('date ', date, dateEl)
+  const weekActive = moment(weeks[activeStep].start).format('W')
+  const meetings = [{
+    week: '7',
+    date: '14-02-2022',
+    day: 'monday',
+    hour: '14:00 - 15:00'
+  },
+  {
+    week: '7',
+    date: '23-02-2022',
+    day: 'tuesday',
+    hour: '10:00 - 11:00'
 
-      if (day === dayEl && hour === hourEl && date === dateEl) { return true } else { return false }
+  }
+  ]
+  const hasMeeting = (daySelected, hourSelected, weekActive) => {
+    return meetings.find(({ day, hour, week }) => {
+      console.log(day, daySelected)
+      console.log(hour, hourSelected)
+      console.log(week, weekActive)
+      if (day === daySelected && hour === hourSelected && week === weekActive) { return true } else { return false }
     })
   }
-  const selectSchedule = (element) => {
-    const day = element.field
-    console.log("en selected", day)
-    if (!daysAvailable.includes(day)) {
-      console.log('Dia no disponible')
-      return
-    }
-    const hourEl = element.value
-    let dayWeek = null
-    let starDate = null
 
-    console.log('aqui el element', element)
+  // const meet =
 
-    switch (day) {
-      case 0:
-        dayWeek = moment(weeks[activeStep].start).add(0, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
+  const [finalClickInfo, setFinalClickInfo] = useState(null)
+  const handleOnCellClick = (element) => {
+    // const day = element.field
+    if (!daysAvailable.includes(element.field)) { return }
+    let dateFormat = null
+    let dateMeet = null
+    switch (element.field) {
+      case 'monday':
+        dateFormat = moment(weeks[activeStep].start).add(0, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(0, 'd').format('YYYY-MM-DD')
         break
-      case 1:
-        dayWeek = moment(weeks[activeStep].start).add(1, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(1, 'd').format('YYYY-MM-DD')
+      case 'tuesday':
+        dateFormat = moment(weeks[activeStep].start).add(1, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(1, 'd').format('YYYY-MM-DD')
         break
-      case 2:
-        dayWeek = moment(weeks[activeStep].start).add(2, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(2, 'd').format('YYYY-MM-DD')
+      case 'wednesday':
+        dateFormat = moment(weeks[activeStep].start).add(2, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(2, 'd').format('YYYY-MM-DD')
         break
-      case 3:
-        dayWeek = moment(weeks[activeStep].start).add(3, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(3, 'd').format('YYYY-MM-DD')
+      case 'thursday':
+        dateFormat = moment(weeks[activeStep].start).add(3, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(3, 'd').format('YYYY-MM-DD')
         break
-      case 4:
-        dayWeek = ((moment(weeks[activeStep].start).add(4, 'd').format('DD-MM-YYYY')))
-        starDate = moment(weeks[activeStep].start).add(4, 'd').format('YYYY-MM-DD')
+      case 'friday':
+        dateFormat = moment(weeks[activeStep].start).add(4, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(4, 'd').format('YYYY-MM-DD')
         break
-      case 5:
-        dayWeek = moment(weeks[activeStep].start).add(5, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(5, 'd').format('YYYY-MM-DD')
+      case 'saturday':
+        dateFormat = moment(weeks[activeStep].start).add(5, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(5, 'd').format('YYYY-MM-DD')
         break
-      case 6:
-        dayWeek = moment(weeks[activeStep].start).add(6, 'd').format('DD-MM-YYYY')
-        starDate = moment(weeks[activeStep].start).add(6, 'd').format('YYYY-MM-DD')
+      case 'sunday':
+        dateFormat = moment(weeks[activeStep].start).add(6, 'd').format('DD-MM-YYYY')
+        dateMeet = moment(weeks[activeStep].start).add(6, 'd').format('YYYY-MM-DD')
         break
     }
-    if (hasMeeting(day, hourEl, dayWeek)) {
-      console.log('Cita reservada')
+    if (hasMeeting(element.field, element.value, weekActive)) {
     } else {
-      console.log('Cita disponible, hacer fetch')
-      const startHour = hourEl.slice(0, 5)
-      const endHour = hourEl.slice(8)
-      // StarDateTime:2022-01-24T18:00
-      const startDateTime = `${starDate}T${startHour}`
-      const endDateTime = `${starDate}T${endHour}`
-      // console.log(startDateTime)
-      // console.log(endDateTime)
+      setOpen(true)
     }
-    console.log('este es dia ', dayWeek)
-    console.log('este es la hora', hourEl)
-    const cita = `el dia ${dayWeek} en un horario de ${hourEl}`
-
-    return cita
+    // LLAMAR AL BACK PARA AGENDAR LA CITA
+    const startHour = ((element.value).slice(0, 5))
+    const endHour = ((element.value).slice(8))
+    const startDateTime = `${dateMeet}T${startHour}`
+    const endDateTime = `${dateMeet}T${endHour}`
+    const dataOfCita = {
+      date: dateFormat,
+      day: element.field,
+      hour: element.value,
+      week: weekActive,
+      startDateTime: startDateTime,
+      endDateTime: endDateTime
+    }
+    // console.log(dataOfCita, 'dataOfCita')
+    setFinalClickInfo(dataOfCita)
+    return dataOfCita
   }
-  // console.log('es el slect', selectSchedule())
-  const createRows = (schedules,daysAvailable, daysReserved) => {
-    const rows = []
+  // console.log('daySelected', finalClickInfo)
+  const createRows = (schedules, daysAvailable, daysReserved) => {
+    const lasRows = []
     schedules.forEach((element) => {
-
       // Aquí se declara el número de fila
-      let row = {
+      const row = {
         id: schedules.indexOf(element)
       }
-
-      // Por cada día disponible añadimos
-      // a la fila el elemnto de schedules
-      // daysAvailable = [monday, tuesday]
       daysAvailable.forEach((day) => {
         row[day] = element
       })
-         
-      // Añadimos la fila completa
-      rows.push(row)
+      lasRows.push(row)
     })
-    console.log("las rows",rows)
-    return rows
+    // console.log('las lasRows', lasRows)
+    return lasRows
   }
 
+  // console.log('dataOfCita', dataOfCita)
   return (
     <div>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', margin: 2, height: 300, boxShadow: 2, borderRadius: 3 }}>
-          <Image
-            src={imageLogin}
-            layout='fixed'
-            width={200}
-            quality={100}
-          />
-
+          <Image src={imageLogin} layout='fixed' width={200} quality={100} />
           <CardContent sx={{ width: 220, margin: 3, marginTop: 6 }}>
             <Typography variant='h6' style={{ fontWeight: '600' }}>
               {name} {lastname}
@@ -281,12 +235,9 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
             </Typography>
           </CardContent>
         </Box>
-
         {/* card */}
         <Box sx={{ display: 'flex', w: 400, h: 300 }}>
-          <CardContent
-            sx={{ width: 500 }}
-          >
+          <CardContent sx={{ width: 500 }}>
             <List>
               <ListItem disableGutters>
                 <ListItemIcon>
@@ -318,7 +269,6 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
                 <ListItemIcon>
                   <img src='/icons/iconsCard2/local.svg' alt='local' ml={0} />
                 </ListItemIcon>
-
                 <ListItemText primary='Ubicacion:' />
                 {address?.town}, {address?.state}
               </ListItem>
@@ -333,7 +283,6 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
           </CardContent>
         </Box>
       </Box>
-
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
         <CalendarTodayRoundedIcon sx={{ fontSize: 36, mr: 5 }} />
         <Typography variant='h4'>
@@ -356,10 +305,10 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowLeft />
-              )
+                )
               : (
                 <KeyboardArrowRight />
-              )}
+                )}
           </Button>
         }
         backButton={
@@ -369,17 +318,17 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowRight />
-              )
+                )
               : (
                 <KeyboardArrowLeft />
-              )}
+                )}
             Atras
           </Button>
         }
         sx={{ mx: 60 }}
       />
       {/* encabezado */}
-      <Box sx={{ display: 'flex', textAlign: 'center', justifyContent: 'space-evenly', m: 3 }}>
+      <Box sx={{ display: 'flex', textAlign: 'center', justifyContent: 'space-evenly' }}>
         <Typography>
           Semana {steps[activeStep].label}
           <br />
@@ -387,18 +336,38 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
         </Typography>
       </Box>
       {/* tabla */}
-      <Box>
+      <Box sx={{
+        height: 'auto',
+        width: 'auto',
+        '& .cold': {
+          backgroundColor: '#e3e3e3',
+          color: '#1a3e72'
+        },
+        '& .hot': {
+          backgroundColor: '#f14233',
+          color: '#1a3e72'
+        }
+      }}
+      >
         {schedules && <DataGrid
-          rows={createRows(schedules,daysAvailable)}
+          rows={createRows(schedules, daysAvailable)}
           columns={columns}
           checkboxSelection={false}
-          onCellClick={selectSchedule}
+          onCellClick={handleOnCellClick}
           hideFooter='true'
           disableColumnMenu='false'
           AutoSizeColumnsMode='fill'
           autoHeight
           density='comfortable'
-        />}
+          getCellClassName={(params) => {
+            if (hasMeeting(params.field, params.value, weekActive)) {
+              return 'hot'
+            }
+            if (!daysAvailable.includes(params.field)) {
+              return 'cold'
+            }
+          }}
+                      />}
       </Box>
       {/* confirmar */}
 
@@ -406,15 +375,15 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={selectSchedule}
+        onClose={null}
         aria-describedby='alert-dialog-slide-description'
         fullWidth='false'
         maxWidth='sm'
       >
         <DialogTitle sx={{ mx: 'auto', my: 1 }}>Confirma tu horario</DialogTitle>
         <DialogContent>
-          <DialogContentText id='alert-dialog-slide-description' sx={{ mx: 'auto', my: 1 }}>
-            La cita con tu contador es{selectSchedule}
+          <DialogContentText id='alert-dialog-slide-description' sx={{ mx: 'auto', my: 1, textAlign: 'center' }}>
+            La cita con tu contador es  el dia {finalClickInfo?.date} <br /> en un horario de {finalClickInfo?.hour}
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
@@ -429,7 +398,19 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
 
 export default Appointment
 
-/* <Box sx={{ height: 255, width: '100%', p: 2 }}>
-        {steps[activeStep].description}
-        </Box>
-*/
+/*
+
+const meetings = [{
+  week: '7',
+  date: '14-02-2022',
+  day: 'monday',
+  hour: '14:00 - 15:00'
+},
+
+ getCellClassName={(params) => {
+          if (params.field === 'city') {
+            return '';
+          }
+          return params.value >= 15 ? 'hot' : 'cold';
+        }}
+        */

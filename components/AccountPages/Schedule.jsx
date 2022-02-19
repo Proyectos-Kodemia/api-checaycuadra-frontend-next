@@ -39,7 +39,7 @@ function Schedule () {
   }
 
   console.log('Dias de la semana', checked)
-  
+
   const dateHoursAvailable = {
     daysAvailable: checked,
     startHour: startHour,
@@ -51,7 +51,7 @@ function Schedule () {
     const endpointSchedule = `${URL_FULL}/schedule`
     const token = sessionStorage.getItem('token')
 
-    async function sendSchedule(url, data) {
+    async function sendSchedule (url, data) {
       // console.log("entrando a la funcion")
       const options = {
         method: 'PATCH',
@@ -65,25 +65,25 @@ function Schedule () {
       return response.json()
     }
 
-    await sendSchedule(endpointSchedule,dateHoursAvailable)
-        .then(response => {
-          console.log(dateHoursAvailable)
-          console.log(response)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    await sendSchedule(endpointSchedule, dateHoursAvailable)
+      .then(response => {
+        console.log(dateHoursAvailable)
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
 
     console.log(dateHoursAvailable)
   }
   const dias = {
-    0: 'LUNES',
-    1: 'MARTES',
-    2: 'MIERCOLES',
-    3: 'JUEVES',
-    4: 'VIERNES',
-    5: 'SABADO',
-    6: 'DOMINGO'
+    monday: 'LUNES',
+    tuesday: 'MARTES',
+    wednesday: 'MIERCOLES',
+    thursday: 'JUEVES',
+    friday: 'VIERNES',
+    saturday: 'SABADO',
+    sunday: 'DOMINGO'
   }
   return (
     <>
@@ -102,19 +102,8 @@ function Schedule () {
           1. Selecciona los dias de la semana disponibles<br />
         </Box>
         <Box sx={{ textAling: 'center', mx: 'auto', mb: 5 }}>
-          <List
-            dense
-            sx={{ width: '100%', maxWidth: 250 }}
-          >
-            {[
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ].map((value) => {
+          <List dense sx={{ width: '100%', maxWidth: 250 }}>
+            {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map((value) => {
               const labelId = `checkbox-list-secondary-label-${value}`
               return (
                 <ListItem

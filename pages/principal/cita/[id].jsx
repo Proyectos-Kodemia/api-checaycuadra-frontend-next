@@ -57,7 +57,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       // console.log(endpoint)
       fetch(`${endpoint}`,optionsAccount).then((res) => {
         res.json().then((value) => {
-          console.log('resultado value', value)
+       //   console.log('resultado value', value)
           setAccountUser(value)
           // setUsers(data.payload) // Revisar
         })
@@ -66,9 +66,9 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
   }, [id])
 
   const {name, lastname, degree,degreeId,profileImage, description, role, evaluation, specialities, address, Schedule,schedules} = accountUser
-  console.log("todo el objeto en id", accountUser)
+//  console.log("todo el objeto en id", accountUser)
   
-  console.log("en id", schedules)
+ // console.log("en id", schedules)
   // console.log('especialidades',specialities)
 
   // proceso de pago
@@ -125,7 +125,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
 
               const idMeeting = value.payload.meetCreated._id
               window.localStorage.setItem('idMeeting',idMeeting)
-              console.log("id Meeting",idMeeting)
+         //     console.log("id Meeting",idMeeting)
 
               return idMeeting
             })
@@ -134,7 +134,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
 
 
           
-          console.log("response Prueba Id", responsePrueba)
+    //      console.log("response Prueba Id", responsePrueba)
           // Obtener el id de la cita 
       
 
