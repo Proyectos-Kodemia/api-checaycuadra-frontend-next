@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { Box, TextField, Typography, InputAdornment, Button, styled, Autocomplete, Chip } from '@mui/material'
 
 import AttachFileIcon from '@mui/icons-material/AttachFile'
@@ -9,9 +9,7 @@ import styles from './FormPerfil.module.scss'
 import { URL_FULL } from '../../services/config'
 import ControlledSwitches from '../Controlled/Switch'
 import Modal from '../Controlled/Modal'
-import {Router, useRouter} from 'next/router'
-
-
+import { Router, useRouter } from 'next/router'
 
 const especialidades = [
   { id: 1, title: 'Contabilidad General' },
@@ -44,7 +42,7 @@ const schema = yup.object().shape({
   })
 }).required()
 
-function FormPerfil({ sendToCalendar }) {
+function FormPerfil ({ sendToCalendar }) {
   // Hook del switch
   const [checked, setChecked] = React.useState(true)
   // Hook del modal
@@ -59,7 +57,7 @@ function FormPerfil({ sendToCalendar }) {
     precio: '',
     formacion: '',
     google: true,
-    email: '',
+    email: ''
     // especialidades:[especialidades[0]]
   }
 
@@ -68,7 +66,7 @@ function FormPerfil({ sendToCalendar }) {
     defaultValues
 
   })
-  console.log("info del form", getValues())
+  console.log('info del form', getValues())
   // Handle switch
   const handleSwitch = (val) => {
     setValue('google', val)
@@ -91,10 +89,10 @@ function FormPerfil({ sendToCalendar }) {
     console.log('entra a dataFOrm')
     console.log('data', data)
     if (checked === true) {
-      const token = sessionStorage.getItem('token')
+      const token = window.sessionStorage.getItem('token')
 
       // Sending patch Account info
-      async function patchAccount(data) {
+      async function patchAccount (data) {
         const options = {
           method: 'PATCH',
           headers: {
@@ -107,14 +105,14 @@ function FormPerfil({ sendToCalendar }) {
         console.log('endpoint del patch', endpoint)
         const response = await fetch(endpoint, options)
         // console.log('response fetch', response)
-        return response.json()
         console.log('response', response)
+        return response.json()
       }
 
       // Enviando a autenticacion de google
       const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
-      async function loginAccountGoogle(url) {
+      async function loginAccountGoogle (url) {
         // console.log("entrando a la funcion")
         const options = {
           method: 'POST',
@@ -153,9 +151,9 @@ function FormPerfil({ sendToCalendar }) {
           console.log(error)
         })
     } else {
-      const token2 = sessionStorage.getItem('token')
+      const token2 = window.sessionStorage.getItem('token')
       // Sending patch Account info
-      async function patchAccount2(data) {
+      async function patchAccount2 (data) {
         const options = {
           method: 'PATCH',
           headers: {
@@ -188,7 +186,7 @@ function FormPerfil({ sendToCalendar }) {
   const router = useRouter()
   useEffect(() => {
     if (router.isReady) {
-      const token = sessionStorage.getItem('token')
+      const token = window.sessionStorage.getItem('token')
       const url = `${URL_FULL}/google/callback`
       const code = router.query.code
 
@@ -403,39 +401,36 @@ function FormPerfil({ sendToCalendar }) {
         >
           <Controller
             control={control}
-            name="especialidades"
+            name='especialidades'
             // rules={{ required: true }}
             render={({ field: { onChange, value } }) => (
               <Autocomplete
                 sx={{ width: '700px' }}
                 onChange={(event, item) => {
-                  onChange(item);
+                  onChange(item)
                 }}
                 multiple
                 value={value}
                 options={especialidades}
-                getOptionLabel={(item) => (item.title ? item.title : "")}
+                getOptionLabel={(item) => (item.title ? item.title : '')}
                 getOptionSelected={(option, value) =>
-                  value === undefined || value === "" || option.id === value.id
-                }
+                  value === undefined || value === '' || option.id === value.id}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     fullWidth
-                    label="Especialidades"
+                    label='Especialidades'
                     color='secondary'
                     variant='filled'
                     className='textFieldsPerfil textAutocomplete'
-                    margin="normal"
+                    margin='normal'
                     error={!!errors.item}
-                    helperText={errors.item && "item required"}
+                    helperText={errors.item && 'item required'}
                   />
                 )}
               />
             )}
           />
-
-
 
           {/* <Controller
             control={control}
@@ -523,21 +518,22 @@ function FormPerfil({ sendToCalendar }) {
             onChange={handleSwitch}
           />
         </Box>
-        {checked && <>
-          <TextField
-            label='Correo electrónico'
-            placeholder='midirección@gmail.com'
-            color='secondary'
-            fullWidth
-            sx={{ fontSize: '12' }}
-            {...register('email')}
-          />
-          <span
-            id='emailerror'
-            className='mb-2 error text-danger'
-          >{errors.email?.message}
-          </span>
-        </>}
+        {checked &&
+          <>
+            <TextField
+              label='Correo electrónico'
+              placeholder='midirección@gmail.com'
+              color='secondary'
+              fullWidth
+              sx={{ fontSize: '12' }}
+              {...register('email')}
+            />
+            <span
+              id='emailerror'
+              className='mb-2 error text-danger'
+            >{errors.email?.message}
+            </span>
+          </>}
         <Box sx={{
           display: 'flex',
           flexDirection: 'row',
