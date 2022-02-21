@@ -138,13 +138,15 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
     const createMeeting = async (e)=>{
       // e.preventDefault()
       const {startDateTime,endDateTime} = finalClickInfo 
+
+      console.log("check starDateTime",startDateTime)
       const token = sessionStorage.getItem('token')
       // console.log("tokenn en el handler",token)
       const endpointMeeting = `${URL_FULL}/metting`
 
           const data = {
             userAccount: id,
-            starDateTime:startDateTime.trim(),
+            startDateTime:startDateTime.trim(),
             endDateTime:endDateTime.trim(),
             title:`consultoria ${name} ${lastname}`,
             unit_price:Schedule.costHour,
@@ -186,7 +188,7 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
         console.log(error)
       })
     
-    console.log("revidando funcion",createMeeting(finalClickInfo))
+    console.log("revisando funcion",createMeeting(finalClickInfo))
     // LoginAccount(endpoint, servicio)
     //   .then(data => {
     //     // location.href = data
@@ -247,11 +249,7 @@ function Appointment({ handlerAuthGoogle, id, name, lastname, degree, degreeId, 
     }
     // LLAMAR AL BACK PARA AGENDAR LA CITA
     const startHour = ((element.value).slice(0, 5))
-
-    console.log("rango de hora", element.value)
-    console.log("starHour", startHour)
-
-    const endHour = ((element.value).slice(8))
+    const endHour = ((element.value).slice(7)).trim()
     const startDateTime = `${dateMeet}T${startHour}`
     const endDateTime = `${dateMeet}T${endHour}`
     const dataOfCita = {
