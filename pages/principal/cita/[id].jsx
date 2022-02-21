@@ -72,12 +72,12 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
   // console.log('especialidades',specialities)
 
   // proceso de pago
-  const statusPayment = router.query.collection_status
 
-    async function LoginAccount (url) {
+
+    async function patchAccount (url) {
       // console.log("entrando a la funcion")
       const options = {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         }
@@ -86,107 +86,39 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       return response.json()
     }
 
-    // const token = sessionStorage.getItem('token')
-    //   console.log(token.token)
-    //   console.log(token)  
 
 
     // Enviar el patch de cita con el boton de confirmar cita
     // Aqui se crea el meeting de google
+    const statusPayment = router.query.collection_status
 
-    const handlerAuthGoogle = async (e)=>{
-      e.preventDefault()
-      const token = sessionStorage.getItem('token')
-      // console.log("tokenn en el handler",token)
-      const endpointMeeting = `${URL_FULL}/metting`
-      // const endpointAuthGoogle = `${URL_FULL}/google/auth`
+    console.log(">Aqui llega statusPayment")
 
-      if(statusPayment === "approved"){
-          const data = {
-            userAccount: id,
-            starDate:"2022-01-24T17:00",
-            endDateTime:"2022-01-24T18:00",
-            title:`consultoria ${name} ${lastname}`,
-            unit_price:Schedule.costHour,
-            quantity:"1",
-            statusPayment: statusPayment
-          }
-          // post
-          const optionsMeeting = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'token': token  // Enviar en el post el token de JWT
-            },
-            body: JSON.stringify(data)
-            
-          }
-          const response = await fetch(endpointMeeting, optionsMeeting).then((res) => {
-            res.json().then((value) => {
-              console.log('Objeto Id cita', value)
-
-              const idMeeting = value.payload.meetCreated._id
-              window.localStorage.setItem('idMeeting',idMeeting)
-         //     console.log("id Meeting",idMeeting)
-
-              return idMeeting
-            })
-          })
-
-
-
-          
-    //      console.log("response Prueba Id", responsePrueba)
-          // Obtener el id de la cita 
-      
-
-          // const optionsAuthGoogle = {
-          //   method: 'POST',
-          //   redirect:'follow',
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //     'token': token  // Enviar en el post el token de JWT
-          //   },
-          // }
-
-          // await LoginAccount(endpointAuthGoogle)
-          // .then(response =>{
-          //   // location.href = response.payload.authUrl
-          //   })
-          // .catch(error =>{
-          //   console.log(error)
-          // })
-      }
-    }
-
-    // const createMeeting = async (e)=>{
-    //   console.log (" en id - createMeeting, finalClickinfo",finalClickInfo)
-      
-    //   const {starDateTime,endDateTime} = finalClickInfo
+    // const handlerAuthGoogle = async (e)=>{
     //   e.preventDefault()
     //   const token = sessionStorage.getItem('token')
     //   // console.log("tokenn en el handler",token)
     //   const endpointMeeting = `${URL_FULL}/metting`
+    //   // const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
-    //       const data = {
+    //   if(statusPayment === "approved"){
+    //       const dataStatusPayment = {
     //         userAccount: id,
-    //         starDate:starDateTime,
-    //         endDateTime:endDateTime,
+    //         starDate:"2022-01-24T17:00",
+    //         endDateTime:"2022-01-24T18:00",
     //         title:`consultoria ${name} ${lastname}`,
     //         unit_price:Schedule.costHour,
     //         quantity:"1",
-    //         statusPayment: "pending"
+    //         statusPayment: statusPayment
     //       }
-
-    //       console.log("la data en el handler",data)
-    //       // post
+    //       // Patch para el status Payment approved y 
     //       const optionsMeeting = {
     //         method: 'POST',
     //         headers: {
     //           'Content-Type': 'application/json',
     //           'token': token  // Enviar en el post el token de JWT
     //         },
-    //         body: JSON.stringify(data)
+    //         body: JSON.stringify(dataStatusPayment)
             
     //       }
     //       const response = await fetch(endpointMeeting, optionsMeeting).then((res) => {
@@ -225,6 +157,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
     //       //   console.log(error)
     //       // })
     //   }
+    // }
 
   return (
     <>
@@ -236,7 +169,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       <NavPage />
       {children}
       <Appointment 
-      handlerAuthGoogle = {handlerAuthGoogle}
+      // handlerAuthGoogle = {handlerAuthGoogle}
       id = {id}
       name = {name}
       lastname ={lastname}
@@ -250,6 +183,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       address ={address}
       Schedule = {Schedule}
       times={schedules}
+      statusPayment={statusPayment}
       />
         {statusPayment && (<Snackbar statusPayment={statusPayment} /> )}
       <FooterPage />
