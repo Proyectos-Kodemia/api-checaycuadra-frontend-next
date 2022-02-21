@@ -214,11 +214,15 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
     const token = sessionStorage.getItem('token')
     const idMeeting = localStorage.getItem('idMeeting')
     const endpointMeeting = `${URL_FULL}/metting/${idMeeting}`
+    console.log(" el endpoint link", endpointLink, endpointMeeting)
+    const endpointLink = `${URL_FULL}/metting/hangout-link`
+
+    console.log(" el endpoint link", endpointLink, endpointMeeting)
     if (statusPayment === "approved") {
       const dataStatusPayment = {
         statusPayment: statusPayment
       }
-      // Patch para el status Payment approved y 
+      // Patch para el status Payment approved
       const optionsMeeting = {
         method: 'PATCH',
         headers: {
@@ -233,13 +237,29 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
           console.log('Objeto Id cita', value)
         })
       })
+      // información necesario para el patch que crea el link
+      const dataLink = {
+        idMeeting: idMeeting
+      }
+      // Patch para link
+      const optionsLink = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token  // Enviar en el post el token de JWT
+        },
+        body: JSON.stringify(dataLink)
+
+      }
+      // Enviando info para el crear link
+      const responseLink = await fetch(endpointLink, optionsLink).then((res) => {
+        res.json().then((value) => {
+          console.log('Hangout LInk information', value)
+        })
+      })
+
     }
   }
-
-
-
-
-
 
   const handleOnCellClick = (element) => {
     // const day = element.field
