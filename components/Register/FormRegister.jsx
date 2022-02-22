@@ -15,6 +15,9 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import imageLogin from '../../images/graphLogin.svg'
 
+import sendMail from '../../services/mailingFetch'
+import mailTemplate from '../../services/mailWelcomeTemplate'
+
 import { URL_FULL } from '../../services/config'
 // esquema de validaciones de input
 const schema = yup.object({
@@ -60,17 +63,19 @@ function FormRegister ({ rol }) {
     if (rol === 'Contador') direction = `${URL_FULL}/account`
     else direction = `${URL_FULL}/users`
 
-    if (sessionStorage.getItem('token')) {
-      sessionStorage.removeItem('token')
+    if (window.sessionStorage.getItem('token')) {
+      window.sessionStorage.removeItem('token')
     }
+
     // aqui pondriamos aviso al usuario que se creo correctamente
     const response = await sendFetchNoToken(direction, data)
     console.log('desde el response', response)
 
     if (response.status) {
-      router.push('/Cuenta/LoginPage')
-    }
-    else {
+      const mailing = mailTemplate(data)
+      sendMail(mailing)
+      // router.push('/Cuenta/LoginPage')
+    } else {
       console.log('error en login')
     }
   }

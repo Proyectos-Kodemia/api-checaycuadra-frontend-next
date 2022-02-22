@@ -10,20 +10,10 @@ import { useTheme } from '@mui/material/styles'
 import { KeyboardArrowLeft, KeyboardArrowRight, LegendToggleRounded } from '@mui/icons-material'
 import { date } from 'yup'
 
-const endpoint = `${URL_FULL}/mercadopago/checkout`
-async function LoginAccount (url, credentials) {
-  // console.log('entrando a la funcion')
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  }
-  // return fetch(url, options)
-  const response = await fetch(url, options)
-  return response.json()
-}
+
+
+
+
 
 // const endpoint = `${URL_FULL}/mercadopago/checkout`
 // async function sendDate (url, credentials) {
@@ -39,7 +29,7 @@ async function LoginAccount (url, credentials) {
 //  const response = await fetch(url, options)
 //  return response.json()
 // }
-const Transition = React.forwardRef(function Transition (props, ref) {
+const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 // semanas
@@ -83,7 +73,7 @@ const columns = [
   { field: 'sunday', headerName: 'Domingo', alignItems: 'center' }
 ]
 
-function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
+function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
   const [schedules, setSchedules] = useState([])
   useEffect(() => {
     setSchedules(
@@ -99,18 +89,9 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
   }
   const [open, setOpen] = React.useState(false)
   const handleClose = () => { setOpen(false) }
-  const handlerPago = (e) => {
-    // console.log('entrando al handler')
-    e.preventDefault()
-    LoginAccount(endpoint, servicio)
-      .then(data => {
-        location.href = data
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
+
   const theme = useTheme()
+
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = steps.length
   const handleNext = () => { setActiveStep((prevActiveStep) => prevActiveStep + 1) }
@@ -132,16 +113,154 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
   ]
   const hasMeeting = (daySelected, hourSelected, weekActive) => {
     return meetings.find(({ day, hour, week }) => {
-      console.log(day, daySelected)
-      console.log(hour, hourSelected)
-      console.log(week, weekActive)
       if (day === daySelected && hour === hourSelected && week === weekActive) { return true } else { return false }
     })
   }
 
-  // const meet =
+
 
   const [finalClickInfo, setFinalClickInfo] = useState(null)
+
+  // Enviar el post  de cita con el boton de pagar
+  const createMeeting = async (e) => {
+    // e.preventDefault()
+    const { startDateTime, endDateTime } = finalClickInfo
+
+    console.log("check starDateTime", startDateTime)
+    const token = sessionStorage.getItem('token')
+    // console.log("tokenn en el handler",token)
+    const endpointMeeting = `${URL_FULL}/metting`
+
+    const data = {
+      userAccount: id,
+      startDateTime: startDateTime.trim(),
+      endDateTime: endDateTime.trim(),
+      title: `consultoria ${name} ${lastname}`,
+      unit_price: Schedule.costHour,
+      quantity: "1",
+      statusPayment: "pending"
+    }
+    console.log("la data en el handler", data)
+    // post
+    const optionsMeeting = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'token': token  // Enviar en el post el token de JWT
+      },
+      body: JSON.stringify(data)
+
+    }
+    const response = await fetch(endpointMeeting, optionsMeeting).then((res) => {
+      res.json().then((value) => {
+        console.log('Objeto Id cita', value)
+
+        const idMeeting = value.payload.meetCreated._id
+        window.localStorage.setItem('idMeeting', idMeeting)
+        //     console.log("id Meeting",idMeeting)
+
+        return idMeeting
+      })
+    })
+  }
+
+  // Enviando al mercadopago checkout
+  const endpoint = `${URL_FULL}/mercadopago/checkout`
+  async function LoginAccount(url, credentials) {
+    // console.log('entrando a la funcion')
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    }
+    // return fetch(url, options)
+    const response = await fetch(url, options)
+    return response.json()
+  }
+
+  const handlerPago = (e) => {
+    console.log('entrando al handler-finalClickINfo', finalClickInfo)
+    e.preventDefault()
+    createMeeting()
+      .then(data => {
+        console.log(data)
+        const idMeeting = value.payload.meetCreated._id
+        window.localStorage.setItem('idMeeting', idMeeting)
+
+        console.log("id Meeting", idMeeting)
+
+        return idMeeting
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+    LoginAccount(endpoint, servicio)
+      .then(data => {
+        location.href = data
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+
+  }
+
+
+  const handlerLinkGoogle = async (e) => {
+    e.preventDefault()
+    const token = sessionStorage.getItem('token')
+    const idMeeting = localStorage.getItem('idMeeting')
+    const endpointMeeting = `${URL_FULL}/metting/${idMeeting}`
+    console.log(" el endpoint link", endpointLink, endpointMeeting)
+    const endpointLink = `${URL_FULL}/metting/hangout-link`
+
+    console.log(" el endpoint link", endpointLink, endpointMeeting)
+    if (statusPayment === "approved") {
+      const dataStatusPayment = {
+        statusPayment: statusPayment
+      }
+      // Patch para el status Payment approved
+      const optionsMeeting = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token  // Enviar en el post el token de JWT
+        },
+        body: JSON.stringify(dataStatusPayment)
+
+      }
+      const response = await fetch(endpointMeeting, optionsMeeting).then((res) => {
+        res.json().then((value) => {
+          console.log('Objeto Id cita', value)
+        })
+      })
+      // información necesario para el patch que crea el link
+      const dataLink = {
+        idMeeting: idMeeting
+      }
+      // Patch para link
+      const optionsLink = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token  // Enviar en el post el token de JWT
+        },
+        body: JSON.stringify(dataLink)
+
+      }
+      // Enviando info para el crear link
+      const responseLink = await fetch(endpointLink, optionsLink).then((res) => {
+        res.json().then((value) => {
+          console.log('Hangout LInk information', value)
+        })
+      })
+
+    }
+  }
+
   const handleOnCellClick = (element) => {
     // const day = element.field
     if (!daysAvailable.includes(element.field)) { return }
@@ -183,7 +302,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
     }
     // LLAMAR AL BACK PARA AGENDAR LA CITA
     const startHour = ((element.value).slice(0, 5))
-    const endHour = ((element.value).slice(8))
+    const endHour = ((element.value).slice(7)).trim()
     const startDateTime = `${dateMeet}T${startHour}`
     const endDateTime = `${dateMeet}T${endHour}`
     const dataOfCita = {
@@ -305,10 +424,10 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowLeft />
-                )
+              )
               : (
                 <KeyboardArrowRight />
-                )}
+              )}
           </Button>
         }
         backButton={
@@ -318,10 +437,10 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowRight />
-                )
+              )
               : (
                 <KeyboardArrowLeft />
-                )}
+              )}
             Atras
           </Button>
         }
@@ -367,7 +486,7 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
               return 'cold'
             }
           }}
-                      />}
+        />}
       </Box>
       {/* confirmar */}
 
@@ -388,9 +507,30 @@ function Appointment ({ handlerAuthGoogle, id, name, lastname, degree, degreeId,
         </DialogContent>
         <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
           <Button onClick={handleClose}>Regresar</Button>
-          <Button onClick={handlerPago}>Confirmar y realizar pago</Button>
+          <Button onClick={handlerPago}>Realizar pago</Button>
         </DialogActions>
       </Dialog>
+      <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
+        {/* <Button
+          // href='../../pages/Cuenta/RegisterPage.js'
+          onClick={handlerPago}
+          variant='contained'
+          disableElevation
+          size='large'
+          endIcon={<ArrowForwardIcon />}
+        >Realizar Pago
+        </Button> */}
+        <Button
+          // href='../../pages/Cuenta/RegisterPage.js'
+          onClick={handlerLinkGoogle}
+          variant='contained'
+          disableElevation
+          size='large'
+          sx={{ mr: 0 }}
+        // endIcon={<ArrowForwardIcon />}
+        >Confirmar Cita
+        </Button>
+      </Box>
 
     </div>
   )
