@@ -6,8 +6,8 @@ import React, { useEffect } from 'react'
 import { URL_FULL } from '../../services/config'
 import styles from './Head.module.scss'
 
-// const endpoint = `${URL_FULL}/account`
-const endpoint = 'http://localhost:8000/account'
+const endpoint = `${URL_FULL}/account`
+// const endpoint = 'http://localhost:8000/account'
 function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad, especialidad }) {
   useEffect(() => {
     fetch(`${endpoint}`).then((res) => {
