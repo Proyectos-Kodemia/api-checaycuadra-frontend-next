@@ -3,7 +3,9 @@
 .containerCard{
     margin-inline: auto;
     max-width: 300px;
-    align-items: center;
+    min-width: 300px;
+    max-height: 700px;
+    min-height: 700px;
     justify-content: space-around;
     margin: 15px 5px;
     text-align: justify;
@@ -11,9 +13,7 @@
 
 .headCard{
     display: flex;
-    flex-direction: row;
     justify-content:space-around;
-    align-items: center;
     margin:10px 0;    
 }
 
@@ -25,7 +25,9 @@
 }
 
 .textHeadCard{
-    padding:0 10 0 0;
+    display: flow-ro;
+    margin-left: 10px;
+    margin-right: 10px;
     :first-child{
         font-size: 16px;
     }

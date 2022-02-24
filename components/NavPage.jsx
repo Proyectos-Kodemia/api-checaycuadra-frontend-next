@@ -50,7 +50,7 @@ function NavPage () {
     <Navbar bg='light' expand='lg'>
       <Container>
         <div>
-          <a href=''>
+          <a href='/'>
             <img src='/icons/Logo.svg' alt='Logo' width={200} height={100} />
           </a>
         </div>
@@ -58,7 +58,6 @@ function NavPage () {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Nav className='me-auto'>
             <Nav.Link href='/'>Inicio</Nav.Link>
-            <Nav.Link href='#Asi funciona'>Asi funciona</Nav.Link>
             <Nav.Link href='/principal/Buscador'>Profesionales</Nav.Link>
           </Nav>
         </div>
