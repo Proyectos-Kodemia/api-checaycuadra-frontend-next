@@ -16,7 +16,8 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import imageLogin from '../../images/graphLogin.svg'
 
 import sendMail from '../../services/mailingFetch'
-import mailTemplate from '../../services/mailWelcomeTemplate'
+import mailUserTemplate from '../../services/mailUserWelcomeTemplate'
+import mailAccountTemplate from '../../services/mailAccountWelcomeTemplate'
 
 import { URL_FULL } from '../../services/config'
 // esquema de validaciones de input
@@ -58,10 +59,16 @@ function FormRegister ({ rol }) {
 
   const dataLogin = async (data) => {
     let direction = ''
+    let mailing
 
     console.log(data)
-    if (rol === 'Contador') direction = `${URL_FULL}/account`
-    else direction = `${URL_FULL}/users`
+    if (rol === 'Contador') {
+      direction = `${URL_FULL}/account`
+      mailing = mailAccountTemplate(data)
+    } else {
+      direction = `${URL_FULL}/users`
+      mailing = mailUserTemplate(data)
+    }
 
     if (window.sessionStorage.getItem('token')) {
       window.sessionStorage.removeItem('token')
@@ -72,9 +79,8 @@ function FormRegister ({ rol }) {
     console.log('desde el response', response)
 
     if (response.status) {
-      const mailing = mailTemplate(data)
       sendMail(mailing)
-      // router.push('/Cuenta/LoginPage')
+      router.push('/Cuenta/LoginPage')
     } else {
       console.log('error en login')
     }

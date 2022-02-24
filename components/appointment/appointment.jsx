@@ -120,7 +120,9 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
     const { startDateTime, endDateTime } = finalClickInfo
 
     console.log('check starDateTime', startDateTime)
-    const token = sessionStorage.getItem('token')
+
+    const token = window.sessionStorage.getItem('token')
+
     // console.log("tokenn en el handler",token)
     const endpointMeeting = `${URL_FULL}/metting`
     console.log(endpointMeeting, 'endpointmeeting')
@@ -179,7 +181,9 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
     createMeeting()
       .then(data => {
         console.log(data)
-        const idMeeting = data.payload._id
+
+        const idMeeting = data.payload.meetCreated._id
+
         window.localStorage.setItem('idMeeting', idMeeting)
 
         console.log('id Meeting', idMeeting)
@@ -201,11 +205,13 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
 
   const handlerLinkGoogle = async (e) => {
     e.preventDefault()
-    const token = sessionStorage.getItem('token')
-    const idMeeting = localStorage.getItem('idMeeting')
+    const token = window.sessionStorage.getItem('token')
+    const idMeeting = window.localStorage.getItem('idMeeting')
     const endpointMeeting = `${URL_FULL}/metting/${idMeeting}`
 
     const endpointLink = `${URL_FULL}/metting/hangout-link`
+
+    console.log(' el endpoint link', endpointLink, endpointMeeting)
 
     if (statusPayment === 'approved') {
       const dataStatusPayment = {
