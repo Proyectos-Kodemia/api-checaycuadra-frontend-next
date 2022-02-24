@@ -48,6 +48,36 @@ function FormPerfil ({ sendToCalendar }) {
   // Hook del modal
   const [open, setOpen] = React.useState(false)
 
+  // Recibiendo code autenticación de google
+  const router = useRouter()
+
+  useEffect(() => {
+    if (router.isReady) {
+      const token = window.sessionStorage.getItem('token')
+      const url = `${URL_FULL}/google/callback`
+      const code = router.query.code
+
+      const bodyCode = JSON.stringify({ code: router.query.code })
+
+      const datos = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', token: token },
+        body: bodyCode
+      }
+
+      fetch(url, datos)
+        .then((res) => {
+          res.json()
+            .then((data) => {
+              console.log('data desde el fetch', data)
+            })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+  }, [router.query])
+
   const defaultValues = {
     nombre: '',
     apellidos: '',
@@ -64,15 +94,14 @@ function FormPerfil ({ sendToCalendar }) {
   const { register, handleSubmit, control, formState: { errors }, setValue, getValues } = useForm({
     resolver: yupResolver(schema),
     defaultValues
-
   })
-  console.log('info del form', getValues())
+
   // Handle switch
   const handleSwitch = (val) => {
     setValue('google', val)
     if (!val) {
       setOpen(true)
-      console.log(' en el handle', val)
+      console.log(' en el handleswitch', val)
     }
   }
 
@@ -84,10 +113,12 @@ function FormPerfil ({ sendToCalendar }) {
   const Input = styled('input')({
     display: 'none'
   })
+
   // Enviendo informacion al back con autentiacion google / sin autenticacion Google
   const dataFormPerfil = async (data) => {
     console.log('entra a dataFOrm')
     console.log('data', data)
+
     if (checked === true) {
       const token = window.sessionStorage.getItem('token')
 
@@ -101,19 +132,32 @@ function FormPerfil ({ sendToCalendar }) {
           },
           body: JSON.stringify(data)
         }
+
         const endpoint = `${URL_FULL}/account/perfil`
-        console.log('endpoint del patch', endpoint)
         const response = await fetch(endpoint, options)
+
+        console.log('endpoint del patch', endpoint)
         // console.log('response fetch', response)
         console.log('response', response)
+
         return response.json()
       }
+
+      // Sending request to account patch to server
+      await patchAccount(data)
+        .then(response => {
+          console.log(data)
+          console.log('se almacenaron los datos', response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
 
       // Enviando a autenticacion de google
       const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
       async function loginAccountGoogle (url) {
-        // console.log("entrando a la funcion")
+        console.log('entrando a la funcion loginaccount google')
         const options = {
           method: 'POST',
           headers: {
@@ -136,16 +180,6 @@ function FormPerfil ({ sendToCalendar }) {
       await loginAccountGoogle(endpointAuthGoogle)
         .then(response => {
           location.href = response.payload.authUrl
-        })
-        .catch(error => {
-          console.log(error)
-        })
-
-      // Sending request to account patch
-      await patchAccount(data)
-        .then(response => {
-          console.log(data)
-          console.log(response)
         })
         .catch(error => {
           console.log(error)
@@ -181,35 +215,6 @@ function FormPerfil ({ sendToCalendar }) {
       sendToCalendar()
     }
   }
-
-  // Recibiendo code autenticación de google
-  const router = useRouter()
-  useEffect(() => {
-    if (router.isReady) {
-      const token = window.sessionStorage.getItem('token')
-      const url = `${URL_FULL}/google/callback`
-      const code = router.query.code
-
-      const bodyCode = JSON.stringify({ code: router.query.code })
-
-      const datos = {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', token: token },
-        body: bodyCode
-      }
-
-      fetch(url, datos)
-        .then((res) => {
-          res.json()
-            .then((data) => {
-              console.log('data desde el fetch', data)
-            })
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    }
-  }, [router.query])
 
   return (
     <Box sx={{
