@@ -10,11 +10,6 @@ import { useTheme } from '@mui/material/styles'
 import { KeyboardArrowLeft, KeyboardArrowRight, LegendToggleRounded } from '@mui/icons-material'
 import { date } from 'yup'
 
-
-
-
-
-
 // const endpoint = `${URL_FULL}/mercadopago/checkout`
 // async function sendDate (url, credentials) {
 //  // console.log('entrando a la funcion')
@@ -29,7 +24,7 @@ import { date } from 'yup'
 //  const response = await fetch(url, options)
 //  return response.json()
 // }
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = React.forwardRef(function Transition (props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 // semanas
@@ -73,7 +68,7 @@ const columns = [
   { field: 'sunday', headerName: 'Domingo', alignItems: 'center' }
 ]
 
-function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
+function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
   const [schedules, setSchedules] = useState([])
   useEffect(() => {
     setSchedules(
@@ -117,8 +112,6 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
     })
   }
 
-
-
   const [finalClickInfo, setFinalClickInfo] = useState(null)
 
   // Enviar el post  de cita con el boton de pagar
@@ -126,8 +119,8 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
     // e.preventDefault()
     const { startDateTime, endDateTime } = finalClickInfo
 
-    console.log("check starDateTime", startDateTime)
-    const token = sessionStorage.getItem('token')
+    console.log('check starDateTime', startDateTime)
+    const token = window.sessionStorage.getItem('token')
     // console.log("tokenn en el handler",token)
     const endpointMeeting = `${URL_FULL}/metting`
 
@@ -137,16 +130,16 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
       endDateTime: endDateTime.trim(),
       title: `consultoria ${name} ${lastname}`,
       unit_price: Schedule.costHour,
-      quantity: "1",
-      statusPayment: "pending"
+      quantity: '1',
+      statusPayment: 'pending'
     }
-    console.log("la data en el handler", data)
+    console.log('la data en el handler', data)
     // post
     const optionsMeeting = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'token': token  // Enviar en el post el token de JWT
+        token: token // Enviar en el post el token de JWT
       },
       body: JSON.stringify(data)
 
@@ -166,7 +159,7 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
 
   // Enviando al mercadopago checkout
   const endpoint = `${URL_FULL}/mercadopago/checkout`
-  async function LoginAccount(url, credentials) {
+  async function LoginAccount (url, credentials) {
     // console.log('entrando a la funcion')
     const options = {
       method: 'POST',
@@ -186,10 +179,10 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
     createMeeting()
       .then(data => {
         console.log(data)
-        const idMeeting = value.payload.meetCreated._id
+        const idMeeting = data.payload.meetCreated._id
         window.localStorage.setItem('idMeeting', idMeeting)
 
-        console.log("id Meeting", idMeeting)
+        console.log('id Meeting', idMeeting)
 
         return idMeeting
       })
@@ -204,21 +197,18 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
       .catch(error => {
         console.log(error)
       })
-
-
   }
-
 
   const handlerLinkGoogle = async (e) => {
     e.preventDefault()
-    const token = sessionStorage.getItem('token')
-    const idMeeting = localStorage.getItem('idMeeting')
+    const token = window.sessionStorage.getItem('token')
+    const idMeeting = window.localStorage.getItem('idMeeting')
     const endpointMeeting = `${URL_FULL}/metting/${idMeeting}`
-    console.log(" el endpoint link", endpointLink, endpointMeeting)
+
     const endpointLink = `${URL_FULL}/metting/hangout-link`
 
-    console.log(" el endpoint link", endpointLink, endpointMeeting)
-    if (statusPayment === "approved") {
+    console.log(' el endpoint link', endpointLink, endpointMeeting)
+    if (statusPayment === 'approved') {
       const dataStatusPayment = {
         statusPayment: statusPayment
       }
@@ -227,7 +217,7 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'token': token  // Enviar en el post el token de JWT
+          token: token // Enviar en el post el token de JWT
         },
         body: JSON.stringify(dataStatusPayment)
 
@@ -246,7 +236,7 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'token': token  // Enviar en el post el token de JWT
+          token: token // Enviar en el post el token de JWT
         },
         body: JSON.stringify(dataLink)
 
@@ -257,7 +247,6 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
           console.log('Hangout LInk information', value)
         })
       })
-
     }
   }
 
@@ -424,10 +413,10 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowLeft />
-              )
+                )
               : (
                 <KeyboardArrowRight />
-              )}
+                )}
           </Button>
         }
         backButton={
@@ -437,10 +426,10 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
             {theme.direction === 'rtl'
               ? (
                 <KeyboardArrowRight />
-              )
+                )
               : (
                 <KeyboardArrowLeft />
-              )}
+                )}
             Atras
           </Button>
         }
@@ -486,7 +475,7 @@ function Appointment({ handlerAuthGoogle, statusPayment, id, name, lastname, deg
               return 'cold'
             }
           }}
-        />}
+                      />}
       </Box>
       {/* confirmar */}
 

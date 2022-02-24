@@ -21,7 +21,7 @@ function FormUser () {
   const router = useRouter()
   useEffect(() => {
     if (router.isReady) {
-    const token = sessionStorage.getItem('token')
+    const token = window.sessionStorage.getItem('token')
       const url = `${URL_FULL}/google/callback`
 
       const bodyCode = JSON.stringify({ code: router.query.code })

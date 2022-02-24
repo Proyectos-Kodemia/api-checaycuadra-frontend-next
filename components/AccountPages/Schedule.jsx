@@ -49,7 +49,7 @@ function Schedule () {
   const handleConfirmation = async () => {
     // Sending informatio to back
     const endpointSchedule = `${URL_FULL}/schedule`
-    const token = sessionStorage.getItem('token')
+    const token = window.sessionStorage.getItem('token')
 
     async function sendSchedule (url, data) {
       // console.log("entrando a la funcion")
@@ -65,6 +65,7 @@ function Schedule () {
       return response.json()
     }
 
+    console.log('viendo que contienen endpointSchedule dateHoursAvailable', endpointSchedule, dateHoursAvailable)
     await sendSchedule(endpointSchedule, dateHoursAvailable)
       .then(response => {
         console.log(dateHoursAvailable)
