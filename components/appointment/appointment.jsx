@@ -120,10 +120,12 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
     const { startDateTime, endDateTime } = finalClickInfo
 
     console.log('check starDateTime', startDateTime)
+
     const token = window.sessionStorage.getItem('token')
+
     // console.log("tokenn en el handler",token)
     const endpointMeeting = `${URL_FULL}/metting`
-
+    console.log(endpointMeeting, 'endpointmeeting')
     const data = {
       userAccount: id,
       startDateTime: startDateTime.trim(),
@@ -150,7 +152,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
 
         const idMeeting = value.payload.meetCreated._id
         window.localStorage.setItem('idMeeting', idMeeting)
-        //     console.log("id Meeting",idMeeting)
+        console.log('id Meeting', idMeeting)
 
         return idMeeting
       })
@@ -179,7 +181,9 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
     createMeeting()
       .then(data => {
         console.log(data)
+
         const idMeeting = data.payload.meetCreated._id
+
         window.localStorage.setItem('idMeeting', idMeeting)
 
         console.log('id Meeting', idMeeting)
@@ -208,6 +212,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
     const endpointLink = `${URL_FULL}/metting/hangout-link`
 
     console.log(' el endpoint link', endpointLink, endpointMeeting)
+
     if (statusPayment === 'approved') {
       const dataStatusPayment = {
         statusPayment: statusPayment
@@ -220,7 +225,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
           token: token // Enviar en el post el token de JWT
         },
         body: JSON.stringify(dataStatusPayment)
-
+        // console.log(' el endpoint link', endpointLink, endpointMeeting)
       }
       const response = await fetch(endpointMeeting, optionsMeeting).then((res) => {
         res.json().then((value) => {

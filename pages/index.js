@@ -30,7 +30,6 @@ export default function Home () {
           className='buttonPrincipal'
           variant='contained'
           type='submit'
-          fullWidth
           href='/principal/Buscador'
         >Buscar especialistas
         </Button>

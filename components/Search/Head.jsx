@@ -13,7 +13,7 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
     fetch(`${endpoint}`).then((res) => {
       res.json().then((data) => {
         setUsers(data.payload)
-        // console.log(data.payload)
+        console.log(data.payload)
       })
     })
   }, [])
@@ -26,14 +26,14 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
   function searchCounter (event) {
     const directionBuscar = `${endpoint}?name=${buscar}`
     event.preventDefault()
-    console.log('esta es la especialidad', especialidad)
+    // console.log('esta es la especialidad', especialidad)
     if (especialidad !== 'Especialidad') {
       const directionEspecialidad = `${endpoint}?specialities=${JSON.stringify(especialidad)}`
-      console.log('entro a especialidad', especialidad)
-      console.log('nos esta enviando a ', directionEspecialidad)
+      // console.log('entro a especialidad', especialidad)
+      // console.log('nos esta enviando a ', directionEspecialidad)
       fetch(directionEspecialidad).then((res) => {
         res.json().then((data) => {
-          console.log(data)
+          // console.log(data)
           const val = parseInt(Object.keys(data.payload).length)
           setUsers(data.payload)
           setEspecialidad('Especialidad')
@@ -41,7 +41,7 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
         })
       })
     } else if (setBuscar) {
-      console.log('entro a buscar', buscar)
+      // console.log('entro a buscar', buscar)
 
       fetch(directionBuscar).then((res) => {
         res.json().then((data) => {
@@ -59,6 +59,7 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
       <form className={styles.boxHead} onSubmit={searchCounter}>
         <h1>¡ Encuentra a tu contador !</h1>
         <h3>No estás solo, obtén ayuda profesional con un solo clic desde la comodidad de tu hogar</h3>
+        <br />
         <div className={styles.boxFind}>
           <div>
             <div className={styles.rowSearch}>
@@ -96,6 +97,7 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
               <div>
                 <BadgeOutlinedIcon className={styles.icon} disabled color='action' fontSize='large' />
               </div>
+              <br />
               <div className={styles.textSearch}>
                 <div>Nombre del especialista</div>
                 <div>Coloca el nombre de tu contador</div>
@@ -105,20 +107,25 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
                   onChange={(e) => setBuscar(e.target.value)}
                 />
               </div>
+
             </div>
+            <br />
+            <div>
+              <Button
+                type='submit' startIcon={<Search />} variant='contained' sx={{
+                  border: 'none',
+                  bgcolor: '#000',
+                  '&:hover': {
+                    background: '#005',
+                    h: 50
+                  }
+                }}
+              >BUSCAR MI ESPECIALISTA
+              </Button>
+            </div>
+            <br />
           </div>
-          <div>
-            <Button
-              type='submit' startIcon={<Search />} variant='contained' sx={{
-                border: 'none',
-                bgcolor: '#000',
-                '&:hover': {
-                  background: '#005'
-                }
-              }}
-            >BUSCAR MI ESPECIALISTA
-            </Button>
-          </div>
+
         </div>
       </form>
 

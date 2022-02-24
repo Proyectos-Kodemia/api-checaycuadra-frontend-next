@@ -31,9 +31,6 @@ function FooterPage () {
                 <Link href='' underline='none'>Inicio</Link>
               </li>
               <li>
-                <Link href='#Asi funciona' underline='none'>Asi funciona</Link>
-              </li>
-              <li>
                 <Link href='/principal/Buscador' underline='none'>Profesionales</Link>
               </li>
             </ul>
@@ -47,7 +44,7 @@ function FooterPage () {
               <div><InstagramIcon /></div>
             </div>
             <div>
-              <p>@ ChecayCuadra 2021. Todos los derechos reservados</p>
+              <p>@ ChecayCuadra 2022. Todos los derechos reservados</p>
               <p>Politíca de privacidad</p>
             </div>
 

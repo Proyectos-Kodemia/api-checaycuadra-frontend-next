@@ -15,8 +15,7 @@ function Search () {
       <Head users={users} setEspecialidad={setEspecialidad} especialidad={especialidad} setResults={setResults} setUsers={setUsers} buscar={buscar} setBuscar={setBuscar} />
 
       <div className={styles.textEspecialist}>
-        <div>Especialistas en </div>
-        <div>{results} resultados para la busqueda</div>
+        <div>Especialistas en {results} resultados para la busqueda</div>
       </div>
       <div className={styles.cards}>
         {users

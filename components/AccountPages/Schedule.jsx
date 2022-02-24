@@ -17,11 +17,11 @@ import { URL_FULL } from '../../services/config'
 function Schedule () {
   const [selectedStar, changeStar] = useState(moment())
   const startHour = (moment(selectedStar).format('LT'))
-  console.log('startHour', startHour)
+  // console.log('startHour', startHour)
 
   const [selectedEnd, changeEnd] = useState(moment())
   const endHour = (moment(selectedEnd).format('LT'))
-  console.log('endHour', endHour)
+  // console.log('endHour', endHour)
 
   const [checked, setChecked] = React.useState([])
 
@@ -38,7 +38,7 @@ function Schedule () {
     setChecked(newChecked)
   }
 
-  console.log('Dias de la semana', checked)
+  // console.log('Dias de la semana', checked)
 
   const dateHoursAvailable = {
     daysAvailable: checked,
@@ -68,14 +68,14 @@ function Schedule () {
     console.log('viendo que contienen endpointSchedule dateHoursAvailable', endpointSchedule, dateHoursAvailable)
     await sendSchedule(endpointSchedule, dateHoursAvailable)
       .then(response => {
-        console.log(dateHoursAvailable)
-        console.log(response)
+        // console.log(dateHoursAvailable)
+        // console.log(response)
       })
       .catch(error => {
-        console.log(error)
+        // console.log(error)
       })
 
-    console.log(dateHoursAvailable)
+    // console.log(dateHoursAvailable)
   }
   const dias = {
     monday: 'LUNES',
@@ -170,6 +170,12 @@ function Schedule () {
         <br /><br />
         <Box sx={{ p: 2, width: 450, fontSize: '3 rem', fontWeight: '700' }}>
           3. Confirma el horario
+          <Box sx={{ p: 2, width: 250, fontSize: '1 rem', fontWeight: '300' }}>
+            <Typography>
+              los dias de la semana disponibles son {dateHoursAvailable.daysAvailable}
+              y el horario es de las {dateHoursAvailable.startHour} a las  {dateHoursAvailable.endHour}
+            </Typography>
+          </Box>
         </Box>
 
       </Box>
