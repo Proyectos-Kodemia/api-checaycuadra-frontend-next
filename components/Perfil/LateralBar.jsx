@@ -1,4 +1,4 @@
-import React, { useCallback,useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { Tabs, Tab, List, Box } from '@mui/material'
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import EventIcon from '@mui/icons-material/Event'
@@ -13,7 +13,7 @@ import ScheduleCita from '../AccountPages/ScheduleCita'
 // import CalendarioPicker from '../AccountPages/CalendarioPicker'
 import styles from './LateralBar.module.scss'
 
-function TabPanel(props) {
+function TabPanel (props) {
   const { children, value, index, ...other } = props
 
   return (
@@ -31,14 +31,14 @@ function TabPanel(props) {
   )
 }
 
-function a11yProps(index) {
+function a11yProps (index) {
   return {
     id: `vertical-tab-${index}`,
     'aria-controls': `vertical-tabpanel-${index}`
   }
 }
 
-function LateralBar() {
+function LateralBar () {
   const [value, setValue] = useState(0)
   const [rol, setRol] = useState('')
 
@@ -57,7 +57,7 @@ function LateralBar() {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
-  const sendToCalendar = useCallback(()=>{
+  const sendToCalendar = useCallback(() => {
     setValue(1)
   })
 
@@ -80,12 +80,12 @@ function LateralBar() {
             icon={<ManageAccountsIcon />} iconPosition='start' color='primary' label='Mi perfil' {...a11yProps(0)}
           />
           {rol === 'Contador' && <Tab sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }} icon={<EventIcon />} iconPosition='start' color='primary' label='Calendario' {...a11yProps(1)} />}
-          <Tab sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }} icon={<AttachFileIcon />} iconPosition='start' color='primary' label='Archivos' {...a11yProps(2)} />
+          {/* <Tab sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }} icon={<AttachFileIcon />} iconPosition='start' color='primary' label='Archivos' {...a11yProps(2)} />
           <Tab sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }} icon={<MarkChatUnreadIcon />} iconPosition='start' color='primary' label='Chat' {...a11yProps(3)} />
-          <Tab sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }} icon={<RestoreIcon />} iconPosition='start' color='primary' label='Historial' {...a11yProps(4)} />
+          <Tab sx={{ display: 'flex', justifyContent: 'space-between', m: 0, py: 0, px: 3 }} icon={<RestoreIcon />} iconPosition='start' color='primary' label='Historial' {...a11yProps(4)} /> */}
         </Tabs>
       </List>
-      
+
       <List sx={{ flex: 1 }}>
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={0}>
           {rol === 'Contador' ? <FormPerfil sendToCalendar={sendToCalendar} /> : <FormUser />}
@@ -93,11 +93,11 @@ function LateralBar() {
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={1}>
           {rol === 'Contador' ? <Schedule /> : <FormUser />}
         </TabPanel>
-        <TabPanel sx={{ flexGrow: 1 }} value={value} index={2} />
+        {/* <TabPanel sx={{ flexGrow: 1 }} value={value} index={2} />
         <TabPanel sx={{ flexGrow: 1 }} value={value} index={3} />
-        <TabPanel sx={{ flexGrow: 1 }} value={value} index={4}>
-          Item Five
-        </TabPanel>
+        <TabPanel sx={{ flexGrow: 1 }} value={value} index={4}> 
+         Item Five
+        </TabPanel> */}
       </List>
     </div>
   )

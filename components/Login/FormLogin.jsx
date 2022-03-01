@@ -58,23 +58,24 @@ const FormLogin = ({ rol }) => {
       // console.log('recibiendo el fetch',response)
 
       // console.log('mostrando estatus', res.status)
-      // console.log('mostrando completo', res)
+      console.log('mostrando completo', res)
 
       if (res.status) {
         // console.log('se creo el token y se almaceno', res.token)
-        window.sessionStorage.setItem('token', res.token)
+        window.sessionStorage.setItem('token', res.token.token)
         window.sessionStorage.setItem('role', rol)
+        window.localStorage.setItem('error', res.token.id)
 
         setLoading(false)
 
-        rol === 'Contador' ? router.push('/Perfil/Perfil') : router.push('/')
+        rol === 'Contador' ? router.push('/Perfil/Perfil') : router.push('/principal/Buscador')
       } else {
-        setError(true)
-        // console.log('error en login ')
+        // setError(true)
+        console.log('error en login ')
       }
     } catch (err) {
-      setError(true)
-      // console.log(err)
+      // setError(true)
+      console.log(err)
     }
   }
 

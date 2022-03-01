@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, TextField, Typography, InputAdornment, Button, styled, Autocomplete, Chip } from '@mui/material'
 
 import AttachFileIcon from '@mui/icons-material/AttachFile'
@@ -44,16 +44,26 @@ const schema = yup.object().shape({
 
 function FormPerfil ({ sendToCalendar }) {
   // Hook del switch
-  const [checked, setChecked] = React.useState(true)
+  const [checked, setChecked] = useState(true)
   // Hook del modal
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   // Recibiendo code autenticación de google
   const router = useRouter()
+  let idUser = ''
 
   useEffect(() => {
     if (router.isReady) {
       const token = window.sessionStorage.getItem('token')
+      idUser = window.localStorage.getItem('error')
+
+      // este es el id de usuario
+      console.log('esta es la data', idUser)
+
+      // if (window.localStorage.getItem('data')) {
+      //   window.localStorage.removeItem('data')
+      // }
+
       const url = `${URL_FULL}/google/callback`
       const code = router.query.code
 
@@ -69,7 +79,7 @@ function FormPerfil ({ sendToCalendar }) {
         .then((res) => {
           res.json()
             .then((data) => {
-              console.log('data desde el fetch', data)
+              console.log('data desde el fetch formperfil', data)
             })
         })
         .catch(function (error) {
@@ -133,7 +143,7 @@ function FormPerfil ({ sendToCalendar }) {
           body: JSON.stringify(data)
         }
 
-        const endpoint = `${URL_FULL}/account/perfil`
+        const endpoint = `${URL_FULL}/account/perfil/:${idUser}`
         const response = await fetch(endpoint, options)
 
         console.log('endpoint del patch', endpoint)
