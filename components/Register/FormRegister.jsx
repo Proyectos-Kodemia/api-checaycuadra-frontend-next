@@ -108,6 +108,8 @@ function FormRegister ({ rol }) {
           sx={{ fontSize: ' 12px', mb: 2 }}
           {...register('name')}
         />
+        <span id='nameHelp' className='mb-4 error text-danger'>{errors.name?.message}</span>
+
         <TextField
           name='lastname'
           label='Apellidos'
@@ -118,6 +120,8 @@ function FormRegister ({ rol }) {
           sx={{ fontSize: ' 12px', mb: 2 }}
           {...register('lastname')}
         />
+        <span id='lastnameHelp' className='mb-4 error text-danger'>{errors.lastname?.message}</span>
+
         <TextField
           name='email'
           label='Correo electrónico'
@@ -153,8 +157,7 @@ function FormRegister ({ rol }) {
             />
           )}
         />
-
-        <span id='passwordHelp' className='mb-2 error text-danger'>{errors.phone?.message}</span>
+        <span id='telephonedHelp' className='mb-2 error text-danger'>{errors.telephone?.message}</span>
 
         <TextField
           label='Contraseña'

@@ -36,7 +36,7 @@ function FormUser () {
         .then((res) => {
           res.json()
             .then((data) => {
-              console.log('data desde el fetch', data)
+              console.log('data desde el fetch formuser', data)
             })
         })
         .catch(function (error) {

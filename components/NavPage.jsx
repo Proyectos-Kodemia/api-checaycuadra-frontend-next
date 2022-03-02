@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Nav, Navbar, Container } from 'react-bootstrap'
 import { Button } from '@mui/material'
-import { useRouter } from 'next/router'
+import { useRouter, Link } from 'next/router'
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined'
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined'
@@ -50,9 +50,9 @@ function NavPage () {
     <Navbar bg='light' expand='lg'>
       <Container>
         <div>
-          <a href='/'>
+          <Link href='/'>
             <img src='/icons/Logo.svg' alt='Logo' width={200} height={100} />
-          </a>
+          </Link>
         </div>
         <div>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
