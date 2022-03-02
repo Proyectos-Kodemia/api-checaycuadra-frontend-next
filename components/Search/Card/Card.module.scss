@@ -4,8 +4,8 @@
     margin-inline: auto;
     max-width: 300px;
     min-width: 300px;
-    max-height: 700px;
-    min-height: 700px;
+    max-height: 650px;
+    min-height: 650px;
     justify-content: space-around;
     margin: 15px 5px;
     text-align: justify;
@@ -58,6 +58,8 @@
     align-items: center;
     justify-content: center;
     margin: 20px;
+    //position: absolute;
+    //bottom: 0%;
 
 }
 
@@ -66,6 +68,7 @@
     color: $white;
     width: 80%;
     font-weight: bold;
+    
     &:hover{
         background-color:lighten($BlueMarine, 10) ;
     }
