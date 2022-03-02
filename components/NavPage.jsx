@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Nav, Navbar, Container } from 'react-bootstrap'
 import { Button } from '@mui/material'
-import { Link } from 'next/link'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined'
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
