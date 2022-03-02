@@ -59,13 +59,13 @@ const steps = [
 ]
 // console.log(weeks)
 const columns = [
-  { field: 'monday', headerName: 'Lunes', alignItems: 'center' },
-  { field: 'tuesday', headerName: 'Martes', alignItems: 'center' },
-  { field: 'wednesday', headerName: 'Miercoles', alignItems: 'center' },
-  { field: 'thursday', headerName: 'Jueves', alignItems: 'center' },
-  { field: 'friday', headerName: 'Viernes', alignItems: 'center' },
-  { field: 'saturday', headerName: 'Sabado', alignItems: 'center' },
-  { field: 'sunday', headerName: 'Domingo', alignItems: 'center' }
+  { field: 'monday', headerName: 'Lunes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
+  { field: 'tuesday', headerName: 'Martes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
+  { field: 'wednesday', headerName: 'Miercoles', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
+  { field: 'thursday', headerName: 'Jueves', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
+  { field: 'friday', headerName: 'Viernes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
+  { field: 'saturday', headerName: 'Sabado', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
+  { field: 'sunday', headerName: 'Domingo', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100, sortable: false, minWidth: 100 }
 ]
 
 function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
@@ -472,6 +472,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
           AutoSizeColumnsMode='fill'
           autoHeight
           density='comfortable'
+          sx={{ with: 800 }}
           getCellClassName={(params) => {
             if (hasMeeting(params.field, params.value, weekActive)) {
               return 'hot'
