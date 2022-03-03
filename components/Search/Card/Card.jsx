@@ -35,13 +35,14 @@ function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, des
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const token = window.sessionStorage.getItem('token')
+    const token = window.sessionStorage?.getItem('token')
     if (token) {
-      // router.push({
-      //   pathname: '/principal/cita/[id]',
-      //   query: { id: idAccount }
-      // })
-      console.log('esto es lo que arroja token', token)
+      router.push({
+        pathname: '/principal/cita/[id]',
+        query: { id: idAccount }
+      })
+    } else {
+      router.push('/Cuenta/LoginPage')
     }
   }
   // console.log(idAccount, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule)
