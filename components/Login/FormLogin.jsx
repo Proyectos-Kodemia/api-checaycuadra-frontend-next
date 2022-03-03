@@ -11,6 +11,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import imageLogin from '../../images/graphLogin.svg'
 import { URL_FULL } from '../../services/config'
+import styles from './FormLogin.module.scss'
 
 const schema = yup.object({
   email: yup.string().email('***El email no es valido').required('***El campo es requerido').max(50, '***Máximo 50 caracteres'),
@@ -39,7 +40,7 @@ const FormLogin = ({ rol }) => {
     }
     // console.log(data)
     const response = await fetch(url, options)
-    // console.log('response fetch', response)
+    // console.log('response fetch loginaccount', response)
     return response.json()
   }
 
@@ -61,24 +62,25 @@ const FormLogin = ({ rol }) => {
         window.sessionStorage.setItem('role', rol)
 
         setLoading(false)
+        setError(false)
 
         rol === 'Contador' ? router.push('/Perfil/Perfil') : router.push('/principal/Buscador')
       } else {
-        // setError(true)
+        setError(true)
         console.log('error en login ')
       }
     } catch (err) {
-      // setError(true)
-      console.log(err)
+      setError(true)
+      console.log('error en catch form login login account', err)
     }
   }
 
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
 
-  if (error) {
-    return <div>Error al obtener los datos. Favor de recargar la página</div>
-  }
+  // if (error) {
+  //   return <div>Error al obtener los datos. Favor de recargar la página</div>
+  // }
 
   if (loading) return <>Please wait a moment...</>
 
@@ -95,7 +97,7 @@ const FormLogin = ({ rol }) => {
             sx={{ fontSize: '12' }}
             {...register('email')}
           />
-          <div id='emailHelp' className='mb-4 error text-danger'>{errors.email?.message}</div>
+          <div id='emailHelp' className={`mb-4 ${styles.error} text-danger`}>{errors.email?.message}</div>
 
           <TextField
             label='Contraseña'
@@ -120,7 +122,7 @@ const FormLogin = ({ rol }) => {
               )
             }}
           />
-          <span id='passwordHelp' className='mb-4 error text-danger'>{errors.password?.message}</span>
+          <span id='passwordHelp' className={`mb-4 ${styles.error} text-danger`}>{errors.password?.message}</span>
           <Button
             type='submit'
             variant='contained'
@@ -140,11 +142,12 @@ const FormLogin = ({ rol }) => {
           </Button>
         </form>
       </div>
+      {error && <span className={`${styles.noLogin}`}> El tipo de usuario, correo o contraseña son incorrectos, favor de verificar</span>}
 
-      <div className='remember'>
-        <a className='forgetPass' href={url}>Olvidé mi contraseña</a>
+      <div className={`${styles.remember}`}>
+        <a className={`${styles.forgetPass}`} href={url}>Olvidé mi contraseña</a>
         <Image src={imageLogin} width='300' height='150' />
-        <div className='register'>¿No tienes una cuenta?<Link href='/Cuenta/RegisterPage' underline='none'> ¡Registrate!</Link></div>
+        <div className={`${styles.register}`}>¿No tienes una cuenta?<Link href='/Cuenta/RegisterPage' underline='none'> ¡Registrate!</Link></div>
       </div>
     </>
   )
