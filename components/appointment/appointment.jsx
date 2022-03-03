@@ -475,7 +475,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
             AutoSizeColumnsMode='fill'
             autoHeight
             density='comfortable'
-            sx={{ marginX: 75 }}
+            sx={{ marginX: 'auto', maxWidth: 1000, textAlign: 'center' }}
             getCellClassName={(params) => {
               if (hasMeeting(params.field, params.value, weekActive)) {
                 return 'hot'
