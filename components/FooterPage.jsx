@@ -28,7 +28,7 @@ function FooterPage () {
             <h5>Navegacion </h5>
             <ul className='list-unstyled'>
               <li>
-                <Link href='' underline='false'>Inicio</Link>
+                <Link href='' sx={{ textDecoration: 'none' }} underline='none'>Inicio</Link>
               </li>
               <li>
                 <Link href='/principal/Buscador' underline='none'>Profesionales</Link>

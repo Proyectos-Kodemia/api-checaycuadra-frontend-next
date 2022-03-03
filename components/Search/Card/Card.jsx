@@ -9,9 +9,12 @@ import LocationOnIcon from '@mui/icons-material/LocationOn'
 // import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styles from './Card.module.scss'
+import { useRouter } from 'next/router'
 
 function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) {
   let val, ubication, hourCost, valDegree
+
+  const router = useRouter()
   // console.log("datos completos", dataUser)
   // console.log('datos incompletos', name, lastname, degree, profileImage, description, role, evaluation, address, Schedule )
   if (evaluation > 6 || evaluation < 0 || !evaluation) val = 0
@@ -30,6 +33,17 @@ function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, des
   if (!degree) valDegree = 'No disponible'
   else valDegree = degree
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const token = window.sessionStorage.getItem('token')
+    if (token) {
+      // router.push({
+      //   pathname: '/principal/cita/[id]',
+      //   query: { id: idAccount }
+      // })
+      console.log('esto es lo que arroja token', token)
+    }
+  }
   // console.log(idAccount, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule)
 
   return (
@@ -78,16 +92,17 @@ function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, des
         </Typography>
       </CardContent>
       <div className={styles.divButton}>
-        <Link href={{
+        {/* <Link href={{
           pathname: '/principal/cita/[id]',
           query: { id: idAccount }
         }}
-        >
-          <Button
-            className={styles.buttonCard}
-          >AGENDAR CITA
-          </Button>
-        </Link>
+        > */}
+        <Button
+          className={styles.buttonCard}
+          onClick={handleSubmit}
+        >AGENDAR CITA
+        </Button>
+        {/* </Link> */}
       </div>
     </Card>
   )

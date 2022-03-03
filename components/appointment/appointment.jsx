@@ -290,7 +290,10 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
         dateMeet = moment(weeks[activeStep].start).add(6, 'd').format('YYYY-MM-DD')
         break
     }
+
     if (hasMeeting(element.field, element.value, weekActive)) {
+      // AQUI NO ESTA MANDANDO NADA PREGUNTAR POR Q
+
     } else {
       setOpen(true)
     }
@@ -328,7 +331,6 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
     return lasRows
   }
 
-  // console.log('dataOfCita', dataOfCita)
   return (
     <div>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
@@ -508,18 +510,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
         </DialogActions>
       </Dialog>
       <Box sx={{ w: 50, display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
-        {/* <Button
-          // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerPago}
-          variant='contained'
-          disableElevation
-          size='large'
-          endIcon={<ArrowForwardIcon />}
-        >Realizar Pago
-        </Button> */}
-
         <Button
-          // href='../../pages/Cuenta/RegisterPage.js'
           onClick={handlerLinkGoogle}
           variant='contained'
           disableElevation
@@ -535,20 +526,3 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
 }
 
 export default Appointment
-
-/*
-
-const meetings = [{
-  week: '7',
-  date: '14-02-2022',
-  day: 'monday',
-  hour: '14:00 - 15:00'
-},
-
- getCellClassName={(params) => {
-          if (params.field === 'city') {
-            return '';
-          }
-          return params.value >= 15 ? 'hot' : 'cold';
-        }}
-        */
