@@ -2,8 +2,8 @@
 
 .containerCard{
     margin-inline: auto;
-    max-width: 300px;
-    min-width: 300px;
+    max-width: 320px;
+    min-width: 320px;
     max-height: 650px;
     min-height: 650px;
     justify-content: space-around;
@@ -47,12 +47,14 @@
 .textIcons{
     margin: auto 29px;
     font-weight: bold;
+    
 }
 
 .textAboutMe{
-    margin: 1px;
+   
+    padding: 20px;
     text-align: justify;
-    width: 300px;
+    width: 320px;
     height: 280px;
 
 }
@@ -68,11 +70,12 @@
 }
 
 .buttonCard{
-    background-color: $BlueMarine;
+    background-color: #00244C;
     color: $white;
     width: 80%;
     font-weight: bold;
     position: relative;
+
    
     
     
@@ -83,12 +86,12 @@
 
 
 .iconSpace{
-    margin: 3 20 2 10;  
+    margin: 6 30 2 15;  
 }
 
 .icons{
-    width: 300px;
+    width: 320px;
     height: 200px;
-    padding-left: 10px;
+    padding-left: 20px;
     padding-right: 10px;
 }

@@ -59,13 +59,13 @@ const steps = [
 ]
 // console.log(weeks)
 const columns = [
-  { field: 'monday', headerName: 'Lunes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
-  { field: 'tuesday', headerName: 'Martes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
-  { field: 'wednesday', headerName: 'Miercoles', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
-  { field: 'thursday', headerName: 'Jueves', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
-  { field: 'friday', headerName: 'Viernes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
-  { field: 'saturday', headerName: 'Sabado', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100 },
-  { field: 'sunday', headerName: 'Domingo', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 100, sortable: false, minWidth: 100 }
+  { field: 'monday', headerName: 'Lunes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'tuesday', headerName: 'Martes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'wednesday', headerName: 'Miercoles', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'thursday', headerName: 'Jueves', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'friday', headerName: 'Viernes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'saturday', headerName: 'Sabado', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'sunday', headerName: 'Domingo', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200, sortable: false }
 ]
 
 function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
@@ -399,7 +399,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
         <CalendarTodayRoundedIcon sx={{ fontSize: 36, mr: 5 }} />
         <Typography variant='h4'>
-          Elije tu horario y agenda tu cita con tu contador
+          Elige tu horario y agenda tu cita con tu contador
         </Typography>
       </Box>
       <br />
@@ -462,26 +462,28 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
         }
       }}
       >
-        {schedules && <DataGrid
-          rows={createRows(schedules, daysAvailable)}
-          columns={columns}
-          checkboxSelection={false}
-          onCellClick={handleOnCellClick}
-          hideFooter='true'
-          disableColumnMenu='false'
-          AutoSizeColumnsMode='fill'
-          autoHeight
-          density='comfortable'
-          sx={{ with: 800 }}
-          getCellClassName={(params) => {
-            if (hasMeeting(params.field, params.value, weekActive)) {
-              return 'hot'
-            }
-            if (!daysAvailable.includes(params.field)) {
-              return 'cold'
-            }
-          }}
-                      />}
+        <Box sx={{ w: 1 }}>
+          {schedules && <DataGrid
+            rows={createRows(schedules, daysAvailable)}
+            columns={columns}
+            checkboxSelection={false}
+            onCellClick={handleOnCellClick}
+            hideFooter='true'
+            disableColumnMenu='false'
+            AutoSizeColumnsMode='fill'
+            autoHeight
+            density='comfortable'
+            sx={{ marginX: 75 }}
+            getCellClassName={(params) => {
+              if (hasMeeting(params.field, params.value, weekActive)) {
+                return 'hot'
+              }
+              if (!daysAvailable.includes(params.field)) {
+                return 'cold'
+              }
+            }}
+                        />}
+        </Box>
       </Box>
       {/* confirmar */}
 
@@ -505,7 +507,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
           <Button onClick={handlerPago}>Realizar pago</Button>
         </DialogActions>
       </Dialog>
-      <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
+      <Box sx={{ w: 50, display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
         {/* <Button
           // href='../../pages/Cuenta/RegisterPage.js'
           onClick={handlerPago}
@@ -515,16 +517,17 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
           endIcon={<ArrowForwardIcon />}
         >Realizar Pago
         </Button> */}
+
         <Button
           // href='../../pages/Cuenta/RegisterPage.js'
           onClick={handlerLinkGoogle}
           variant='contained'
           disableElevation
           size='large'
-          sx={{ mr: 0 }}
-        // endIcon={<ArrowForwardIcon />}
+          sx={{ alignItems: 'center' }}
         >Confirmar Cita
         </Button>
+
       </Box>
 
     </div>
