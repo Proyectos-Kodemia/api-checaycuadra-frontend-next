@@ -28,7 +28,7 @@ function FooterPage () {
             <h5>Navegacion </h5>
             <ul className='list-unstyled'>
               <li>
-                <Link href='' underline='none'>Inicio</Link>
+                <Link href='' underline='false'>Inicio</Link>
               </li>
               <li>
                 <Link href='/principal/Buscador' underline='none'>Profesionales</Link>
@@ -38,11 +38,12 @@ function FooterPage () {
 
           <div className='col-md-3 col-xs-6 '>
             <div>
-              <div><TwitterIcon /></div>
-              <div><FacebookIcon /></div>
-              <div><LinkedInIcon /></div>
-              <div><InstagramIcon /></div>
+              <TwitterIcon />
+              <FacebookIcon />
+              <LinkedInIcon />
+              <InstagramIcon />
             </div>
+            <br />
             <div>
               <p>@ ChecayCuadra 2022. Todos los derechos reservados</p>
               <p>Politíca de privacidad</p>
