@@ -47,7 +47,7 @@ function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, des
   }
   // console.log(idAccount, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule)
   const src = `${profileImage}`
-  const myLoader=({src})=>{
+  const myLoader = ({ src }) => {
     return src
   }
   return (
@@ -104,6 +104,7 @@ function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, des
         <Button
           className={styles.buttonCard}
           onClick={handleSubmit}
+          sx={{ bgcolor: '#00244C', color: 'white' }}
         >AGENDAR CITA
         </Button>
         {/* </Link> */}

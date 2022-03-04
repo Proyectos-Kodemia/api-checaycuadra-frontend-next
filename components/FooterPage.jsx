@@ -11,7 +11,7 @@ function FooterPage () {
     <footer className='footer'>
       <div className='container'>
         <div className='row'>
-          <div className='col-md-3 col-xs-6 '>
+          <div className='col-md-4 col-xs-6 '>
             <a href=''>
               <span>
                 <img src='/icons/Logo.svg' alt='Logo' width={200} height={100} />
@@ -19,7 +19,7 @@ function FooterPage () {
             </a>
           </div>
 
-          <div className='col-md-3 col-xs-6 '>
+          <div className='col-md-4 col-xs-6 '>
             <h5> Contacto</h5>
             <br />
             <p>(MEX) +52 (55) 1234 5678</p>
@@ -33,23 +33,17 @@ function FooterPage () {
             <p> <Link href='/principal/Buscador' underline='none' color='black'>Profesionales</Link></p>
           </div>
 
-          <div className='col-md-3 col-xs-6 '>
-            <div style={{ paddingLeft: '5' }}>
-              <TwitterIcon />
-              <FacebookIcon />
-              <LinkedInIcon />
-              <InstagramIcon />
-            </div>
-            <br />
-            <div>
-              <p>@ ChecayCuadra 2022. Todos los derechos reservados</p>
-              <p>Politíca de privacidad</p>
-            </div>
+          <div className='col-md-1 col-xs-6 '>
+            <div><TwitterIcon /> </div>
+            <div><FacebookIcon /> </div>
+            <div><LinkedInIcon /> </div>
+            <div><InstagramIcon /> </div>
           </div>
+
         </div>
 
         <div className={` row ${styles.direction}`}>
-          <div className='my-5 col-md-6 col-xs-12 '>
+          <div className='mt-5 mb-3 col-md-6 col-xs-12 '>
             <p>Politíca de privacidad</p>
             <p>ChecayCuadra© 2022. Todos los derechos reservados</p>
           </div>
