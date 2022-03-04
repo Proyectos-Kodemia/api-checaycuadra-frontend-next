@@ -225,10 +225,12 @@ function FormPerfil({ sendToCalendar }) {
         sendData.append('precio',data.precio)
         sendData.append('cedula',data.cedula)
         sendData.append('formacion',data.formacion)
-        sendData.append('especialidades',data.especialidades)
+
+        const especialidades = JSON.stringify(data.especialidades)
+        sendData.append('especialidades',especialidades)
+
         sendData.append('acercade',data.acercade)
         sendData.append('email',data.email)
-        console.log(">>> send data", sendData.get('imgfile'))
 
         const options = {
           method: 'PATCH',
