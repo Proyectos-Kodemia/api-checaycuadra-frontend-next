@@ -10,11 +10,8 @@ import { URL_FULL } from '../../services/config'
 import ControlledSwitches from '../Controlled/Switch'
 import Modal from '../Controlled/Modal'
 import { Router, useRouter } from 'next/router'
-<<<<<<< HEAD
 import { FourGPlusMobiledataRounded } from '@mui/icons-material'
-=======
 import Snackbar from '../Notifications/SnakbarConfirmardatosPerfil'
->>>>>>> main
 
 const especialidades = [
   { id: 1, title: 'Contabilidad General' },
@@ -174,12 +171,8 @@ function FormPerfil({ sendToCalendar }) {
       // Sending request to account patch to server
       await patchAccount(data)
         .then(response => {
-<<<<<<< HEAD
-          console.log(data)
-=======
           // console.log(data)
           setSaveData(response.status)
->>>>>>> main
           console.log('se almacenaron los datos', response)
         })
         .catch(error => {
