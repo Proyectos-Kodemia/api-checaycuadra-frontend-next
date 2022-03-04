@@ -231,7 +231,16 @@ function FormPerfil({ sendToCalendar }) {
         sendData.append('imgfile',data.fotoPerfil[0])
         sendData.append('nombre',data.nombre)
         sendData.append('apellidos',data.apellidos)
+        sendData.append('estado',data.estado)
+        sendData.append('cp',data.cp)
+        sendData.append('precio',data.precio)
+        sendData.append('cedula',data.cedula)
+        sendData.append('formacion',data.formacion)
+        sendData.append('especialidades',data.especialidades)
+        sendData.append('acercade',data.acercade)
+        sendData.append('email',data.email)
         console.log(">>> send data", sendData.get('imgfile'))
+
         const options = {
           method: 'PATCH',
           headers: {
@@ -255,7 +264,7 @@ function FormPerfil({ sendToCalendar }) {
           console.log(error)
         })
 
-      // sendToCalendar()
+      sendToCalendar()
     }
   }
 
