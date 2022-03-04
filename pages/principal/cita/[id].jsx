@@ -4,12 +4,8 @@ import FooterPage from '../../../components/FooterPage'
 import NavPage from '../../../components/NavPage'
 import Appointment from '../../../components/appointment/appointment'
 import { useRouter } from "next/router";
-import Snackbar from '../../../components/Notifications/Snackbar'
+import Snackbar from '../../../components/Notifications/SnackbarMercadoPago'
 import { URL_FULL } from '../../../services/config'
-
-// import { RouterTwoTone } from '@material-ui/icons';
-// Import material component (toast)
-// Opcion crear componente de toast para reausarlo
 
 function Cita ({ children, title = 'Checa y Cuadra' }) {
   
@@ -42,9 +38,8 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
   // Fetch de seleccion de card
  
   useEffect(() => {
-    
-    // console.log("llega el id <use effect>",router)
     if(router.isReady){
+      
       const endpoint=`${URL_FULL}/account/${id}`
     
       // console.log(endpoint)
@@ -66,14 +61,8 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
   }, [id])
 
   const {name, lastname, degree,degreeId,profileImage, description, role, evaluation, specialities, address, Schedule,schedules} = accountUser
-//  console.log("todo el objeto en id", accountUser)
-  
- // console.log("en id", schedules)
-  // console.log('especialidades',specialities)
 
   // proceso de pago
-
-
     async function patchAccount (url) {
       // console.log("entrando a la funcion")
       const options = {
@@ -87,78 +76,11 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
       return response.json()
     }
 
-
-
     // Enviar el patch de cita con el boton de confirmar cita
     // Aqui se crea el meeting de google
     const statusPayment = router.query.collection_status
 
-    console.log(">Aqui llega statusPayment")
-
-    // const handlerAuthGoogle = async (e)=>{
-    //   e.preventDefault()
-    //   const token = sessionStorage.getItem('token')
-    //   // console.log("tokenn en el handler",token)
-    //   const endpointMeeting = `${URL_FULL}/metting`
-    //   // const endpointAuthGoogle = `${URL_FULL}/google/auth`
-
-    //   if(statusPayment === "approved"){
-    //       const dataStatusPayment = {
-    //         userAccount: id,
-    //         starDate:"2022-01-24T17:00",
-    //         endDateTime:"2022-01-24T18:00",
-    //         title:`consultoria ${name} ${lastname}`,
-    //         unit_price:Schedule.costHour,
-    //         quantity:"1",
-    //         statusPayment: statusPayment
-    //       }
-    //       // Patch para el status Payment approved y 
-    //       const optionsMeeting = {
-    //         method: 'POST',
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //           'token': token  // Enviar en el post el token de JWT
-    //         },
-    //         body: JSON.stringify(dataStatusPayment)
-            
-    //       }
-    //       const response = await fetch(endpointMeeting, optionsMeeting).then((res) => {
-    //         res.json().then((value) => {
-    //           console.log('Objeto Id cita', value)
-
-    //           const idMeeting = value.payload.meetCreated._id
-    //           window.localStorage.setItem('idMeeting',idMeeting)
-    //      //     console.log("id Meeting",idMeeting)
-
-    //           return idMeeting
-    //         })
-    //       })
-
-
-
-          
-    // //      console.log("response Prueba Id", responsePrueba)
-    //       // Obtener el id de la cita 
-      
-
-    //       // const optionsAuthGoogle = {
-    //       //   method: 'POST',
-    //       //   redirect:'follow',
-    //       //   headers: {
-    //       //     'Content-Type': 'application/json',
-    //       //     'token': token  // Enviar en el post el token de JWT
-    //       //   },
-    //       // }
-
-    //       // await LoginAccount(endpointAuthGoogle)
-    //       // .then(response =>{
-    //       //   // location.href = response.payload.authUrl
-    //       //   })
-    //       // .catch(error =>{
-    //       //   console.log(error)
-    //       // })
-    //   }
-    // }
+    // console.log(">Aqui llega statusPayment")
 
   return (
     <>

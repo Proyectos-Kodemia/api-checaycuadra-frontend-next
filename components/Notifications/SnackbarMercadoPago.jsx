@@ -1,6 +1,4 @@
 import * as React from 'react'
-// import Stack from '@mui/material/Stack'
-// import Button from '@mui/material/Button'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert from '@mui/material/Alert'
 import { useState } from 'react'
@@ -61,7 +59,7 @@ export default function CustomizedSnackbars ({ statusPayment }) {
 
     <Snackbar
       open={isOpen}
-      autoHideDuration={6000}
+      autoHideDuration={5000}
       onClose={callBack}
     >
       <Alert
