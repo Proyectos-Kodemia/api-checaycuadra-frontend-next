@@ -18,7 +18,6 @@ import imageLogin from '../../images/graphLogin.svg'
 import sendMail from '../../services/mailingFetch'
 import mailUserTemplate from '../../services/mailUserWelcomeTemplate'
 import mailAccountTemplate from '../../services/mailAccountWelcomeTemplate'
-import Snackbar from '../Notifications/SnakbarConfirmardatosPerfil'
 
 import { URL_FULL } from '../../services/config'
 // esquema de validaciones de input
@@ -44,8 +43,6 @@ function FormRegister ({ rol }) {
 
   const [showPassword, setShowPassword] = useState(false)
 
-  const [saveData, setSaveData] = useState(false)
-
   const router = useRouter()
 
   async function sendFetchNoToken (url, data) {
@@ -64,7 +61,7 @@ function FormRegister ({ rol }) {
     let direction = ''
     let mailing
 
-    console.log(data)
+    // console.log(data)
     if (rol === 'Contador') {
       direction = `${URL_FULL}/account`
       mailing = mailAccountTemplate(data)
@@ -79,27 +76,11 @@ function FormRegister ({ rol }) {
 
     // aqui pondriamos aviso al usuario que se creo correctamente
     const response = await sendFetchNoToken(direction, data)
-    console.log('desde el response', response)
+    // console.log('desde el response', response)
 
     if (response.status) {
-      setSaveData(true)
       sendMail(mailing)
-      function waitforme (milisec) {
-        return new Promise(resolve => {
-          setTimeout(() => { resolve('') }, milisec)
-        })
-      }
-
-      async function printy () {
-        for (let i = 0; i < 10; ++i) {
-          await waitforme(1000)
-        }
-        router.push('/Cuenta/LoginPage')
-      }
-
-      if (saveData) {
-        printy()
-      }
+      router.push('/Cuenta/LoginPage')
     } else {
       console.log('error en login')
     }
@@ -235,7 +216,6 @@ function FormRegister ({ rol }) {
         <Image src={imageLogin} width='300' height='150' />
         <div className='register'>¿Ya tienes una cuenta?<Link href='/Cuenta/LoginPage' underline='none'> ¡Inicia sesión!</Link></div>
       </div>
-      {saveData && (<Snackbar saveData='Save' />)}
     </>
   )
 }

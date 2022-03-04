@@ -9,6 +9,7 @@ import { URL_FULL } from '../../services/config'
 import { useTheme } from '@mui/material/styles'
 import { KeyboardArrowLeft, KeyboardArrowRight, LegendToggleRounded } from '@mui/icons-material'
 import { date } from 'yup'
+import styles from './appointment.module.scss'
 
 // const endpoint = `${URL_FULL}/mercadopago/checkout`
 // async function sendDate (url, credentials) {
@@ -75,6 +76,11 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
       times
     )
   }, [times])
+
+  if (!profileImage) {
+    profileImage = imageLogin
+  }
+
   const daysAvailable = Schedule.daysAvailable
   const servicio = {
     title: 'consultoria',
@@ -119,13 +125,13 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
     // e.preventDefault()
     const { startDateTime, endDateTime } = finalClickInfo
 
-    console.log('check starDateTime', startDateTime)
+    // console.log('check starDateTime', startDateTime)
 
     const token = window.sessionStorage.getItem('token')
 
     // console.log("tokenn en el handler",token)
     const endpointMeeting = `${URL_FULL}/metting`
-    console.log(endpointMeeting, 'endpointmeeting')
+    // console.log(endpointMeeting, 'endpointmeeting')
     const data = {
       userAccount: id,
       startDateTime: startDateTime.trim(),
@@ -135,7 +141,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
       quantity: '1',
       statusPayment: 'pending'
     }
-    console.log('la data en el handler', data)
+    // console.log('la data en el handler', data)
     // post
     const optionsMeeting = {
       method: 'POST',
@@ -148,11 +154,11 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
     }
     const response = await fetch(endpointMeeting, optionsMeeting).then((res) => {
       res.json().then((value) => {
-        console.log('Objeto Id cita', value)
+        // console.log('Objeto Id cita', value)
 
         const idMeeting = value.payload.meetCreated._id
         window.localStorage.setItem('idMeeting', idMeeting)
-        console.log('id Meeting', idMeeting)
+        // console.log('id Meeting', idMeeting)
 
         return idMeeting
       })
@@ -176,17 +182,17 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
   }
 
   const handlerPago = (e) => {
-    console.log('entrando al handler-finalClickINfo', finalClickInfo)
+    // console.log('entrando al handler-finalClickINfo', finalClickInfo)
     e.preventDefault()
     createMeeting()
       .then(data => {
-        console.log(data)
+        // console.log(data)
 
         const idMeeting = data.payload.meetCreated._id
 
         window.localStorage.setItem('idMeeting', idMeeting)
 
-        console.log('id Meeting', idMeeting)
+        // console.log('id Meeting', idMeeting)
 
         return idMeeting
       })
@@ -211,7 +217,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
 
     const endpointLink = `${URL_FULL}/metting/hangout-link`
 
-    console.log(' el endpoint link', endpointLink, endpointMeeting)
+    // console.log(' el endpoint link', endpointLink, endpointMeeting)
 
     if (statusPayment === 'approved') {
       const dataStatusPayment = {
@@ -229,7 +235,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
       }
       const response = await fetch(endpointMeeting, optionsMeeting).then((res) => {
         res.json().then((value) => {
-          console.log('Objeto Id cita', value)
+          // console.log('Objeto Id cita', value)
         })
       })
       // información necesario para el patch que crea el link
@@ -249,7 +255,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
       // Enviando info para el crear link
       const responseLink = await fetch(endpointLink, optionsLink).then((res) => {
         res.json().then((value) => {
-          console.log('Hangout LInk information', value)
+          // console.log('Hangout LInk information', value)
         })
       })
     }
@@ -331,11 +337,16 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
     return lasRows
   }
 
+  const src = `${profileImage}`
+  const myLoader = ({ src }) => {
+    return src
+  }
+
   return (
     <div>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', margin: 2, height: 300, boxShadow: 2, borderRadius: 3 }}>
-          <Image src={imageLogin} layout='fixed' width={200} quality={100} />
+        <Box sx={{ display: 'flex', alignItems: 'center', m: 2, height: 300, boxShadow: 2, borderRadius: 3 }}>
+          <Image sx={{ mx: 2 }} loader={myLoader} className={styles.imgCard} src={src} width={200} height={200} alt={name} />
           <CardContent sx={{ width: 220, margin: 3, marginTop: 6 }}>
             <Typography variant='h6' style={{ fontWeight: '600' }}>
               {name} {lastname}

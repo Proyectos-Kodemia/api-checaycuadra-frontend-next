@@ -72,7 +72,7 @@ function Cita ({ children, title = 'Checa y Cuadra' }) {
         }
       }
       const response = await fetch(url, options)
-      console.log(response)
+      // console.log(response)
       return response.json()
     }
 

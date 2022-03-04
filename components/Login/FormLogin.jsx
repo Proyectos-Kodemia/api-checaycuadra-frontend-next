@@ -71,7 +71,7 @@ const FormLogin = ({ rol }) => {
       }
     } catch (err) {
       setError(true)
-      console.log('error en catch form login login account', err)
+      console.log('error en catch form login account', err)
     }
   }
 
