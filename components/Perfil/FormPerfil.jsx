@@ -10,11 +10,8 @@ import { URL_FULL } from '../../services/config'
 import ControlledSwitches from '../Controlled/Switch'
 import Modal from '../Controlled/Modal'
 import { Router, useRouter } from 'next/router'
-<<<<<<< HEAD
 import { FourGPlusMobiledataRounded } from '@mui/icons-material'
-=======
 import Snackbar from '../Notifications/SnakbarConfirmardatosPerfil'
->>>>>>> main
 
 const especialidades = [
   { id: 1, title: 'Contabilidad General' },
