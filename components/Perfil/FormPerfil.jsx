@@ -10,6 +10,7 @@ import { URL_FULL } from '../../services/config'
 import ControlledSwitches from '../Controlled/Switch'
 import Modal from '../Controlled/Modal'
 import { Router, useRouter } from 'next/router'
+import { FourGPlusMobiledataRounded } from '@mui/icons-material'
 
 const especialidades = [
   { id: 1, title: 'Contabilidad General' },
@@ -42,7 +43,7 @@ const schema = yup.object().shape({
   })
 }).required()
 
-function FormPerfil ({ sendToCalendar }) {
+function FormPerfil({ sendToCalendar }) {
   // Hook del switch
   const [checked, setChecked] = useState(true)
 
@@ -149,11 +150,11 @@ function FormPerfil ({ sendToCalendar }) {
       const token = window.sessionStorage.getItem('token')
 
       // Sending patch Account info
-      async function patchAccount (data) {
+      async function patchAccount(data) {
         const options = {
           method: 'PATCH',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             token: token
           },
           body: JSON.stringify(data)
@@ -167,7 +168,7 @@ function FormPerfil ({ sendToCalendar }) {
       // Sending request to account patch to server
       await patchAccount(data)
         .then(response => {
-          // console.log(data)
+          console.log(data)
           console.log('se almacenaron los datos', response)
         })
         .catch(error => {
@@ -177,7 +178,23 @@ function FormPerfil ({ sendToCalendar }) {
       // Enviando a autenticacion de google
       const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
-      async function loginAccountGoogle (url) {
+
+      // // Enviando imagen a AWS
+      // async function uploadFile (data) {
+      //   cosnt
+      //   const formData = new FormData()
+      //   formData.append('')
+      //   const options = {
+      //     method: 'POST',
+      //     headers: {
+      //       token: token
+      //     },
+      //     body: formData
+      //   }
+      // }  
+
+
+      async function loginAccountGoogle(url) {
         console.log('entrando a la funcion loginaccount google')
         const options = {
           method: 'POST',
@@ -208,14 +225,19 @@ function FormPerfil ({ sendToCalendar }) {
     } else {
       const token2 = window.sessionStorage.getItem('token')
       // Sending patch Account info
-      async function patchAccount2 (data) {
+      async function patchAccount2(data) {
+        console.log(">> data " ,data)
+        const sendData = new FormData()
+        sendData.append('imgfile',data.fotoPerfil[0])
+        sendData.append('nombre',data.nombre)
+        sendData.append('apellidos',data.apellidos)
+        console.log(">>> send data", sendData.get('imgfile'))
         const options = {
           method: 'PATCH',
           headers: {
-            'Content-Type': 'application/json',
             token: token2
           },
-          body: JSON.stringify(data)
+          body: sendData
         }
         const endpoint = `${URL_FULL}/account/perfil`
         const response = await fetch(endpoint, options)
@@ -233,7 +255,7 @@ function FormPerfil ({ sendToCalendar }) {
           console.log(error)
         })
 
-      sendToCalendar()
+      // sendToCalendar()
     }
   }
 
@@ -368,7 +390,9 @@ function FormPerfil ({ sendToCalendar }) {
 
             <label htmlFor='contained-button-file' className='uploadFile'>
 
-              <Input accept='image/*' id='contained-button-file' multiple type='file' {...register('fotoPerfil')} />
+              <Input accept='image/*'
+                id='contained-button-file'
+                type='file' {...register('fotoPerfil')} />
               <Button variant='text' component='span' endIcon={<AttachFileIcon />}>
                 Adjunta tu Foto
               </Button>

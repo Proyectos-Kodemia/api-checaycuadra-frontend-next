@@ -9,6 +9,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn'
 // import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styles from './Card.module.scss'
+import { URL_FULL } from '../../../services/config'
+
 
 function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule }) {
   let val, ubication, hourCost, valDegree
@@ -31,12 +33,15 @@ function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, des
   else valDegree = degree
 
   // console.log(idAccount, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule)
-
+  const src = `${profileImage}`
+  const myLoader=({src})=>{
+    return src
+  }
   return (
     <Card className={styles.containerCard}>
       <div className={styles.headCard}>
         <div>
-          <Image className={styles.imgCard} src={profileImage} alt={name} />
+          <Image loader={myLoader} className={styles.imgCard} src={src} width={100} height={100} alt={name} />
         </div>
 
         <div className={styles.textHeadCard}>

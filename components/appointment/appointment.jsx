@@ -130,7 +130,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
       userAccount: id,
       startDateTime: startDateTime.trim(),
       endDateTime: endDateTime.trim(),
-      title: `consultoria ${name} ${lastname}`,
+      title: `consultoria de ${name} ${lastname}`,
       unit_price: Schedule.costHour,
       quantity: '1',
       statusPayment: 'pending'
