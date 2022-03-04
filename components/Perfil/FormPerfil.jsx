@@ -10,7 +10,11 @@ import { URL_FULL } from '../../services/config'
 import ControlledSwitches from '../Controlled/Switch'
 import Modal from '../Controlled/Modal'
 import { Router, useRouter } from 'next/router'
+<<<<<<< HEAD
+import { FourGPlusMobiledataRounded } from '@mui/icons-material'
+=======
 import Snackbar from '../Notifications/SnakbarConfirmardatosPerfil'
+>>>>>>> main
 
 const especialidades = [
   { id: 1, title: 'Contabilidad General' },
@@ -43,7 +47,7 @@ const schema = yup.object().shape({
   })
 }).required()
 
-function FormPerfil ({ sendToCalendar }) {
+function FormPerfil({ sendToCalendar }) {
   // Hook del switch
   const [checked, setChecked] = useState(true)
 
@@ -152,11 +156,11 @@ function FormPerfil ({ sendToCalendar }) {
       const token = window.sessionStorage.getItem('token')
 
       // Sending patch Account info
-      async function patchAccount (data) {
+      async function patchAccount(data) {
         const options = {
           method: 'PATCH',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             token: token
           },
           body: JSON.stringify(data)
@@ -170,8 +174,12 @@ function FormPerfil ({ sendToCalendar }) {
       // Sending request to account patch to server
       await patchAccount(data)
         .then(response => {
+<<<<<<< HEAD
+          console.log(data)
+=======
           // console.log(data)
           setSaveData(response.status)
+>>>>>>> main
           console.log('se almacenaron los datos', response)
         })
         .catch(error => {
@@ -212,14 +220,28 @@ function FormPerfil ({ sendToCalendar }) {
     } else {
       const token2 = window.sessionStorage.getItem('token')
       // Sending patch Account info
-      async function patchAccount2 (data) {
+      async function patchAccount2(data) {
+        console.log(">> data " ,data)
+        const sendData = new FormData()
+        sendData.append('imgfile',data.fotoPerfil[0])
+        sendData.append('nombre',data.nombre)
+        sendData.append('apellidos',data.apellidos)
+        sendData.append('estado',data.estado)
+        sendData.append('cp',data.cp)
+        sendData.append('precio',data.precio)
+        sendData.append('cedula',data.cedula)
+        sendData.append('formacion',data.formacion)
+        sendData.append('especialidades',data.especialidades)
+        sendData.append('acercade',data.acercade)
+        sendData.append('email',data.email)
+        console.log(">>> send data", sendData.get('imgfile'))
+
         const options = {
           method: 'PATCH',
           headers: {
-            'Content-Type': 'application/json',
             token: token2
           },
-          body: JSON.stringify(data)
+          body: sendData
         }
         const endpoint = `${URL_FULL}/account/perfil`
         const response = await fetch(endpoint, options)
@@ -389,7 +411,9 @@ function FormPerfil ({ sendToCalendar }) {
 
             <label htmlFor='contained-button-file' className='uploadFile'>
 
-              <Input accept='image/*' id='contained-button-file' multiple type='file' {...register('fotoPerfil')} />
+              <Input accept='image/*'
+                id='contained-button-file'
+                type='file' {...register('fotoPerfil')} />
               <Button variant='text' component='span' endIcon={<AttachFileIcon />}>
                 Adjunta tu Foto
               </Button>

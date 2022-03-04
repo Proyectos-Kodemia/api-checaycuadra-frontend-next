@@ -46,12 +46,15 @@ function Cards ({ idAccount, dataUser, name, lastname, degree, profileImage, des
     }
   }
   // console.log(idAccount, name, lastname, degree, profileImage, description, role, evaluation, address, Schedule)
-
+  const src = `${profileImage}`
+  const myLoader=({src})=>{
+    return src
+  }
   return (
     <Card className={styles.containerCard}>
       <div className={styles.headCard}>
         <div>
-          <Image className={styles.imgCard} src={profileImage} alt={name} />
+          <Image loader={myLoader} className={styles.imgCard} src={src} width={100} height={100} alt={name} />
         </div>
 
         <div className={styles.textHeadCard}>
