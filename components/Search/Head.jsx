@@ -13,7 +13,7 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
     fetch(`${endpoint}`).then((res) => {
       res.json().then((data) => {
         setUsers(data.payload)
-        console.log(data.payload)
+        // console.log(data.payload)
       })
     })
   }, [])

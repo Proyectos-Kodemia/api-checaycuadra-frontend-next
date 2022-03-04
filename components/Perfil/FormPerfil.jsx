@@ -75,7 +75,7 @@ function FormPerfil({ sendToCalendar }) {
         .then((res) => {
           res.json()
             .then((data) => {
-              console.log('data desde el fetch formperfil', data)
+              // console.log('data desde el fetch formperfil', data)
               setSaveData(data.ok)
             })
         })
@@ -173,7 +173,7 @@ function FormPerfil({ sendToCalendar }) {
         .then(response => {
           // console.log(data)
           setSaveData(response.status)
-          console.log('se almacenaron los datos', response)
+          // console.log('se almacenaron los datos', response)
         })
         .catch(error => {
           console.log(error)
@@ -214,7 +214,7 @@ function FormPerfil({ sendToCalendar }) {
       const token2 = window.sessionStorage.getItem('token')
       // Sending patch Account info
       async function patchAccount2(data) {
-        console.log(">> data " ,data)
+        // console.log(">> data " ,data)
         const sendData = new FormData()
         sendData.append('imgfile',data.fotoPerfil[0])
         sendData.append('nombre',data.nombre)
@@ -249,7 +249,7 @@ function FormPerfil({ sendToCalendar }) {
       await patchAccount2(data)
         .then(response => {
           setSaveData(response.status)
-          console.log('se almacenaron los datos', response)
+          // console.log('se almacenaron los datos', response)
           // console.log(data)
           // console.log(response)
         })

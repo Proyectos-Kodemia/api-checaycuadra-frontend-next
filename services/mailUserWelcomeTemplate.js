@@ -1,7 +1,7 @@
 
 const mailTemplate = (data) => {
   const htmlTemplate = template(data)
-  console.log('esto es lo que hay en data mail welcometemplate', data)
+  // console.log('esto es lo que hay en data mail welcometemplate', data)
   const mailing = {
     to: data.email,
     subject: '¡Bienvenid@ a ChecayCuadra!',

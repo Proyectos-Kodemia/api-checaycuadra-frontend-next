@@ -36,7 +36,7 @@ function FormUser () {
         .then((res) => {
           res.json()
             .then((data) => {
-              console.log('data desde el fetch formuser', data)
+              // console.log('data desde el fetch formuser', data)
             })
         })
         .catch(function (error) {
@@ -61,7 +61,7 @@ function FormUser () {
   }
 
   const dataFormPerfil = async (data) => {
-    console.log(data)
+    // console.log(data)
   }
   return (
     <Box sx={{ flexGrow: 1 }} justifyContent='center' alignItems='center'>
