@@ -65,11 +65,11 @@ function Schedule () {
       return response.json()
     }
 
-    console.log('viendo que contienen endpointSchedule dateHoursAvailable', endpointSchedule, dateHoursAvailable)
+    // console.log('viendo que contienen endpointSchedule dateHoursAvailable', endpointSchedule, dateHoursAvailable)
     await sendSchedule(endpointSchedule, dateHoursAvailable)
       .then(response => {
-        console.log('fecha y hora disponible', dateHoursAvailable)
-        console.log('este es el response', response)
+        // console.log('fecha y hora disponible', dateHoursAvailable)
+        // console.log('este es el response', response)
       })
       .catch(error => {
         console.log(error)

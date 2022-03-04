@@ -8,7 +8,7 @@ async function sendMail (data) {
     },
     body: JSON.stringify(data)
   }
-  console.log('esto es lo que se esta enviando', data)
+  // console.log('esto es lo que se esta enviando', data)
   const response = await fetch(url, options)
   return response.json()
 }
