@@ -7,6 +7,7 @@ import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlin
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined'
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined'
+import { color } from '@mui/system'
 
 function NavPage () {
   const [sessionOn, setSessionOn] = useState(false)
@@ -48,7 +49,7 @@ function NavPage () {
   }, [])
 
   return (
-    <Navbar bg='light' expand='lg'>
+    <Navbar style={{ background: '#F0F0F0' }} expand='lg'>
       <Container>
         <div>
           <Link href='/'>
@@ -63,10 +64,10 @@ function NavPage () {
           </Nav>
         </div>
         <div>
-          {!sessionOn && <Button startIcon={<AppRegistrationOutlinedIcon />} type='button' sx={{ mx: 2, color: '#113311' }} variant='light' onClick={handlerRegister}>Registrate</Button>}
-          {!sessionOn && <Button startIcon={<VpnKeyOutlinedIcon />} type='button' sx={{ mx: 2, color: '#113311' }} variant='outline-primary' onClick={handlerLogin}>Ingresar</Button>}
-          {sessionOn && <Button startIcon={<ManageAccountsOutlinedIcon />} sx={{ mx: 2, color: '#113311' }} variant='text' onClick={handlerPerfil}>Mi Perfil</Button>}
-          {sessionOn && <Button startIcon={<ExitToAppOutlinedIcon />} sx={{ mx: 2, color: '#113311' }} variant='text' onClick={handlerLogout}>Cerrar sesión</Button>}
+          {!sessionOn && <Button startIcon={<AppRegistrationOutlinedIcon />} type='button' sx={{ mx: 2, color: '#113311' }} variant='light' color='primary' onClick={handlerRegister}>Registrate</Button>}
+          {!sessionOn && <Button startIcon={<VpnKeyOutlinedIcon />} type='button' sx={{ mx: 2, color: '#113311' }} variant='outline-primary' color='primary' onClick={handlerLogin}>Ingresar</Button>}
+          {sessionOn && <Button startIcon={<ManageAccountsOutlinedIcon />} sx={{ mx: 2, color: '#113311' }} variant='text' color='primary' onClick={handlerPerfil}>Mi Perfil</Button>}
+          {sessionOn && <Button startIcon={<ExitToAppOutlinedIcon />} sx={{ mx: 2, color: '#113311' }} variant='text' color='primary' onClick={handlerLogout}>Cerrar sesión</Button>}
         </div>
       </Container>
     </Navbar>

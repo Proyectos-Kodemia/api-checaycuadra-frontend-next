@@ -172,8 +172,11 @@ function Schedule () {
           3. Confirma el horario
           <Box sx={{ p: 2, width: 250, fontSize: '1 rem', fontWeight: '300' }}>
             <Typography>
-              los dias de la semana disponibles son {dateHoursAvailable.daysAvailable}
-              y el horario es de las {dateHoursAvailable.startHour} a las  {dateHoursAvailable.endHour}
+              Los dias de la semana disponibles son {dateHoursAvailable.daysAvailable}
+            </Typography>
+            <br />
+            <Typography>
+              El horario es de las {dateHoursAvailable.startHour} a las {dateHoursAvailable.endHour}
             </Typography>
           </Box>
         </Box>

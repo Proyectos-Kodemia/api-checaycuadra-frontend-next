@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Tab, Tabs, Grid, Paper } from '@mui/material'
 import FormLogin from './FormLogin'
+import styles from './FormLogin.module.scss'
 
 const TabPanel = (props) => {
   const { children, value, index } = props
@@ -31,18 +32,28 @@ const Login = () => {
         elevation={12} sx={{ p: 3, h: 560, width: 320, my: 10 }}
       >
         <Grid align='center'>
-          <div className='welcome'>¡Bienvenido! Accede a tu cuenta</div>
+          <div className={`${styles.welcome}`}>¡Bienvenido! Accede a tu cuenta</div>
         </Grid>
-        <Box sx={{ mx: 'auto' }}>
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column'
+        }}
+        >
           <Tabs
-            sx={{ bgcolor: '#fff', color: '#00244C' }}
+            sx={{
+              bgcolor: '#fff',
+              color: '#00244C'
+            }}
             value={value}
             onChange={handleChange}
             TabIndicatorProps={styleTabs}
             textColor='inherit'
+            // mx='auto'
           >
-            <Tab sx={{ borderRadius: 1, width: 120 }} label='Usuario' className={`${!value ? 'activo' : 'inactivo'}`} />
-            <Tab sx={{ borderRadius: 1, width: 120 }} label='Contador' className={`${value ? 'activo' : 'inactivo'}`} />
+            <Tab sx={{ borderRadius: 1, width: 120 }} label='Usuario' className={`${!value} ? ${styles.activo} : ${styles.inactivo}}`} />
+            <Tab sx={{ borderRadius: 1, width: 120 }} label='Contador' className={`${value} ? ${styles.activo} : ${styles.inactivo}}`} />
           </Tabs>
           <TabPanel value={value} index={0}>
             <FormLogin rol='Usuario' />

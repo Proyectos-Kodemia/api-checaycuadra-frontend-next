@@ -10,7 +10,11 @@ import { URL_FULL } from '../../services/config'
 import ControlledSwitches from '../Controlled/Switch'
 import Modal from '../Controlled/Modal'
 import { Router, useRouter } from 'next/router'
+<<<<<<< HEAD
 import { FourGPlusMobiledataRounded } from '@mui/icons-material'
+=======
+import Snackbar from '../Notifications/SnakbarConfirmardatosPerfil'
+>>>>>>> main
 
 const especialidades = [
   { id: 1, title: 'Contabilidad General' },
@@ -50,8 +54,8 @@ function FormPerfil({ sendToCalendar }) {
   // Hook del modal
   const [open, setOpen] = useState(false)
 
-  // ID DEL USUARIO
-  const [idUser, setIdUser] = useState('')
+  // snakbarperfil
+  const [saveData, setSaveData] = useState(false)
 
   // Recibiendo code autenticación de google
   const router = useRouter()
@@ -75,6 +79,7 @@ function FormPerfil({ sendToCalendar }) {
           res.json()
             .then((data) => {
               console.log('data desde el fetch formperfil', data)
+              setSaveData(data.ok)
             })
         })
         .catch(function (error) {
@@ -82,26 +87,26 @@ function FormPerfil({ sendToCalendar }) {
         })
 
       // Obteniendo datos de id desde token
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          token: token
-        }
-      }
+      // const options = {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     token: token
+      //   }
+      // }
 
-      const endpoint = `${URL_FULL}/account/verifyAuth` // :${idUser}
+      // const endpoint = `${URL_FULL}/account/verifyAuth` // :${idUser}
 
-      fetch(endpoint, options)
-        .then(res => {
-          res.json()
-            .then((data) => {
-              setIdUser(data.payload)
-            })
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      // fetch(endpoint, options)
+      //   .then(res => {
+      //     res.json()
+      //       .then((data) => {
+      //         setIdUser(data.payload)
+      //       })
+      //   })
+      //   .catch(error => {
+      //     console.log(error)
+      //   })
 
       // console.log('endpoint del patch', endpoint)
       // console.log('response fetch', response)
@@ -131,7 +136,7 @@ function FormPerfil({ sendToCalendar }) {
     setValue('google', val)
     if (!val) {
       setOpen(true)
-      console.log(' en el handleswitch', val)
+      // console.log(' en el handleswitch', val)
     }
   }
 
@@ -146,6 +151,7 @@ function FormPerfil({ sendToCalendar }) {
 
   // Enviendo informacion al back con autentiacion google / sin autenticacion Google
   const dataFormPerfil = async (data) => {
+    setSaveData(false)
     if (checked === true) {
       const token = window.sessionStorage.getItem('token')
 
@@ -168,7 +174,12 @@ function FormPerfil({ sendToCalendar }) {
       // Sending request to account patch to server
       await patchAccount(data)
         .then(response => {
+<<<<<<< HEAD
           console.log(data)
+=======
+          // console.log(data)
+          setSaveData(response.status)
+>>>>>>> main
           console.log('se almacenaron los datos', response)
         })
         .catch(error => {
@@ -178,24 +189,8 @@ function FormPerfil({ sendToCalendar }) {
       // Enviando a autenticacion de google
       const endpointAuthGoogle = `${URL_FULL}/google/auth`
 
-
-      // // Enviando imagen a AWS
-      // async function uploadFile (data) {
-      //   cosnt
-      //   const formData = new FormData()
-      //   formData.append('')
-      //   const options = {
-      //     method: 'POST',
-      //     headers: {
-      //       token: token
-      //     },
-      //     body: formData
-      //   }
-      // }  
-
-
-      async function loginAccountGoogle(url) {
-        console.log('entrando a la funcion loginaccount google')
+      async function loginAccountGoogle (url) {
+        // console.log('entrando a la funcion loginaccount google')
         const options = {
           method: 'POST',
           headers: {
@@ -257,14 +252,31 @@ function FormPerfil({ sendToCalendar }) {
       // Sending request to account patch
       await patchAccount2(data)
         .then(response => {
-          console.log(data)
-          console.log(response)
+          setSaveData(response.status)
+          console.log('se almacenaron los datos', response)
+          // console.log(data)
+          // console.log(response)
         })
         .catch(error => {
+          setSaveData(false)
           console.log(error)
         })
+      function waitforme (milisec) {
+        return new Promise(resolve => {
+          setTimeout(() => { resolve('') }, milisec)
+        })
+      }
 
-      sendToCalendar()
+      async function printy () {
+        for (let i = 0; i < 10; ++i) {
+          await waitforme(1000)
+        }
+        sendToCalendar()
+      }
+
+      if (saveData) {
+        printy()
+      }
     }
   }
 
@@ -490,46 +502,6 @@ function FormPerfil({ sendToCalendar }) {
               />
             )}
           />
-
-          {/* <Controller
-            control={control}
-            name='especialidades'
-            render={({ onChange, ...props} ) => (
-              <Autocomplete
-                multiple
-                id='tags-filled'
-                sx={{ width: '700px' }}
-                options={especialidades.map((option) => option.title)}
-                // defaultValue={[especialidades[1].title]}
-                freeSolo
-                onChange={(e,item)=> onChange(item)}
-                {... props}
-                // onBlur={onBlur}
-                // value={value}
-                // getOptionLabel={(item) => (item.title ? item.title : "")}
-                // getOptionSelected={(option, value) =>
-                //   value === undefined || value === "" || option.title === value.title
-                // }
-                renderTags={(value, getTagProps) =>
-                  value.map((option, index) => (
-                    <Chip key={index} variant='outlined' label={option} {...getTagProps({ index })} />
-                  ))}
-                // {...register('especialidades')}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    label='Especialidades'
-                    color='secondary'
-                    variant='filled'
-                    className='textFieldsPerfil textAutocomplete'
-
-                  />
-                )}
-              />
-
-            )}
-          /> */}
         </Box>
 
         <Box sx={{
@@ -616,6 +588,7 @@ function FormPerfil({ sendToCalendar }) {
           />
         </Box>
       </form>
+      {saveData && (<Snackbar saveData='Save' />)}
     </Box>
 
   )

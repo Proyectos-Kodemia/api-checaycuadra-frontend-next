@@ -4,6 +4,7 @@ import FacebookIcon from '@mui/icons-material/Facebook'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import { Link } from '@mui/material'
+import styles from './Footer.module.scss'
 
 function FooterPage () {
   return (
@@ -20,37 +21,40 @@ function FooterPage () {
 
           <div className='col-md-3 col-xs-6 '>
             <h5> Contacto</h5>
+            <br />
             <p>(MEX) +52 (55) 1234 5678</p>
             <p>info@checaycuadra.com</p>
           </div>
 
           <div className='col-md-3 col-xs-6 '>
             <h5>Navegacion </h5>
-            <ul className='list-unstyled'>
-              <li>
-                <Link href='' underline='none'>Inicio</Link>
-              </li>
-              <li>
-                <Link href='/principal/Buscador' underline='none'>Profesionales</Link>
-              </li>
-            </ul>
+            <br />
+            <p> <Link href='' underline='none' color='black'>Inicio</Link></p>
+            <p> <Link href='/principal/Buscador' underline='none' color='black'>Profesionales</Link></p>
           </div>
 
           <div className='col-md-3 col-xs-6 '>
-            <div>
-              <div><TwitterIcon /></div>
-              <div><FacebookIcon /></div>
-              <div><LinkedInIcon /></div>
-              <div><InstagramIcon /></div>
+            <div style={{ paddingLeft: '5' }}>
+              <TwitterIcon />
+              <FacebookIcon />
+              <LinkedInIcon />
+              <InstagramIcon />
             </div>
+            <br />
             <div>
               <p>@ ChecayCuadra 2022. Todos los derechos reservados</p>
               <p>Politíca de privacidad</p>
             </div>
-
           </div>
-
         </div>
+
+        <div className={` row ${styles.direction}`}>
+          <div className='my-5 col-md-6 col-xs-12 '>
+            <p>Politíca de privacidad</p>
+            <p>ChecayCuadra© 2022. Todos los derechos reservados</p>
+          </div>
+        </div>
+
       </div>
     </footer>
   )

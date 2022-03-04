@@ -105,6 +105,7 @@ function Head ({ setResults, users, setUsers, buscar, setBuscar, setEspecialidad
                   type='text'
                   value={buscar}
                   onChange={(e) => setBuscar(e.target.value)}
+                  sx={{ width: '400px', bgcolor: 'none', fontSize: '12px' }}
                 />
               </div>
 

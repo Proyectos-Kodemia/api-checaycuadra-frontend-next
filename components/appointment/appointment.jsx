@@ -59,13 +59,13 @@ const steps = [
 ]
 // console.log(weeks)
 const columns = [
-  { field: 'monday', headerName: 'Lunes', alignItems: 'center' },
-  { field: 'tuesday', headerName: 'Martes', alignItems: 'center' },
-  { field: 'wednesday', headerName: 'Miercoles', alignItems: 'center' },
-  { field: 'thursday', headerName: 'Jueves', alignItems: 'center' },
-  { field: 'friday', headerName: 'Viernes', alignItems: 'center' },
-  { field: 'saturday', headerName: 'Sabado', alignItems: 'center' },
-  { field: 'sunday', headerName: 'Domingo', alignItems: 'center' }
+  { field: 'monday', headerName: 'Lunes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'tuesday', headerName: 'Martes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'wednesday', headerName: 'Miercoles', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'thursday', headerName: 'Jueves', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'friday', headerName: 'Viernes', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'saturday', headerName: 'Sabado', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200 },
+  { field: 'sunday', headerName: 'Domingo', alignItems: 'center', flex: 1, minWidth: 100, maxWidth: 200, sortable: false }
 ]
 
 function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, degree, degreeId, profileImage, description, role, evaluation, specialities, address, Schedule, times }) {
@@ -290,7 +290,10 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
         dateMeet = moment(weeks[activeStep].start).add(6, 'd').format('YYYY-MM-DD')
         break
     }
+
     if (hasMeeting(element.field, element.value, weekActive)) {
+      // AQUI NO ESTA MANDANDO NADA PREGUNTAR POR Q
+
     } else {
       setOpen(true)
     }
@@ -328,7 +331,6 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
     return lasRows
   }
 
-  // console.log('dataOfCita', dataOfCita)
   return (
     <div>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
@@ -399,7 +401,7 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
         <CalendarTodayRoundedIcon sx={{ fontSize: 36, mr: 5 }} />
         <Typography variant='h4'>
-          Elije tu horario y agenda tu cita con tu contador
+          Elige tu horario y agenda tu cita con tu contador
         </Typography>
       </Box>
       <br />
@@ -462,25 +464,28 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
         }
       }}
       >
-        {schedules && <DataGrid
-          rows={createRows(schedules, daysAvailable)}
-          columns={columns}
-          checkboxSelection={false}
-          onCellClick={handleOnCellClick}
-          hideFooter='true'
-          disableColumnMenu='false'
-          AutoSizeColumnsMode='fill'
-          autoHeight
-          density='comfortable'
-          getCellClassName={(params) => {
-            if (hasMeeting(params.field, params.value, weekActive)) {
-              return 'hot'
-            }
-            if (!daysAvailable.includes(params.field)) {
-              return 'cold'
-            }
-          }}
-                      />}
+        <Box sx={{ w: 1 }}>
+          {schedules && <DataGrid
+            rows={createRows(schedules, daysAvailable)}
+            columns={columns}
+            checkboxSelection={false}
+            onCellClick={handleOnCellClick}
+            hideFooter='true'
+            disableColumnMenu='false'
+            AutoSizeColumnsMode='fill'
+            autoHeight
+            density='comfortable'
+            sx={{ marginX: 'auto', maxWidth: 1000, textAlign: 'center' }}
+            getCellClassName={(params) => {
+              if (hasMeeting(params.field, params.value, weekActive)) {
+                return 'hot'
+              }
+              if (!daysAvailable.includes(params.field)) {
+                return 'cold'
+              }
+            }}
+                        />}
+        </Box>
       </Box>
       {/* confirmar */}
 
@@ -504,26 +509,16 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
           <Button onClick={handlerPago}>Realizar pago</Button>
         </DialogActions>
       </Dialog>
-      <Box sx={{ w: 50, display: 'flex', justifyContent: 'space-between', p: 1, m: 5 }}>
-        {/* <Button
-          // href='../../pages/Cuenta/RegisterPage.js'
-          onClick={handlerPago}
-          variant='contained'
-          disableElevation
-          size='large'
-          endIcon={<ArrowForwardIcon />}
-        >Realizar Pago
-        </Button> */}
+      <Box sx={{ w: 50, display: 'flex', justifyContent: 'center', p: 1, m: 5 }}>
         <Button
-          // href='../../pages/Cuenta/RegisterPage.js'
           onClick={handlerLinkGoogle}
           variant='contained'
           disableElevation
           size='large'
-          sx={{ mr: 0 }}
-        // endIcon={<ArrowForwardIcon />}
+          sx={{ alignItems: 'center' }}
         >Confirmar Cita
         </Button>
+
       </Box>
 
     </div>
@@ -531,20 +526,3 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
 }
 
 export default Appointment
-
-/*
-
-const meetings = [{
-  week: '7',
-  date: '14-02-2022',
-  day: 'monday',
-  hour: '14:00 - 15:00'
-},
-
- getCellClassName={(params) => {
-          if (params.field === 'city') {
-            return '';
-          }
-          return params.value >= 15 ? 'hot' : 'cold';
-        }}
-        */

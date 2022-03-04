@@ -18,6 +18,7 @@ import imageLogin from '../../images/graphLogin.svg'
 import sendMail from '../../services/mailingFetch'
 import mailUserTemplate from '../../services/mailUserWelcomeTemplate'
 import mailAccountTemplate from '../../services/mailAccountWelcomeTemplate'
+import Snackbar from '../Notifications/SnakbarConfirmardatosPerfil'
 
 import { URL_FULL } from '../../services/config'
 // esquema de validaciones de input
@@ -42,6 +43,8 @@ function FormRegister ({ rol }) {
   const [loading, setLoading] = useState(false)
 
   const [showPassword, setShowPassword] = useState(false)
+
+  const [saveData, setSaveData] = useState(false)
 
   const router = useRouter()
 
@@ -79,8 +82,24 @@ function FormRegister ({ rol }) {
     console.log('desde el response', response)
 
     if (response.status) {
+      setSaveData(true)
       sendMail(mailing)
-      router.push('/Cuenta/LoginPage')
+      function waitforme (milisec) {
+        return new Promise(resolve => {
+          setTimeout(() => { resolve('') }, milisec)
+        })
+      }
+
+      async function printy () {
+        for (let i = 0; i < 10; ++i) {
+          await waitforme(1000)
+        }
+        router.push('/Cuenta/LoginPage')
+      }
+
+      if (saveData) {
+        printy()
+      }
     } else {
       console.log('error en login')
     }
@@ -216,7 +235,7 @@ function FormRegister ({ rol }) {
         <Image src={imageLogin} width='300' height='150' />
         <div className='register'>¿Ya tienes una cuenta?<Link href='/Cuenta/LoginPage' underline='none'> ¡Inicia sesión!</Link></div>
       </div>
-
+      {saveData && (<Snackbar saveData='Save' />)}
     </>
   )
 }
