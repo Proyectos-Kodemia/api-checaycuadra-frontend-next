@@ -59,7 +59,7 @@ export default function CustomizedSnackbars ({ statusPayment }) {
 
     <Snackbar
       open={isOpen}
-      autoHideDuration={6000}
+      autoHideDuration={5000}
       onClose={callBack}
     >
       <Alert

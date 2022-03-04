@@ -75,6 +75,7 @@ function FormPerfil ({ sendToCalendar }) {
           res.json()
             .then((data) => {
               console.log('data desde el fetch formperfil', data)
+              setSaveData(data.ok)
             })
         })
         .catch(function (error) {
@@ -146,6 +147,7 @@ function FormPerfil ({ sendToCalendar }) {
 
   // Enviendo informacion al back con autentiacion google / sin autenticacion Google
   const dataFormPerfil = async (data) => {
+    setSaveData(false)
     if (checked === true) {
       const token = window.sessionStorage.getItem('token')
 
@@ -234,10 +236,25 @@ function FormPerfil ({ sendToCalendar }) {
           // console.log(response)
         })
         .catch(error => {
+          setSaveData(false)
           console.log(error)
         })
+      function waitforme (milisec) {
+        return new Promise(resolve => {
+          setTimeout(() => { resolve('') }, milisec)
+        })
+      }
 
-      sendToCalendar()
+      async function printy () {
+        for (let i = 0; i < 10; ++i) {
+          await waitforme(1000)
+        }
+        sendToCalendar()
+      }
+
+      if (saveData) {
+        printy()
+      }
     }
   }
 

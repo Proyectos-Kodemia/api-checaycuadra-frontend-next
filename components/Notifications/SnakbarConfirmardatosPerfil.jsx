@@ -56,7 +56,7 @@ export default function SnackbarConfirmarCita ({ saveData }) {
         open={isOpen}
         anchorOrigin={{ vertical, horizontal }}
         onClose={handleClose}
-        autoHideDuration={6000}
+        autoHideDuration={8000}
         key={vertical + horizontal}
 
       >
