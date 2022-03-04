@@ -345,9 +345,11 @@ function Appointment ({ handlerAuthGoogle, statusPayment, id, name, lastname, de
   return (
     <div>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 1, m: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', m: 2, height: 300, boxShadow: 2, borderRadius: 3 }}>
-          <Image sx={{ mx: 2 }} loader={myLoader} className={styles.imgCard} src={src} width={200} height={200} alt={name} />
-          <CardContent sx={{ width: 220, margin: 3, marginTop: 6 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', m: 2, height: 300, w: 300, boxShadow: 2, borderRadius: 3 }}>
+          <Box sx={{ m: 5 }}>
+            <Image sx={{ mx: 5 }} loader={myLoader} className={styles.imgCard} src={src} width={200} height={200} alt={name} />
+          </Box>
+          <CardContent sx={{ width: 220, margin: 2, marginTop: 2 }}>
             <Typography variant='h6' style={{ fontWeight: '600' }}>
               {name} {lastname}
             </Typography>
