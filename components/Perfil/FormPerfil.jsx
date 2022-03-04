@@ -174,12 +174,8 @@ function FormPerfil({ sendToCalendar }) {
       // Sending request to account patch to server
       await patchAccount(data)
         .then(response => {
-<<<<<<< HEAD
-          console.log(data)
-=======
           // console.log(data)
           setSaveData(response.status)
->>>>>>> main
           console.log('se almacenaron los datos', response)
         })
         .catch(error => {
