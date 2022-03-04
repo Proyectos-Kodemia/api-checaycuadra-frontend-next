@@ -7,6 +7,7 @@ import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlin
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined'
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined'
+import { color } from '@mui/system'
 
 function NavPage () {
   const [sessionOn, setSessionOn] = useState(false)
@@ -48,7 +49,7 @@ function NavPage () {
   }, [])
 
   return (
-    <Navbar bg='light' expand='lg'>
+    <Navbar style={{ background: '#F0F0F0' }} expand='lg'>
       <Container>
         <div>
           <Link href='/'>

@@ -20,24 +20,21 @@ function FooterPage () {
 
           <div className='col-md-3 col-xs-6 '>
             <h5> Contacto</h5>
+            <br />
             <p>(MEX) +52 (55) 1234 5678</p>
             <p>info@checaycuadra.com</p>
           </div>
 
           <div className='col-md-3 col-xs-6 '>
             <h5>Navegacion </h5>
-            <ul className='list-unstyled'>
-              <li>
-                <Link href='' underline='false'>Inicio</Link>
-              </li>
-              <li>
-                <Link href='/principal/Buscador' underline='none'>Profesionales</Link>
-              </li>
-            </ul>
+            <br />
+            <p> <Link href='' underline='none' color='black'>Inicio</Link></p>
+            <p> <Link href='/principal/Buscador' underline='none' color='black'>Profesionales</Link></p>
+
           </div>
 
           <div className='col-md-3 col-xs-6 '>
-            <div>
+            <div style={{ paddingLeft: '5' }}>
               <TwitterIcon />
               <FacebookIcon />
               <LinkedInIcon />
