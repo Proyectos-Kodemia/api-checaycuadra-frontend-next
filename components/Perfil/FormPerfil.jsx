@@ -220,6 +220,7 @@ function FormPerfil({ sendToCalendar }) {
         sendData.append('nombre',data.nombre)
         sendData.append('apellidos',data.apellidos)
         sendData.append('estado',data.estado)
+        sendData.append('municipio',data.municipio)
         sendData.append('cp',data.cp)
         sendData.append('precio',data.precio)
         sendData.append('cedula',data.cedula)
