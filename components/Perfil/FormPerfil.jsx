@@ -154,17 +154,34 @@ function FormPerfil({ sendToCalendar }) {
 
       // Sending patch Account info
       async function patchAccount(data) {
+        // console.log(">> data " ,data)
+        const sendData = new FormData()
+        sendData.append('imgfile',data.fotoPerfil[0])
+        sendData.append('nombre',data.nombre)
+        sendData.append('apellidos',data.apellidos)
+        sendData.append('estado',data.estado)
+        sendData.append('municipio',data.municipio)
+        sendData.append('cp',data.cp)
+        sendData.append('precio',data.precio)
+        sendData.append('cedula',data.cedula)
+        sendData.append('formacion',data.formacion)
+
+        const especialidades = JSON.stringify(data.especialidades)
+        sendData.append('especialidades',especialidades)
+
+        sendData.append('acercade',data.acercade)
+        sendData.append('email',data.email)
+
         const options = {
           method: 'PATCH',
           headers: {
-            'Content-Type': 'multipart/form-data',
             token: token
           },
-          body: JSON.stringify(data)
+          body: sendData
         }
-
-        const endpoint = `${URL_FULL}/account/perfil/`
+        const endpoint = `${URL_FULL}/account/perfil`
         const response = await fetch(endpoint, options)
+
         return response.json()
       }
 
